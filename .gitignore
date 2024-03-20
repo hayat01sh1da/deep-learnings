@@ -1,0 +1,31 @@
+# Vol.1
+
+vol1/dataset/*
+vol1/src/__pycache__/
+vol1/src/lib/__pycache__/
+
+# Vol.2
+
+vol2/exec/cbow_params.pkl
+vol2/lib/__pycache__
+vol2/lib/concerns/__pycache__
+vol2/lib/layers/__pycache__
+vol2/lib/models/__pycache__
+vol2/lib/optimisers/__pycache__
+vol2/lib/concerns/ptb.train.npy
+vol2/lib/concerns/ptb.train.txt
+vol2/lib/concerns/ptb.test.npy
+vol2/lib/concerns/ptb.test.txt
+vol2/lib/concerns/ptb.vocab.pkl
+vol2/lib/concerns/ptb.valid.npy
+vol2/lib/concerns/ptb.valid.txt
+vol2/test/__pycache__
+vol2/pkl/*
+
+# Vol.3
+
+vol3/1_basic_differential/src/__pycache__
+vol3/2_natural_coding/src/__pycache__
+vol3/3_higher_differential/src/__pycache__
+vol3/4_neural_network/src/__pycache__
+vol3/5_de_zero/src/__pycache__
