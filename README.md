@@ -1,7 +1,7 @@
 ## 1. Common Environment
 
-* WSL(Ubuntu 20.04.6 LTS)
-* Python 3.12.3
+- WSL(Ubuntu 20.04.6 LTS)
+- Python 3.12.3
 
 ## 2. READMEs
 

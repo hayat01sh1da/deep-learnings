@@ -1,6 +1,6 @@
 ## 1. Reference
 
-* [『ゼロから作るDeep Learning ② ―自然言語処理編』](https://bookmeter.com/books/12738319)
+- [『ゼロから作るDeep Learning ② ―自然言語処理編』](https://bookmeter.com/books/12738319)
 
 ## 2. Clone the repository
 

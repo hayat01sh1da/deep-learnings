@@ -1,6 +1,6 @@
 ## 1. Reference
 
-* [『ゼロから作るDeep Learning ―Pythonで学ぶディープラーニングの理論と実装』](https://bookmeter.com/books/11128002)
+- [『ゼロから作るDeep Learning ―Pythonで学ぶディープラーニングの理論と実装』](https://bookmeter.com/books/11128002)
 
 ## 2. Clone the repository
 

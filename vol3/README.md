@@ -1,6 +1,6 @@
 ## 1. Reference
 
-* [『ゼロから作るDeep Learning ❸ ―フレームワーク編』](https://bookmeter.com/books/15556819)
+- [『ゼロから作るDeep Learning ❸ ―フレームワーク編』](https://bookmeter.com/books/15556819)
 
 ## 2. Clone the repository
 
