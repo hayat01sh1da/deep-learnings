@@ -1,5 +1,8 @@
 import numpy as np
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 sys.path.append('./src/lib')
 from simple_net import SimpleNet
@@ -27,3 +30,8 @@ dW = numerical_gradient(f, net.W)
 print(dW)
 # >>> [[ 0.09999078  0.39092591 -0.49091668]
 #      [ 0.14998616  0.58638886 -0.73637502]]
+
+pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+for pycache in pycaches:
+    if os.path.isdir(pycache):
+        shutil.rmtree(pycache)

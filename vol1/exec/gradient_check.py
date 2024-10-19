@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pylab as plt
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./dataset')
 sys.path.append('./src')
 sys.path.append('./src/lib')
@@ -21,3 +24,8 @@ grad_backprop  = net.gradient(x_batch, t_batch)
 for key in grad_numerical.keys():
     diff = np.average(np.abs(grad_backprop[key] - grad_numerical[key]))
     print('{}: {}'.format(key, str(diff)))
+
+pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+for pycache in pycaches:
+    if os.path.isdir(pycache):
+        shutil.rmtree(pycache)

@@ -1,9 +1,11 @@
 import numpy as np
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 sys.path.append('./src/lib')
 from two_layer_net import TwoLayerNet
-from gradient import numerical_gradient
 
 net = TwoLayerNet(input_size=784, hidden_size=100, output_size=10)
 print(net.params['W1'].shape)
@@ -23,3 +25,8 @@ print(grads['W1'].shape)
 print(grads['b1'].shape)
 print(grads['W2'].shape)
 print(grads['b2'].shape)
+
+pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+for pycache in pycaches:
+    if os.path.isdir(pycache):
+        shutil.rmtree(pycache)

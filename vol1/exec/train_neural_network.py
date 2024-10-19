@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pylab as plt
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./dataset')
 sys.path.append('./src')
 sys.path.append('./src/lib')
@@ -56,3 +59,8 @@ plt.ylabel('accuracy')
 plt.ylim(0, 1.0)
 plt.legend(loc='lower right')
 plt.savefig('../img/{}.png'.format('train_neural_network'))
+
+pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+for pycache in pycaches:
+    if os.path.isdir(pycache):
+        shutil.rmtree(pycache)
