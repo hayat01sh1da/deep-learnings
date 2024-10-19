@@ -15,7 +15,7 @@ class TestNeuralNetworkLearning(unittest.TestCase):
 
     def tearDown(self):
         for pycache in self.pycaches:
-            if os.path.isdir(pycache):
+            if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
     def test_mean_squared_error_1(self):

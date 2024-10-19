@@ -22,7 +22,7 @@ class TestAddLayer(unittest.TestCase):
 
     def tearDown(self):
         for pycache in self.pycaches:
-            if os.path.isdir(pycache):
+            if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
     def test_forward(self):
