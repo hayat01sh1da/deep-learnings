@@ -3,6 +3,9 @@ import numpy as np
 from numpy.testing import assert_array_equal, assert_almost_equal
 import copy
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/layers')
 from lstm import LSTM
 
@@ -55,7 +58,7 @@ class TestLSTM(unittest.TestCase):
             0.37846653,  0.47617248,  -1.8035631
         ])
         self.lstm = LSTM(Wx, Wh, b)
-        self.x = np.array([
+        self.x    = np.array([
             [ 0.32434964, -1.25234162, -1.11446048],
             [-1.00333386, -0.28908588,  0.80944727],
             [-1.12554591,  0.00812256, -0.17046584],
@@ -97,6 +100,12 @@ class TestLSTM(unittest.TestCase):
             [-0.04484411, -0.13443395, -0.6548083 ],
             [-0.9392424 , -1.23116816,  1.26848987]
         ])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         c_next, h_next = self.lstm.forward(self.x, self.h_prev, self.c_prev)
@@ -130,7 +139,7 @@ class TestLSTM(unittest.TestCase):
         ]), h_next)
 
     def test_backward(self):
-        dc_next, dh_next = self.lstm.forward(self.x, self.h_prev, self.c_prev)
+        dc_next, dh_next     = self.lstm.forward(self.x, self.h_prev, self.c_prev)
         dx, dh_prev, dc_prev = self.lstm.backward(dc_next, dh_next)
         assert_almost_equal(np.array([
             [-6.79930933e-01, -1.97518363e-01,  4.16860765e-01],
@@ -177,15 +186,15 @@ class TestLSTM(unittest.TestCase):
 
     def test_grads_diff(self):
         _before_Wx_grads, _before_Wh_grads, _before_b_grads = self.lstm.grads
-        before_Wx_grads = copy.copy(_before_Wx_grads)
-        before_Wh_grads = copy.copy(_before_Wh_grads)
-        before_b_grads  = copy.copy(_before_b_grads)
-        dc_next, dh_next = self.lstm.forward(self.x, self.h_prev, self.c_prev)
+        before_Wx_grads                                     = copy.copy(_before_Wx_grads)
+        before_Wh_grads                                     = copy.copy(_before_Wh_grads)
+        before_b_grads                                      = copy.copy(_before_b_grads)
+        dc_next, dh_next                                    = self.lstm.forward(self.x, self.h_prev, self.c_prev)
         self.lstm.backward(dc_next, dh_next)
         after_Wx_grads, after_Wh_grads, after_b_grads = self.lstm.grads
-        Wx_grads = before_Wx_grads == after_Wx_grads
-        Wh_grads = before_Wh_grads == after_Wh_grads
-        b_grads  = before_b_grads == after_b_grads
+        Wx_grads                                      = before_Wx_grads == after_Wx_grads
+        Wh_grads                                      = before_Wh_grads == after_Wh_grads
+        b_grads                                       = before_b_grads == after_b_grads
         assert_array_equal(np.array([
             [
                 False, False, False,

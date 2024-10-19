@@ -1,7 +1,9 @@
 import unittest
 import numpy as np
-from os import path
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/')
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
@@ -10,14 +12,14 @@ from count_based_methods import CountBasedMethod
 
 class TestRNNLM(unittest.TestCase):
     def setUp(self):
-        text = 'You said good-bye and I said hello.'
-        cbm = CountBasedMethod()
-        word_list = cbm.text_to_word_list(text)
+        text           = 'You said good-bye and I said hello.'
+        cbm            = CountBasedMethod()
+        word_list      = cbm.text_to_word_list(text)
         word_to_id, *_ = cbm.preprocess(word_list)
-        vocab_size = len(word_to_id)
-        wordvec_size = 100
-        hidden_size  = 100
-        self.rnnlm = RNNLM(vocab_size, wordvec_size, hidden_size)
+        vocab_size     = len(word_to_id)
+        wordvec_size   = 100
+        hidden_size    = 100
+        self.rnnlm     = RNNLM(vocab_size, wordvec_size, hidden_size)
         self.xs = np.array([
             [0, 4, 4, 1],
             [4, 0, 2, 1]
@@ -26,6 +28,12 @@ class TestRNNLM(unittest.TestCase):
             [0, 1, 0, 0],
             [0, 0, 0, 1]
         ])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_predict(self):
         score = self.rnnlm._predict(self.xs)
@@ -51,7 +59,7 @@ class TestRNNLM(unittest.TestCase):
         self.rnnlm.forward(self.xs, self.ts)
         self.rnnlm.backward()
         self.rnnlm.save_params()
-        self.assertEqual(True, path.exists('../pkl/rnnlm.pkl'))
+        self.assertEqual(True, os.path.exists('../pkl/rnnlm.pkl'))
 
     def test_load_params(self):
         self.rnnlm.load_params()

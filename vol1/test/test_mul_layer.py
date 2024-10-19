@@ -1,5 +1,8 @@
 import unittest
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 from mul_layer import MulLayer
 
@@ -10,6 +13,12 @@ class TestMulLayer(unittest.TestCase):
         self.apple       = 100
         self.apple_num   = 2
         self.tax         = 1.1
+        self.pycaches    = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         apple_price = self.apple_layer.forward(self.apple, self.apple_num)

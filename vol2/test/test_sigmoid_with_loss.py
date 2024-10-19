@@ -2,6 +2,9 @@ import unittest
 import numpy as np
 from numpy.testing import assert_almost_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
 from sigmoid_with_loss import SigmoidWithLoss
@@ -9,7 +12,7 @@ from sigmoid_with_loss import SigmoidWithLoss
 class TestNegativeSamplingLoss(unittest.TestCase):
     def setUp(self):
         self.sigmoid_with_loss = SigmoidWithLoss()
-        self.x = np.array([
+        self.x                 = np.array([
             [-0.27291637,  3.0623984 ,  1.08772839,  1.21167545],
             [ 0.77815361,  1.20011612, -0.37179735,  1.93945452],
             [-1.02360881, -0.23723418, -1.42713268, -0.6484095 ],
@@ -21,6 +24,12 @@ class TestNegativeSamplingLoss(unittest.TestCase):
             [0, 1, 0, 0],
             [0, 1, 0, 0],
         ])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         loss = self.sigmoid_with_loss.forward(self.x, self.t)

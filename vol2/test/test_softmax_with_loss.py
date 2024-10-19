@@ -2,6 +2,9 @@ import unittest
 import numpy as np
 from numpy.testing import assert_almost_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
 from softmax_with_loss import SoftMaxWithLoss
@@ -21,6 +24,12 @@ class TestSoftMaxWithLoss(unittest.TestCase):
             [0, 1, 0, 0],
             [0, 1, 0, 0],
         ])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         loss = self.softmax_with_loss.forward(self.x, self.t)

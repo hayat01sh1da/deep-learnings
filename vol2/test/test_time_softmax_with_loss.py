@@ -2,6 +2,9 @@ import unittest
 import numpy as np
 from numpy.testing import assert_almost_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
 from time_softmax_with_loss import TimeSoftmaxWithLoss
@@ -9,7 +12,7 @@ from time_softmax_with_loss import TimeSoftmaxWithLoss
 class TestTimeSoftmaxWithLoss(unittest.TestCase):
     def setUp(self):
         self.time_softmax_with_loss = TimeSoftmaxWithLoss()
-        self.xs = np.array([
+        self.xs                     = np.array([
             [[3, 1, 3], [1, 3, 0], [2, 1, 1]],
             [[2, 4, 3], [0, 1, 0], [0, 4, 2]],
             [[2, 1, 0], [3, 2, 3], [1, 0, 2]],
@@ -19,6 +22,12 @@ class TestTimeSoftmaxWithLoss(unittest.TestCase):
             [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
             [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
         ])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         loss = self.time_softmax_with_loss.forward(self.xs, self.ts)

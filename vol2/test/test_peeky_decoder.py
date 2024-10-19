@@ -1,18 +1,27 @@
 import unittest
 import numpy as np
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 sys.path.append('./src/layers')
 from peeky_decoder import PeekyDecoder
 
 class TestPeekyDecoder(unittest.TestCase):
     def setUp(self):
-        vocab_size   = 13
-        wordvec_size = 16
-        hidden_size  = 128
+        vocab_size         = 13
+        wordvec_size       = 16
+        hidden_size        = 128
         self.peeky_decoder = PeekyDecoder(vocab_size, wordvec_size, hidden_size)
-        self.xs = np.random.randint(0, 13, (13, 16))
-        self.h = np.random.randn(13, 128)
+        self.xs            = np.random.randint(0, 13, (13, 16))
+        self.h             = np.random.randn(13, 128)
+        self.pycaches      = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         score = self.peeky_decoder.forward(self.xs, self.h)

@@ -2,16 +2,25 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/layers')
 from time_rnn import TimeRNN
 
 class TestTimeRNN(unittest.TestCase):
     def setUp(self):
-        Wx = np.random.randn(3, 3)
-        Wh = np.random.randn(3, 3)
-        b  = np.random.randn(3,)
+        Wx            = np.random.randn(3, 3)
+        Wh            = np.random.randn(3, 3)
+        b             = np.random.randn(3,)
         self.time_rnn = TimeRNN(Wx, Wh, b)
-        self.xs = np.random.randn(3, 3, 3)
+        self.xs       = np.random.randn(3, 3, 3)
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_state(self):
         h = np.random.randn(7, 7)
@@ -25,7 +34,7 @@ class TestTimeRNN(unittest.TestCase):
         self.assertEqual((3, 3, 3), hs.shape)
 
     def test_backward(self):
-        hs = self.time_rnn.forward(self.xs)
+        hs  = self.time_rnn.forward(self.xs)
         dxs = self.time_rnn.backward(hs)
         self.assertEqual((3, 3, 3), dxs.shape)
 

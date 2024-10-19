@@ -2,8 +2,10 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 import time
-from os import path
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
@@ -21,6 +23,12 @@ class TestTrainer(unittest.TestCase):
         self.trainer   = Trainer(model, optimizer)
         self.x, self.t = load_data()
         self.data_size = len(self.x)
+        self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_shuffle_data(self):
         xx, tt = self.trainer._shuffle_data(self.data_size, self.x, self.t)
@@ -29,21 +37,21 @@ class TestTrainer(unittest.TestCase):
 
     def test_calculate_loss(self):
         batch_size = 32
-        xx, tt = self.trainer._shuffle_data(self.data_size, self.x, self.t)
-        batch_x = xx[1 * batch_size: (1 + 1) * batch_size]
-        batch_t = tt[1 * batch_size: (1 + 1) * batch_size]
-        loss = self.trainer._calculate_loss(batch_x, batch_t)
+        xx, tt     = self.trainer._shuffle_data(self.data_size, self.x, self.t)
+        batch_x    = xx[1 * batch_size: (1 + 1) * batch_size]
+        batch_t    = tt[1 * batch_size: (1 + 1) * batch_size]
+        loss       = self.trainer._calculate_loss(batch_x, batch_t)
         self.assertEqual(1.1, round(loss, 1))
 
     def test_remove_duplicate(self):
         batch_size = 32
-        xx, tt = self.trainer._shuffle_data(self.data_size, self.x, self.t)
-        batch_x = xx[1 * batch_size: (1 + 1) * batch_size]
-        batch_t = tt[1 * batch_size: (1 + 1) * batch_size]
-        loss = self.trainer._calculate_loss(batch_x, batch_t)
+        xx, tt     = self.trainer._shuffle_data(self.data_size, self.x, self.t)
+        batch_x    = xx[1 * batch_size: (1 + 1) * batch_size]
+        batch_t    = tt[1 * batch_size: (1 + 1) * batch_size]
+        loss       = self.trainer._calculate_loss(batch_x, batch_t)
         params, grads = self.trainer._remove_duplicate()
         param_1, param_2, param_3, param_4 = params
-        grad_1, grad_2, grad_3, grad_4 = grads
+        grad_1, grad_2, grad_3, grad_4     = grads
         self.assertEqual((2, 10), param_1.shape)
         self.assertEqual((10,), param_2.shape)
         self.assertEqual((10, 3), param_3.shape)
@@ -55,18 +63,18 @@ class TestTrainer(unittest.TestCase):
 
     def test_evaluate(self):
         batch_size = 32
-        xx, tt = self.trainer._shuffle_data(self.data_size, self.x, self.t)
-        batch_x = xx[1 * batch_size: (1 + 1) * batch_size]
-        batch_t = tt[1 * batch_size: (1 + 1) * batch_size]
+        xx, tt     = self.trainer._shuffle_data(self.data_size, self.x, self.t)
+        batch_x    = xx[1 * batch_size: (1 + 1) * batch_size]
+        batch_t    = tt[1 * batch_size: (1 + 1) * batch_size]
         total_loss = 0
         loss_count = 0
-        loss = self.trainer._calculate_loss(batch_x, batch_t)
-        total_loss += loss
-        loss_count += 1
-        params, grads = self.trainer._remove_duplicate()
-        start_time = time.time()
-        current_epoch = 0
-        max_iters = self.data_size // batch_size
+        loss                          = self.trainer._calculate_loss(batch_x, batch_t)
+        total_loss                    loss
+        loss_count                    1
+        params, grads                 = self.trainer._remove_duplicate()
+        start_time                    = time.time()
+        current_epoch                 = 0
+        max_iters                     = self.data_size // batch_size
         avarage_loss, training_status = self.trainer._evaluate(total_loss, loss_count, start_time, current_epoch, 1, max_iters)
         self.assertEqual(1.0982153338384055, avarage_loss)
         self.assertEqual('| epoch 1 |  iter 2 / 9 | time 0[s] | loss 1.10', training_status)
@@ -102,7 +110,7 @@ class TestTrainer(unittest.TestCase):
         self.trainer.fit(self.x, self.t, max_epoch=300, batch_size=30)
         file_path = '../img/training_plot.png'
         self.trainer.save_plot_image(file_path)
-        self.assertEqual(True, path.exists(file_path))
+        self.assertEqual(True, os.path.exists(file_path))
 
 if __name__ == '__main__':
     unittest.main()

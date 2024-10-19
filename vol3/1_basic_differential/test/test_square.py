@@ -1,5 +1,8 @@
 import unittest
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./1_basic_differential/src')
 from variable import Variable
 from square import Square
@@ -8,7 +11,13 @@ from numpy.testing import assert_array_equal
 
 class TestSquare(unittest.TestCase):
     def setUp(self):
-        self.square = Square()
+        self.square   = Square()
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_call(self):
         data = np.array([
@@ -16,7 +25,7 @@ class TestSquare(unittest.TestCase):
             [0, 2, 5],
             [9, 9, 1]
         ])
-        input = Variable(data)
+        input  = Variable(data)
         output = self.square(input)
         assert_array_equal(np.array([
             [0,  16,  0],

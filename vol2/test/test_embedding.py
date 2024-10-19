@@ -2,14 +2,23 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/layers')
 from embedding import Embedding
 
 class TestEmbedding(unittest.TestCase):
     def setUp(self):
-        W = np.arange(21).reshape(7, 3)
+        W              = np.arange(21).reshape(7, 3)
         self.embedding = Embedding(W)
-        self.index = np.array([0, 2, 0, 4])
+        self.index     = np.array([0, 2, 0, 4])
+        self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_params(self):
         params, = self.embedding.params

@@ -1,17 +1,26 @@
 import unittest
 import numpy as np
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 sys.path.append('./src/layers')
 from encoder import Encoder
 
 class TestEncoder(unittest.TestCase):
     def setUp(self):
-        vocab_size   = 13
-        wordvec_size = 100
-        hidden_size  = 100
-        self.encoder = Encoder(vocab_size, wordvec_size, hidden_size)
-        self.xs = np.random.randint(0, 13, (7, 3))
+        vocab_size    = 13
+        wordvec_size  = 100
+        hidden_size   = 100
+        self.encoder  = Encoder(vocab_size, wordvec_size, hidden_size)
+        self.xs       = np.random.randint(0, 13, (7, 3))
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         a, b, c, d, e, f, g = self.encoder.forward(self.xs)
@@ -24,7 +33,7 @@ class TestEncoder(unittest.TestCase):
         self.assertEqual((100,), g.shape)
 
     def test_backward(self):
-        dh = self.encoder.forward(self.xs)
+        dh   = self.encoder.forward(self.xs)
         dout = self.encoder.backward(dh)
         self.assertEqual(None, dout)
 

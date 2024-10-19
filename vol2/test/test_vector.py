@@ -1,12 +1,21 @@
 import unittest
 import numpy as np
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 from vector import Vector
 
 class TestVector(unittest.TestCase):
     def setUp(self):
-        self.vector = Vector(np.array([1, 2, 3]))
+        self.vector   = Vector(np.array([1, 2, 3]))
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_get_class_name(self):
         self.assertEqual('<class 'numpy.ndarray'>', str(self.vector.x.__class__))

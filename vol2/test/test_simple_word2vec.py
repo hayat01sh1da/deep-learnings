@@ -2,6 +2,9 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 sys.path.append('./src/concerns')
 from simple_word2vec import SimpleWord2Vec
@@ -9,13 +12,19 @@ from count_based_methods import CountBasedMethod
 
 class TestSimpleWord2Vec(unittest.TestCase):
     def setUp(self):
-        text = 'You said good-bye and I said hello.'
-        cbm = CountBasedMethod()
-        word_list = cbm.text_to_word_list(text)
-        self.word_to_id, _, self.corpus = cbm.preprocess(word_list)
-        self.simple_word2vec = SimpleWord2Vec()
+        text                                   = 'You said good-bye and I said hello.'
+        cbm                                    = CountBasedMethod()
+        word_list                              = cbm.text_to_word_list(text)
+        self.word_to_id, _, self.corpus        = cbm.preprocess(word_list)
+        self.simple_word2vec                   = SimpleWord2Vec()
         self.contexts_array, self.target_array = self.simple_word2vec.create_contexts_target(self.corpus)
-        self.vocab_size = len(self.word_to_id)
+        self.vocab_size                        = len(self.word_to_id)
+        self.pycaches                          = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_corpus(self):
         assert_array_equal(np.array([0, 1, 2, 3, 4, 1, 5, 6]), self.corpus)

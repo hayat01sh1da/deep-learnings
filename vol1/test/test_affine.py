@@ -2,14 +2,23 @@ import unittest
 import numpy as np
 from numpy.testing import assert_almost_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 from affine import Affine
 
 class TestAffine(unittest.TestCase):
     def setUp(self):
-        W = np.array([[-0.22472106, -0.42868683, 0.21713442],[-0.13635294, 0.45327181, -1.31839392]])
-        b = np.array([1.55270156, 1.44441689, -1.69451485])
-        self.affine = Affine(W, b)
+        W             = np.array([[-0.22472106, -0.42868683, 0.21713442],[-0.13635294, 0.45327181, -1.31839392]])
+        b             = np.array([1.55270156, 1.44441689, -1.69451485])
+        self.affine   = Affine(W, b)
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         x = np.array([1.52949391, -0.81788271])

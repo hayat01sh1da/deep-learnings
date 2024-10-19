@@ -1,10 +1,20 @@
 import unittest
 import numpy as np
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/concerns')
 from cross_entropy_error import *
 
 class TestCrossEntropyError(unittest.TestCase):
+    def setUp(self):
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
     def test_cross_entropy_error(self):
         y = np.array([
             [0.02673862, 0.75101348, 0.10424601, 0.11800189],

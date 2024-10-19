@@ -3,6 +3,9 @@ import numpy as np
 from numpy.testing import assert_array_equal
 import copy
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/layers')
 from time_embedding import TimeEmbedding
 
@@ -18,22 +21,28 @@ class TestTimeEmbedding(unittest.TestCase):
             [-2.13395059,  1.04338757,  1.14265363]
         ])
         self.time_embedding = TimeEmbedding(W)
-        self.xs = np.array([
+        self.xs             = np.array([
             [0, 4, 4, 1],
             [4, 0, 2, 1]
         ])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_forward(self):
         out = self.time_embedding.forward(self.xs)
         self.assertEqual((2, 4, 3), out.shape)
 
     def test_grads_diff(self):
-        _grads, = self.time_embedding.grads
+        _grads,      = self.time_embedding.grads
         before_grads = copy.copy(_grads)
-        dout = self.time_embedding.forward(self.xs)
+        dout         = self.time_embedding.forward(self.xs)
         self.time_embedding.backward(dout)
         after_grads, = self.time_embedding.grads
-        grads = before_grads == after_grads
+        grads        = before_grads == after_grads
         assert_array_equal(np.array([
             [False, False, False],
             [False, False, False],

@@ -2,15 +2,24 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 from matrix import Matrix
 
 class TestVector(unittest.TestCase):
     def setUp(self):
         self.matrix = Matrix(np.array([[1, 2, 3], [4, 5, 6]]))
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_get_class_name(self):
-        self.assertEqual('<class 'numpy.ndarray'>', str(self.matrix.W.__class__))
+        self.assertEqual("<class 'numpy.ndarray'>", str(self.matrix.W.__class__))
 
     def test_get_shape(self):
         self.assertEqual((2, 3), self.matrix.W.shape)

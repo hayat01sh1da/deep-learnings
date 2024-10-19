@@ -2,15 +2,24 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/layers')
 from embedding_dot import EmbeddingDot
 
 class TestEmbeddingDot(unittest.TestCase):
     def setUp(self):
-        W = np.arange(21).reshape(7, 3)
+        W                  = np.arange(21).reshape(7, 3)
         self.embedding_dot = EmbeddingDot(W)
-        self.index = np.array([0, 3, 1])
-        self.h = np.arange(9).reshape(3, 3)
+        self.index         = np.array([0, 3, 1])
+        self.h             = np.arange(9).reshape(3, 3)
+        self.pycaches      = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_params(self):
         params, = self.embedding_dot.params

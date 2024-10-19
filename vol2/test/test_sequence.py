@@ -1,15 +1,23 @@
 import unittest
-import numpy as np
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/concerns')
 from sequence import Sequence
 
 class TestSequence(unittest.TestCase):
     def setUp(self):
-        self.sequence = Sequence()
+        self.sequence  = Sequence()
         self.file_path = '../texts/addition.txt'
         self.questions = []
-        self.answers = []
+        self.answers   = []
+        self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_text_to_dict(self):
         questions, answers = self.sequence._text_to_dict(self.file_path, self.questions, self.answers)

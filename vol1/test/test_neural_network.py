@@ -2,8 +2,9 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 from numpy.testing import assert_almost_equal
-import os.path
-from os import path
+import os
+import shutil
+import glob
 import sys
 sys.path.append('./src')
 sys.path.append('./dataset')
@@ -11,7 +12,13 @@ from neural_network import NeuralNetwork
 
 class TestNeuralNetwork(unittest.TestCase):
     def setUp(self):
-        self.nnw = NeuralNetwork()
+        self.nnw      = NeuralNetwork()
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_sigmoid(self):
         x = np.arange(-5.0, 5.0, 0.1)
@@ -40,14 +47,14 @@ class TestNeuralNetwork(unittest.TestCase):
                 0.98901306, 0.9900482 , 0.9909867 , 0.99183743, 0.99260846
             ]
         ), y)
-        # self.assertEqual(True, path.exists('../img/sigmoid.png'))
+        # self.assertEqual(True, os.path.exists('../img/sigmoid.png'))
 
     def test_softmax(self):
         y = self.nnw._softmax(np.array([0.3, 2.9, 4.0]))
         assert_almost_equal(np.array([0.01821127, 0.24519181, 0.73659691]), y)
 
     def test_show_image(self):
-        x_train, t_train = self.nnw._get_test_data()
+        x_train, t_train         = self.nnw._get_test_data()
         img, label, reshaped_img = self.nnw._process_image(x_train, t_train)
         self.assertEqual(7, label)
         self.assertEqual((784,), img.shape)
@@ -71,7 +78,7 @@ class TestNeuralNetwork(unittest.TestCase):
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
             ]
         ), y)
-        # self.assertEqual(True, path.exists('../img/step_func.png'))
+        # self.assertEqual(True, os.path.exists('../img/step_func.png'))
 
     def test_relu(self):
         x = np.arange(-5.0, 5.0, 0.1)
@@ -88,11 +95,11 @@ class TestNeuralNetwork(unittest.TestCase):
                 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9
             ]
         ), y)
-        # self.assertEqual(True, path.exists('../img/relu.png'))
+        # self.assertEqual(True, os.path.exists('../img/relu.png'))
 
     def test_matrix_product_1(self):
-        a = np.array([[1, 2], [3, 4]])
-        b = np.array([[5, 6], [7, 8]])
+        a       = np.array([[1, 2], [3, 4]])
+        b       = np.array([[5, 6], [7, 8]])
         product = self.nnw.matrix_product(a, b)
         self.assertEqual((2, 2), a.shape)
         self.assertEqual((2, 2), b.shape)
@@ -104,8 +111,8 @@ class TestNeuralNetwork(unittest.TestCase):
         ), product)
 
     def test_matrix_product_2(self):
-        a = np.array([[1, 2, 3], [4, 5, 6]])
-        b = np.array([[1, 2], [3, 4], [5,6]])
+        a       = np.array([[1, 2, 3], [4, 5, 6]])
+        b       = np.array([[1, 2], [3, 4], [5,6]])
         product = self.nnw.matrix_product(a, b)
         self.assertEqual((2, 3), a.shape)
         self.assertEqual((3, 2), b.shape)
@@ -117,8 +124,8 @@ class TestNeuralNetwork(unittest.TestCase):
         ), product)
 
     def test_matrix_product_3(self):
-        a = np.array([[1, 2], [3, 4], [5,6]])
-        b = np.array([7, 8])
+        a       = np.array([[1, 2], [3, 4], [5,6]])
+        b       = np.array([7, 8])
         product = self.nnw.matrix_product(a, b)
         self.assertEqual((3, 2), a.shape)
         self.assertEqual((2,), b.shape)

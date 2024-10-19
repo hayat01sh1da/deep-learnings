@@ -1,8 +1,10 @@
 import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
-from os import path
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 sys.path.append('./src/concerns')
 sys.path.append('./src/optimisers')
@@ -13,21 +15,27 @@ from sgd import SGD
 
 class TestRNNLMTrainer(unittest.TestCase):
     def setUp(self):
-        self.batch_size = 10
-        wordvec_size    = 100
-        hidden_size     = 100
-        self.time_size  = 5
-        learning_rate   = 0.1
-        self.max_epoch  = 100
+        self.batch_size                = 10
+        wordvec_size                   = 100
+        hidden_size                    = 100
+        self.time_size                 = 5
+        learning_rate                  = 0.1
+        self.max_epoch                 = 100
         corpus, word_to_id, id_to_word = load_data('train')
-        corpus_size = 1000
-        corpus = corpus[:corpus_size]
-        vocab_size = int(max(corpus) + 1)
-        self.xs = corpus[:-1]
-        self.ts = corpus[1:]
-        model = SimpleRNNLM(vocab_size, wordvec_size, hidden_size)
-        optimiser = SGD(learning_rate)
-        self.rnnlm_trainer = RNNLMTrainer(model, optimiser)
+        corpus_size                    = 1000
+        corpus                         = corpus[:corpus_size]
+        vocab_size                     = int(max(corpus) + 1)
+        self.xs                        = corpus[:-1]
+        self.ts                        = corpus[1:]
+        model                          = SimpleRNNLM(vocab_size, wordvec_size, hidden_size)
+        optimiser                      = SGD(learning_rate)
+        self.rnnlm_trainer             = RNNLMTrainer(model, optimiser)
+        self.pycaches                  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_get_batch(self):
         batch_x, batch_t = self.rnnlm_trainer._get_batch(self.xs, self.ts, self.batch_size, self.time_size)
@@ -64,7 +72,7 @@ class TestRNNLMTrainer(unittest.TestCase):
         self.rnnlm_trainer.fit(self.xs, self.ts, self.max_epoch, self.batch_size, self.time_size)
         file_path = '../img/rnnlm_trainer.png'
         self.rnnlm_trainer.save_plot_image(file_path)
-        self.assertEqual(True, path.exists(file_path))
+        self.assertEqual(True, os.path.exists(file_path))
 
 if __name__ == '__main__':
     unittest.main()

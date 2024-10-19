@@ -2,6 +2,9 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal, assert_almost_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/layers')
 from time_lstm import TimeLSTM
 
@@ -47,14 +50,14 @@ class TestTimeLSTM(unittest.TestCase):
                 -0.86293879,  1.67287773,  0.41575087
             ]
         ])
-        b  = np.array([
+        b = np.array([
             0.46861655,  0.15954682,  0.38782221,
             1.00791178, -0.38322573,  0.83138721,
             0.98675017, -0.83388618,  1.14392808,
             0.37846653,  0.47617248,  -1.8035631
         ])
         self.time_lstm = TimeLSTM(Wx, Wh, b)
-        self.xs = np.array([
+        self.xs        = np.array([
             [
                 [ 0.71755849,  0.60697008, -0.62888378],
                 [-0.49626568, -0.4748135 ,  1.75968249],
@@ -98,6 +101,12 @@ class TestTimeLSTM(unittest.TestCase):
                 [-0.81431589, -0.93004337, -0.10522209]
             ]
         ])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_state(self):
         h = np.random.randn(7, 7)

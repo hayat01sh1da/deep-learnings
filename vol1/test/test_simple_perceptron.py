@@ -1,11 +1,20 @@
 import unittest
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src')
 from simple_perceptron import SimplePerceptron
 
 class TestPerceptron(unittest.TestCase):
     def setUp(self):
-        self.sp = SimplePerceptron()
+        self.sp       = SimplePerceptron()
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_and_gate(self):
         self.assertEqual(0, self.sp.and_gate(0, 0))

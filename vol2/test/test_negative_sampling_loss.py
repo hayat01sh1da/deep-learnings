@@ -2,17 +2,26 @@ import unittest
 import numpy as np
 from numpy.testing import assert_array_equal
 import sys
+import os
+import shutil
+import glob
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
 from negative_sampling_loss import NegativeSamplingLoss
 
 class TestNegativeSamplingLoss(unittest.TestCase):
     def setUp(self):
-        W = np.arange(21).reshape(7, 3)
-        corpus = np.array([0, 1, 2, 3, 4, 1, 5, 2, 6])
-        self.nsl = NegativeSamplingLoss(W, corpus)
-        self.h = np.arange(3)
-        self.target = np.array([1, 3, 0])
+        W             = np.arange(21).reshape(7, 3)
+        corpus        = np.array([0, 1, 2, 3, 4, 1, 5, 2, 6])
+        self.nsl      = NegativeSamplingLoss(W, corpus)
+        self.h        = np.arange(3)
+        self.target   = np.array([1, 3, 0])
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+
+    def tearDown(self):
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
 
     def test_params(self):
         param, *_ = self.nsl.params
