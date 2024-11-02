@@ -11,7 +11,12 @@ on:
     branches:
       - master
     paths:
-      - ./python
+      - ./vol1
+      - ./vol2
+      - ./vol3
+      - '!./vol1/README.md'
+      - '!./vol2/README.md'
+      - '!./vol3/README.md'
 
 permissions:
   contents: read
