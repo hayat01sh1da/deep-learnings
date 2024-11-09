@@ -7,16 +7,19 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '.github/workflows/unittest.yml'
+      - 'run_unittests.sh'
+      - 'requirements.txt'
+      - '**.py'
   pull_request:
     branches:
       - master
     paths:
-      - ./vol1
-      - ./vol2
-      - ./vol3
-      - '!./vol1/README.md'
-      - '!./vol2/README.md'
-      - '!./vol3/README.md'
+      - '.github/workflows/unittest.yml'
+      - 'run_unittests.sh'
+      - 'requirements.txt'
+      - '**.py'
 
 permissions:
   contents: read
