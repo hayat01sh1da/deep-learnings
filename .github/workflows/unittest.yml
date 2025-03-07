@@ -5,16 +5,12 @@ name: UnitTest
 
 on:
   push:
-    branches:
-      - master
     paths:
       - '.github/workflows/unittest.yml'
       - 'run_unittests.sh'
       - 'requirements.txt'
       - '**.py'
   pull_request:
-    branches:
-      - master
     paths:
       - '.github/workflows/unittest.yml'
       - 'run_unittests.sh'
