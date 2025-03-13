@@ -12,7 +12,7 @@ from softmax import Softmax
 from time_softmax_with_loss import TimeSoftmaxWithLoss
 
 class BetterRNNLM(BaseModel):
-    def __init__(self, vocab_size=10000, wordvec_size=650, hidden_size=650, dropout_ratio=0.5):
+    def __init__(self, vocab_size = 10000, wordvec_size = 650, hidden_size = 650, dropout_ratio = 0.5):
         V  = vocab_size
         D  = wordvec_size
         H  = hidden_size
@@ -30,9 +30,9 @@ class BetterRNNLM(BaseModel):
         self.layers = [
             TimeEmbedding(embed_W),
             TimeDropout(dropout_ratio),
-            TimeLSTM(lstm_Wx1, lstm_Wh1, lstm_b1, stateful=True),
+            TimeLSTM(lstm_Wx1, lstm_Wh1, lstm_b1, stateful = True),
             TimeDropout(dropout_ratio),
-            TimeLSTM(lstm_Wx2, lstm_Wh2, lstm_b2, stateful=True),
+            TimeLSTM(lstm_Wx2, lstm_Wh2, lstm_b2, stateful = True),
             TimeDropout(dropout_ratio),
             TimeAffine(embed_W.T, affine_b)
         ]
@@ -56,10 +56,10 @@ class BetterRNNLM(BaseModel):
 
     def forward(self, xs, ts, train_flag=True):
         score = self._predict(xs, train_flag)
-        loss = self.loss_layer.forward(score, ts)
+        loss  = self.loss_layer.forward(score, ts)
         return loss
 
-    def backward(self, dout=1):
+    def backward(self, dout = 1):
         dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)

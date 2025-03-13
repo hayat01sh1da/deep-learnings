@@ -12,7 +12,7 @@ from two_layer_net import TwoLayerNet
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
-net = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
+net = TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 
 x_batch = x_train[:3]
 t_batch = t_train[:3]

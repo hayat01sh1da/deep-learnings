@@ -61,7 +61,7 @@ class Affine:
     def backward(self, dout):
         dx = np.dot(dout, self.W.T)
         self.dW = np.dot(self.x.T, dout)
-        self.db = np.sum(dout, axis=0)
+        self.db = np.sum(dout, axis = 0)
 
         dx = dx.reshape(*self.original_x_shape)  # 入力データの形状に戻す（テンソル対応）
         return dx
@@ -80,7 +80,7 @@ class SoftmaxWithLoss:
 
         return self.loss
 
-    def backward(self, dout=1):
+    def backward(self, dout = 1):
         batch_size = self.t.shape[0]
         if self.t.size == self.y.size: # 教師データがone-hot-vectorの場合
             dx = (self.y - self.t) / batch_size
@@ -149,9 +149,9 @@ class BatchNormalization:
             self.running_var = np.zeros(D)
 
         if train_flg:
-            mu = x.mean(axis=0)
+            mu = x.mean(axis = 0)
             xc = x - mu
-            var = np.mean(xc**2, axis=0)
+            var = np.mean(xc**2, axis = 0)
             std = np.sqrt(var + 10e-7)
             xn = xc / std
 
@@ -179,14 +179,14 @@ class BatchNormalization:
         return dx
 
     def __backward(self, dout):
-        dbeta = dout.sum(axis=0)
-        dgamma = np.sum(self.xn * dout, axis=0)
+        dbeta = dout.sum(axis = 0)
+        dgamma = np.sum(self.xn * dout, axis = 0)
         dxn = self.gamma * dout
         dxc = dxn / self.std
-        dstd = -np.sum((dxn * self.xc) / (self.std * self.std), axis=0)
+        dstd = -np.sum((dxn * self.xc) / (self.std * self.std), axis = 0)
         dvar = 0.5 * dstd / self.std
         dxc += (2.0 / self.batch_size) * self.xc * dvar
-        dmu = np.sum(dxc, axis=0)
+        dmu = np.sum(dxc, axis = 0)
         dx = dxc - dmu / self.batch_size
 
         self.dgamma = dgamma
@@ -233,7 +233,7 @@ class Convolution:
         FN, C, FH, FW = self.W.shape
         dout = dout.transpose(0,2,3,1).reshape(-1, FN)
 
-        self.db = np.sum(dout, axis=0)
+        self.db = np.sum(dout, axis = 0)
         self.dW = np.dot(self.col.T, dout)
         self.dW = self.dW.transpose(1, 0).reshape(FN, C, FH, FW)
 
@@ -261,8 +261,8 @@ class Pooling:
         col = im2col(x, self.pool_h, self.pool_w, self.stride, self.pad)
         col = col.reshape(-1, self.pool_h*self.pool_w)
 
-        arg_max = np.argmax(col, axis=1)
-        out = np.max(col, axis=1)
+        arg_max = np.argmax(col, axis = 1)
+        out = np.max(col, axis = 1)
         out = out.reshape(N, out_h, out_w, C).transpose(0, 3, 1, 2)
 
         self.x = x

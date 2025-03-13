@@ -20,22 +20,22 @@ max_grad      = 0.25
 
 # Load trainig data
 corpus, word_to_id, id_to_word = load_data('train')
-corpus_test, *_ = load_data('test')
-vocab_size = len(word_to_id)
-xs = corpus[:-1]
-ts = corpus[1:]
+corpus_test, *_                = load_data('test')
+vocab_size                     = len(word_to_id)
+xs                             = corpus[:-1]
+ts                             = corpus[1:]
 
 # Generate a model, optimiser and trainer
-model = RNNLM(vocab_size, wordvec_size, hidden_size)
+model     = RNNLM(vocab_size, wordvec_size, hidden_size)
 optimiser = SGD(learning_rate)
-trainer = RNNLMTrainer(model, optimiser)
+trainer   = RNNLMTrainer(model, optimiser)
 
 # 1. Train applying gradients clipping
-training_process = trainer.fit(xs, ts, max_epoch, batch_size, time_size, max_grad, eval_interval=20)
+training_process = trainer.fit(xs, ts, max_epoch, batch_size, time_size, max_grad, eval_interval = 20)
 for iter in training_process:
     print(iter)
 file_path = '../img/train_rnnlm.png'
-tainer.save_plot_image(file_path, ylim=(0, 500))
+tainer.save_plot_image(file_path, ylim = (0, 500))
 
 # 2. Evaluate by test data
 model.reset_state()

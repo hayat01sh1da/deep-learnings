@@ -18,7 +18,7 @@ class CBOW:
             self.in_layers.append(in_layer)
         self.ns_loss_layer = NegativeSamplingLoss(W_out, corpus)
         # Integrate all weight and gradients in a list
-        layers = self.in_layers + [self.ns_loss_layer]
+        layers      = self.in_layers + [self.ns_loss_layer]
         self.params = []
         self.grads  = []
         for layer in layers:
@@ -31,12 +31,12 @@ class CBOW:
         h = 0
         for i, in_layer in enumerate(self.in_layers):
             h += in_layer.forward(contexts[:, i])
-        h *= 1 / len(self.in_layers)
+        h   *= 1 / len(self.in_layers)
         loss = self.ns_loss_layer.forward(h, target)
         return loss
 
-    def backward(self, dout=1):
-        dout = self.ns_loss_layer.backward(dout)
+    def backward(self, dout = 1):
+        dout  = self.ns_loss_layer.backward(dout)
         dout *= 1 / len(self.in_layers)
         for layer in self.in_layers:
             layer.backward(dout)

@@ -15,6 +15,6 @@ class NeuralNetwork:
 
     def get_output_layer(self, h):
         sigmoid = Sigmoid()
-        a = sigmoid.forward(h)
-        out = np.dot(a, self.W) + self.b
+        a       = sigmoid.forward(h)
+        out     = np.dot(a, self.W) + self.b
         return out

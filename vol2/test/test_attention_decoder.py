@@ -29,7 +29,7 @@ class TestDecoder(unittest.TestCase):
 
     def test_backward(self):
         dscore = self.decoder.forward(self.xs, self.enc_hs)
-        dh = self.decoder.backward(dscore)
+        dh     = self.decoder.backward(dscore)
         self.assertEqual((13, 100), dh.shape)
 
     def test_generate(self):

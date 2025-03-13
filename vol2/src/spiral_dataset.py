@@ -9,8 +9,8 @@ class SpiralDataset:
 
     def save_plot_image(self, file_path):
         SAMPLE_NUMS_PER_CLASS = 100
-        CLASS_NUNS = 3
-        markers = ['o', 'x', '^']
+        CLASS_NUNS            = 3
+        markers               = ['o', 'x', '^']
         plt.figure()
         for i in range(CLASS_NUNS):
             plt.scatter(

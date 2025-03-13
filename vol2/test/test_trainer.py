@@ -18,7 +18,7 @@ from sgd import SGD
 
 class TestTrainer(unittest.TestCase):
     def setUp(self):
-        model          = TwoLayerNet(input_size=2, hidden_size=10, output_size=3)
+        model          = TwoLayerNet(input_size = 2, hidden_size = 10, output_size = 3)
         optimizer      = SGD(lr=1.0)
         self.trainer   = Trainer(model, optimizer)
         self.x, self.t = load_data()
@@ -44,12 +44,12 @@ class TestTrainer(unittest.TestCase):
         self.assertEqual(1.1, round(loss, 1))
 
     def test_remove_duplicate(self):
-        batch_size = 32
-        xx, tt     = self.trainer._shuffle_data(self.data_size, self.x, self.t)
-        batch_x    = xx[1 * batch_size: (1 + 1) * batch_size]
-        batch_t    = tt[1 * batch_size: (1 + 1) * batch_size]
-        loss       = self.trainer._calculate_loss(batch_x, batch_t)
-        params, grads = self.trainer._remove_duplicate()
+        batch_size                         = 32
+        xx, tt                             = self.trainer._shuffle_data(self.data_size, self.x, self.t)
+        batch_x                            = xx[1 * batch_size: (1 + 1) * batch_size]
+        batch_t                            = tt[1 * batch_size: (1 + 1) * batch_size]
+        loss                               = self.trainer._calculate_loss(batch_x, batch_t)
+        params, grads                      = self.trainer._remove_duplicate()
         param_1, param_2, param_3, param_4 = params
         grad_1, grad_2, grad_3, grad_4     = grads
         self.assertEqual((2, 10), param_1.shape)
@@ -62,21 +62,21 @@ class TestTrainer(unittest.TestCase):
         self.assertEqual( (3,), grad_4.shape)
 
     def test_evaluate(self):
-        batch_size = 32
-        xx, tt     = self.trainer._shuffle_data(self.data_size, self.x, self.t)
-        batch_x    = xx[1 * batch_size: (1 + 1) * batch_size]
-        batch_t    = tt[1 * batch_size: (1 + 1) * batch_size]
-        total_loss = 0
-        loss_count = 0
+        batch_size                    = 32
+        xx, tt                        = self.trainer._shuffle_data(self.data_size, self.x, self.t)
+        batch_x                       = xx[1 * batch_size: (1 + 1) * batch_size]
+        batch_t                       = tt[1 * batch_size: (1 + 1) * batch_size]
+        total_loss                    = 0
+        loss_count                    = 0
         loss                          = self.trainer._calculate_loss(batch_x, batch_t)
-        total_loss                    loss
-        loss_count                    1
+        total_loss                    = loss
+        loss_count                    = 1
         params, grads                 = self.trainer._remove_duplicate()
         start_time                    = time.time()
         current_epoch                 = 0
         max_iters                     = self.data_size // batch_size
-        avarage_loss, training_status = self.trainer._evaluate(total_loss, loss_count, start_time, current_epoch, 1, max_iters)
-        self.assertEqual(1.0982153338384055, avarage_loss)
+        average_loss, training_status = self.trainer._evaluate(total_loss, loss_count, start_time, current_epoch, 1, max_iters)
+        self.assertEqual(1.0982153338384055, average_loss)
         self.assertEqual('| epoch 1 |  iter 2 / 9 | time 0[s] | loss 1.10', training_status)
 
     def test_fit(self):
@@ -107,7 +107,7 @@ class TestTrainer(unittest.TestCase):
         ], training_process)
 
     def test_save_plot_image(self):
-        self.trainer.fit(self.x, self.t, max_epoch=300, batch_size=30)
+        self.trainer.fit(self.x, self.t, max_epoch=300, batch_size = 30)
         file_path = '../img/training_plot.png'
         self.trainer.save_plot_image(file_path)
         self.assertEqual(True, os.path.exists(file_path))

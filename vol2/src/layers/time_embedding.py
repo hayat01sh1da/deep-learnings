@@ -9,22 +9,22 @@ class TimeEmbedding:
         self.W      = W
 
     def forward(self, xs):
-        N, T = xs.shape
-        V, D = self.W.shape
-        out = np.empty((N, T, D), dtype='f')
+        N, T        = xs.shape
+        V, D        = self.W.shape
+        out         = np.empty((N, T, D), dtype='f')
         self.layers = []
         for t in range(T):
-            layer = Embedding(self.W)
+            layer        = Embedding(self.W)
             out[:, t, :] = layer.forward(xs[:, t])
             self.layers.append(layer)
         return out
 
     def backward(self, dout):
         N, T, D = dout.shape
-        grad = 0
+        grad    = 0
         for t in range(T):
             layer = self.layers[t]
             layer.backward(dout[:, t, :])
-            grad += layer.grads[0]
+            grad          += layer.grads[0]
         self.grads[0][...] = grad
         return None

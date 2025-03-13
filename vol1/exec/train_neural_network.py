@@ -23,7 +23,7 @@ batch_size     = 100
 learning_rate  = 0.1
 iter_per_epoch = max(train_size / batch_size, 1)
 
-net = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
+net = TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 
 for i in range(iters_num):
     # Get mini batch

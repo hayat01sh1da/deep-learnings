@@ -5,21 +5,21 @@ sys.path.append('./src/concerns')
 from count_based_methods import CountBasedMethod
 from ptb import *
 
-window_size = 2
+window_size  = 2
 wordvec_size = 100
 
-cbm =  CountBasedMethod()
+cbm                            =  CountBasedMethod()
 corpus, word_to_id, id_to_word = load_data('train')
-vocab_size = len(word_to_id)
+vocab_size                     = len(word_to_id)
 print('=== Counting co-occurence... ===')
 C = cbm.create_co_matrix(corpus, vocab_size, window_size)
 print('=== Counting PPMI... ===')
 W = cbm.ppmi(C, verbose=True)
 print('=== Counting SVD... ===')
 
-U, *_ = randomized_svd(W, n_components=wordvec_size, n_iter=5, random_state=None)
+U, *_     = randomized_svd(W, n_components=wordvec_size, n_iter=5, random_state=None)
 word_vecs = U[:, :wordvec_size]
-queries = ['you', 'year', 'car', 'toyota']
+queries   = ['you', 'year', 'car', 'toyota']
 for query in queries:
     rankings = cbm.rank_similarities(query, word_to_id, word_vecs, vocab_size, id_to_word, top=5)
     for key, value in rankings.items():

@@ -2,7 +2,7 @@ import numpy as np
 from rnn import RNN
 
 class TimeRNN:
-    def __init__(self, Wx, Wh, b, stateful=False):
+    def __init__(self, Wx, Wh, b, stateful = False):
         self.params   = [Wx, Wh, b]
         self.grads    = [np.zeros_like(Wx), np.zeros_like(Wh), np.zeros_like(b)]
         self.layers   = None
@@ -25,8 +25,8 @@ class TimeRNN:
         if not self.stateful or self.h is None:
             self.h = np.zeros((N, H), dtype='f')
         for t in range(T):
-            layer = RNN(*self.params)
-            self.h = layer.forward(xs[:, t, :], self.h)
+            layer       = RNN(*self.params)
+            self.h      = layer.forward(xs[:, t, :], self.h)
             hs[:, t, :] = self.h
             self.layers.append(layer)
         return hs
@@ -35,12 +35,12 @@ class TimeRNN:
         Wx, Wh, b = self.params
         N, T, H   = dhs.shape
         D, H      = Wx.shape
-        dxs = np.empty((N, T, D), dtype='f')
-        dh = 0
-        grads = [0, 0, 0]
+        dxs       = np.empty((N, T, D), dtype='f')
+        dh        = 0
+        grads     = [0, 0, 0]
         for t in reversed(range(T)):
-            layer = self.layers[t]
-            dx, dh = layer.backward(dhs[:, t, :] + dh)
+            layer        = self.layers[t]
+            dx, dh       = layer.backward(dhs[:, t, :] + dh)
             dxs[:, t, :] = dx
             for i, grad in enumerate(layer.grads):
                 grads[i] += grad

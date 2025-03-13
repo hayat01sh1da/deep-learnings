@@ -1,17 +1,17 @@
 import numpy as np
 
-def eval_perplexity(model, corpus, batch_size=10, time_size=35):
+def eval_perplexity(model, corpus, batch_size = 10, time_size = 35):
     print('=== Evaluating perplexity... ===')
-    corpus_size = len(corpus)
+    corpus_size          = len(corpus)
     total_loss, loss_cnt = 0, 0
-    max_iters = (corpus_size - 1) // (batch_size * time_size)
-    jump = (corpus_size - 1) // batch_size
+    max_iters            = (corpus_size - 1) // (batch_size * time_size)
+    jump                 = (corpus_size - 1) // batch_size
 
     for iters in range(max_iters):
-        xs = np.zeros((batch_size, time_size), dtype=np.int32)
-        ts = np.zeros((batch_size, time_size), dtype=np.int32)
+        xs          = np.zeros((batch_size, time_size), dtype=np.int32)
+        ts          = np.zeros((batch_size, time_size), dtype=np.int32)
         time_offset = iters * time_size
-        offsets = [time_offset + (i * jump) for i in range(batch_size)]
+        offsets     = [time_offset + (i * jump) for i in range(batch_size)]
         for t in range(time_size):
             for i, offset in enumerate(offsets):
                 xs[i, t] = corpus[(offset + t) % corpus_size]

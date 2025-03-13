@@ -3,7 +3,7 @@ import numpy as np
 class AdaGrad:
     def __init__(self, learning_rate=0.01):
         self.lr = learning_rate
-        self.h = None
+        self.h  = None
 
     def update(self, params, grads):
         if self.h is None:

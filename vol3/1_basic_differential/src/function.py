@@ -5,8 +5,8 @@ class Function:
         pass
 
     def __call__(self, input):
-        x = input.data
-        y = self.forward(x)
+        x      = input.data
+        y      = self.forward(x)
         output = Variable(y)
         return output
 

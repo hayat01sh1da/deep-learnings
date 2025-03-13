@@ -69,7 +69,7 @@ class TestEmbeddingDot(unittest.TestCase):
 
     def test_backward(self):
         dout = self.embedding_dot.forward(self.h, self.index)
-        dh = self.embedding_dot.backward(dout)
+        dh   = self.embedding_dot.backward(dout)
         assert_array_equal(np.array([
             [   0,    5,   10],
             [1098, 1220, 1342],

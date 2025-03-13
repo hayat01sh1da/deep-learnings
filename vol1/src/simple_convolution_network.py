@@ -7,7 +7,7 @@ from affine import Affine
 from soft_max_with_loss import SoftmaxWithLoss
 
 class SimpleConvolutionNetwork:
-    def __init__(self, input_dim=(1, 28, 28), conv_param={'filter_num': 30, 'filter_size': 5, 'pad': 0, 'stride': 1}, hidden_size=100, output_size=10, weight_init_std=0.01):
+    def __init__(self, input_dim = (1, 28, 28), conv_param = {'filter_num': 30, 'filter_size': 5, 'pad': 0, 'stride': 1}, hidden_size = 100, output_size = 10, weight_init_std = 0.01):
         filter_num             = conv_param['filter_num']
         filter_size            = conv_param['filter_size']
         filter_pad             = conv_param['pad']
@@ -40,18 +40,21 @@ class SimpleConvolutionNetwork:
         y = self.predict(x)
         return self.last_layer.forward(y, t)
 
-        def gradient(self, x, t):
-            # forward
-            self.loss(x, t)
-            #backward
-            dout = 1
-            dout = self.last_layer(dout)
-            # Settings
-            grads = {}
-            grads['W1'] = self.layers['Conv1'].dW
-            grads['b1'] = self.layers['Conv1'].db
-            grads['W2'] = self.layers['Affine1'].dW
-            grads['b2'] = self.layers['Affine1'].db
-            grads['W3'] = self.layers['Affine2'].dW
-            grads['b3'] = self.layers['Affine2'].db
-            return grads
+    def gradient(self, x, t):
+        # forward
+        self.loss(x, t)
+
+        #backward
+        dout        = 1
+        dout        = self.last_layer(dout)
+
+        # Settings
+        grads       = {}
+        grads['W1'] = self.layers['Conv1'].dW
+        grads['b1'] = self.layers['Conv1'].db
+        grads['W2'] = self.layers['Affine1'].dW
+        grads['b2'] = self.layers['Affine1'].db
+        grads['W3'] = self.layers['Affine2'].dW
+        grads['b3'] = self.layers['Affine2'].db
+
+        return grads

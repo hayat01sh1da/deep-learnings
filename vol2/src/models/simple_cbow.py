@@ -27,14 +27,14 @@ class SimpleCBOW:
         self.word_vecs = W_in
 
     def forward(self, contexts, target):
-        h0 = self.in_layer_0.forward(contexts[:, 0])
-        h1 = self.in_layer_1.forward(contexts[:, 1])
-        h  = (h0 + h1) * 0.5
+        h0    = self.in_layer_0.forward(contexts[:, 0])
+        h1    = self.in_layer_1.forward(contexts[:, 1])
+        h     = (h0 + h1) * 0.5
         score = self.out_layer.forward(h)
         loss  = self.loss_layer.forward(score, target)
         return loss
 
-    def backward(self, dout=1):
+    def backward(self, dout = 1):
         ds = self.loss_layer.backward(dout)
         da = self.out_layer.backward(ds)
         da *= 0.5

@@ -7,13 +7,13 @@ class Embedding:
         self.index  = None
 
     def forward(self, index):
-        W, = self.params
+        W,         = self.params
         self.index = index
-        out = W[index]
+        out        = W[index]
         return out
 
     def backward(self, dout):
-        dW, = self.grads
+        dW,     = self.grads
         dW[...] = 0
         np.add.at(dW, self.index, dout)
         # for i, word_id in enumarate(self.index):

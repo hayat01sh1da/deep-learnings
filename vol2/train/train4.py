@@ -20,11 +20,11 @@ max_epoch     = 100
 # Load trainig data(Make data size smalller)
 corpus, word_to_id, id_to_word = load_data('train')
 corpus_size = 1000
-corpus = corpus[:corpus_size]
-vocab_size = int(max(corpus) + 1)
-xs = corpus[:-1] # Inputs
-ts = corpus[1:]  # Outputs(Teacher labels)
-data_size = len(xs)
+corpus      = corpus[:corpus_size]
+vocab_size  = int(max(corpus) + 1)
+xs          = corpus[:-1] # Inputs
+ts          = corpus[1:]  # Outputs(Teacher labels)
+data_size   = len(xs)
 print('Corpus size: %d, Vocabulary size: %d' % (corpus_size, vocab_size))
 
 # Variables for training
@@ -35,11 +35,11 @@ loss_count = 0
 ppl_list   = []
 
 # Generate a model and optimiser
-model = SimpleRNNLM(vocab_size, wordvec_size, hidden_dize)
+model     = SimpleRNNLM(vocab_size, wordvec_size, hidden_dize)
 optimiser = SGD(learning_rate)
 
 # 1. Calculate the initial position to load each sample of mini batches
-jump = (corpus_size - 1) // batch_size
+jump    = (corpus_size - 1) // batch_size
 offsets = [i * jump for i in range(batch_size)]
 for epoch in range(max_epoch):
     for iter in range(max_iters):

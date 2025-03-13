@@ -24,7 +24,7 @@ class TwoLayerNet:
         self.loss_layer = SoftMaxWithLoss()
         # Integrate all weight and gradients in each list
         self.params = []
-        self.grads = []
+        self.grads  = []
         for layer in self.layers:
             self.params += layer.params
             self.grads  += layer.grads
@@ -39,7 +39,7 @@ class TwoLayerNet:
         loss  = self.loss_layer.forward(score, t)
         return loss
 
-    def backward(self, dout=1):
+    def backward(self, dout = 1):
         dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)

@@ -6,7 +6,7 @@ class Repeat:
         self.N = N
 
     def forward(self, x):
-        return np.repeat(x, self.N, axis=0)
+        return np.repeat(x, self.N, axis = 0)
 
     def backward(self, dy):
-        return np.sum(dy, axis=0, keepdims=True)
+        return np.sum(dy, axis = 0, keepdims = True)

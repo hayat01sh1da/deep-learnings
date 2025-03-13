@@ -7,7 +7,7 @@ sys.path.append('./src')
 sys.path.append('./src/lib')
 from two_layer_net import TwoLayerNet
 
-net = TwoLayerNet(input_size=784, hidden_size=100, output_size=10)
+net = TwoLayerNet(input_size = 784, hidden_size = 100, output_size = 10)
 print(net.params['W1'].shape)
 print(net.params['b1'].shape)
 print(net.params['W2'].shape)

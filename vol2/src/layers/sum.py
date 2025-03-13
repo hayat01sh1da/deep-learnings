@@ -6,7 +6,7 @@ class Sum:
         self.N = N
 
     def forward(self, x):
-        return np.sum(x, axis=0, keepdims=True)
+        return np.sum(x, axis = 0, keepdims = True)
 
     def backward(self, dy):
-        return np.repeat(dy, self.N, axis=0)
+        return np.repeat(dy, self.N, axis = 0)

@@ -1,13 +1,13 @@
 import numpy as np
 
 class Adam:
-    def __init__(self, lr=0.001, beta1=0.9, beta2=0.999):
-        self.lr = lr
+    def __init__(self, lr = 0.001, beta1 = 0.9, beta2 = 0.999):
+        self.lr    = lr
         self.beta1 = beta1
         self.beta2 = beta2
-        self.iter = 0
-        self.m = None
-        self.v = None
+        self.iter  = 0
+        self.m     = None
+        self.v     = None
 
     def update(self, params, grads):
         if self.m is None:

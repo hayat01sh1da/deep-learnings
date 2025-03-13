@@ -10,7 +10,7 @@ from matrix import Matrix
 
 class TestVector(unittest.TestCase):
     def setUp(self):
-        self.matrix = Matrix(np.array([[1, 2, 3], [4, 5, 6]]))
+        self.matrix   = Matrix(np.array([[1, 2, 3], [4, 5, 6]]))
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
     def tearDown(self):

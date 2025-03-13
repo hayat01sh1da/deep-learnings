@@ -21,7 +21,7 @@ class TestBetterRNNLM(unittest.TestCase):
         wordvec_size      = 100
         hidden_size       = 100
         self.better_rnnlm = BetterRNNLM(vocab_size, wordvec_size, hidden_size)
-        self.xs = np.array([
+        self.xs           = np.array([
             [0, 4, 4, 1],
             [4, 0, 2, 1]
         ])

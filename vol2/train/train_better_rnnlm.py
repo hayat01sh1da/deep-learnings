@@ -22,20 +22,20 @@ dropout       = 0.5
 
 # Load trainig data
 corpus, word_to_id, id_to_word = load_data('train')
-corpus_val, *_ = load_data('val')
-corpus_test, *_ = load_data('test')
-vocab_size = len(word_to_id)
-xs = corpus[:-1]
-ts = corpus[1:]
+corpus_val, *_                 = load_data('val')
+corpus_test, *_                = load_data('test')
+vocab_size                     = len(word_to_id)
+xs                             = corpus[:-1]
+ts                             = corpus[1:]
 
 # Generate a model, optimiser and trainer
-model = BetterRNNLM(vocab_size, wordvec_size, hidden_size, dropout)
+model     = BetterRNNLM(vocab_size, wordvec_size, hidden_size, dropout)
 optimiser = SGD(learning_rate)
-trainer = RNNLMTrainer(model, optimiser)
+trainer   = RNNLMTrainer(model, optimiser)
 
 best_ppl = float('inf')
 for epoch in range(max_epoch):
-    trainer.fit(xs, ts, max_epoch=1, batch_size=batch_size, time_size=time_size, max_grad=max_grad)
+    trainer.fit(xs, ts, max_epoch=1, batch_size = batch_size, time_size = time_size, max_grad = max_grad)
     model.reset_state()
     ppl = eval_perplexity(model, corpus_val)
     print('Valid perplexity: ', ppl)
@@ -45,6 +45,6 @@ for epoch in range(max_epoch):
         model.save_params()
     else:
         learning_rate /= 4.0
-        optimiser.lr = learning_rate
+        optimiser.lr   = learning_rate
         model.reset_state()
         print('=' * 50)

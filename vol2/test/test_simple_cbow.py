@@ -50,9 +50,9 @@ class TestSimpleCBOW(unittest.TestCase):
         after_in_grads_0, = self.simple_cbow.in_layer_0.grads
         after_in_grads_1, = self.simple_cbow.in_layer_1.grads
         after_out_grads,  = self.simple_cbow.out_layer.grads
-        in_grads_0 = before_in_grads_0 == after_in_grads_0
-        in_grads_1 = before_in_grads_1 == after_in_grads_1
-        out_grads  = before_out_grads == after_out_grads
+        in_grads_0        = before_in_grads_0 == after_in_grads_0
+        in_grads_1        = before_in_grads_1 == after_in_grads_1
+        out_grads         = before_out_grads == after_out_grads
         assert_array_equal(np.array([
             [False, False, False],
             [False, False, False],

@@ -19,8 +19,8 @@ class Sequence:
         chars = list(text)
         for i, char in enumerate(chars):
             if char not in self.char_to_id:
-                tmp_id = len(self.char_to_id)
-                self.char_to_id[char] = tmp_id
+                tmp_id                  = len(self.char_to_id)
+                self.char_to_id[char]   = tmp_id
                 self.id_to_char[tmp_id] = char
 
     def _create_vocab_dict(self, questions, answers):
@@ -50,14 +50,14 @@ class Sequence:
         if not path.exists(file_path):
             print('No file: %s' % file_path)
             return None
-        questions = []
-        answers = []
+        questions          = []
+        answers            = []
         questions, answers = self._text_to_dict(file_path, questions, answers)
         self._create_vocab_dict(questions, answers)
         x, t = self._create_numpy_array(questions, answers)
         x, t = self._shuffle_data(x, t, seed)
         # 10% for validation set
-        split_at = len(x) - len(x) // 10
+        split_at          = len(x) - len(x) // 10
         (x_train, x_test) = x[:split_at], x[split_at:]
         (t_train, t_test) = t[:split_at], t[split_at:]
         return (x_train, t_train), (x_test, t_test)

@@ -4,12 +4,12 @@ def eval_seq2seq(model, question, correct, id_to_char, verbose=False, is_reverse
     correct = correct.flatten()
     # Head devider
     start_id = correct[0]
-    correct = correct[1:]
-    guess = model.generate(question, start_id, len(correct))
+    correct  = correct[1:]
+    guess    = model.generate(question, start_id, len(correct))
     # Converrt to string
     question = ''.join([id_to_char[int(c)] for c in question.flatten()])
-    correct = ''.join([id_to_char[int(c)] for c in correct])
-    guess = ''.join([id_to_char[int(c)] for c in guess])
+    correct  = ''.join([id_to_char[int(c)] for c in correct])
+    guess    = ''.join([id_to_char[int(c)] for c in guess])
     if verbose:
         if is_reverse:
             question = question[::-1]

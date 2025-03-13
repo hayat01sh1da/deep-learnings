@@ -7,8 +7,8 @@ class SimpleWord2Vec:
     def __init__(self):
         pass
 
-    def create_contexts_target(self, corpus, window_size=1):
-        target = corpus[window_size:-window_size]
+    def create_contexts_target(self, corpus, window_size = 1):
+        target   = corpus[window_size:-window_size]
         contexts = []
         for index in range(window_size, len(corpus) - window_size):
             cs = []
@@ -26,7 +26,7 @@ class SimpleWord2Vec:
             for index, word_id in enumerate(corpus):
                 one_hot[index, word_id] = 1
         elif corpus.ndim == 2:
-            C = corpus.shape[1]
+            C       = corpus.shape[1]
             one_hot = np.zeros((N, C, vocab_size), dtype=np.int32)
             for index_0, word_ids in enumerate(corpus):
                 for index_1, word_id in enumerate(word_ids):

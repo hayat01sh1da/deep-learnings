@@ -19,14 +19,14 @@ batch_size  = 100
 
 # Load data
 corpus, word_to_id, id_to_word = load_data('train')
-vocab_size = len(word_to_id)
-simple_word2vec = SimpleWord2Vec()
-contexts, target = simple_word2vec.create_contexts_target(corpus, window_size)
+vocab_size                     = len(word_to_id)
+simple_word2vec                = SimpleWord2Vec()
+contexts, target               = simple_word2vec.create_contexts_target(corpus, window_size)
 
 # Generate a model, trainer and trainer
-model = CBOW(vocab_size, hidden_size, window_size, corpus)
+model     = CBOW(vocab_size, hidden_size, window_size, corpus)
 optimiser = Adam()
-trainer = Trainer(model, optimiser)
+trainer   = Trainer(model, optimiser)
 
 # Initialize training
 trainer.fit(contexts, target, batch_size)
@@ -36,10 +36,10 @@ trainer.save_plot_image(file_path)
 # Store data to later use
 word_vecs = model.word_vecs
 
-params = {}
+params               = {}
 params['word_vecs']  = word_vecs.astype(np.float16)
 params['word_to_id'] = word_to_id
 params['id_to_word'] = id_to_word
-pkl_file = '../evaluate/cbow_params.pkl'
+pkl_file             = '../evaluate/cbow_params.pkl'
 with open(pkl_file, 'wb') as f:
     pickle.dump(params, f, -1)

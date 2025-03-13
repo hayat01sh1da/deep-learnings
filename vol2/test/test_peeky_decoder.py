@@ -29,14 +29,14 @@ class TestPeekyDecoder(unittest.TestCase):
 
     def test_backward(self):
         dscore = self.peeky_decoder.forward(self.xs, self.h)
-        dh = self.peeky_decoder.backward(dscore)
+        dh     = self.peeky_decoder.backward(dscore)
         self.assertEqual((13, 128), dh.shape)
 
     def test_generate(self):
-        h = np.random.randn(1, 128)
-        start_id = 0
+        h           = np.random.randn(1, 128)
+        start_id    = 0
         sample_size = 10
-        sampled = self.peeky_decoder.generate(h, start_id, sample_size)
+        sampled     = self.peeky_decoder.generate(h, start_id, sample_size)
         self.assertEqual(10, len(sampled))
 
 if __name__ == '__main__':

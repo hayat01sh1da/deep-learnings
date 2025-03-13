@@ -22,7 +22,7 @@ class SimpleRNNLM:
         # Generate layers
         self.layers = [
             TimeEmbedding(embed_W),
-            TimeRNN(rnn_Wx, rnn_Wh, rnn_b, stateful=True),
+            TimeRNN(rnn_Wx, rnn_Wh, rnn_b, stateful = True),
             TimeAffine(affine_W, affine_b)
         ]
         self.loss_layer = TimeSoftmaxWithLoss()
@@ -41,10 +41,10 @@ class SimpleRNNLM:
 
     def forward(self, xs, ts):
         score = self._predict(xs)
-        loss = self.loss_layer.forward(score, ts)
+        loss  = self.loss_layer.forward(score, ts)
         return loss
 
-    def backward(self, dout=1):
+    def backward(self, dout = 1):
         dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)

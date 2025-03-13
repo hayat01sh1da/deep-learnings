@@ -22,8 +22,8 @@ def relu_grad(x):
 
 def softmax(x):
     # Prevent overflow
-    x = x - np.max(x, axis=-1, keepdims=True)
-    return np.exp(x) / np.sum(np.exp(x), axis=-1, keepdims=True)
+    x = x - np.max(x, axis = -1, keepdims = True)
+    return np.exp(x) / np.sum(np.exp(x), axis = -1, keepdims = True)
 
 def sum_squared_error(y, t):
     return 0.5 * np.sum((y-t)**2)
@@ -34,6 +34,6 @@ def cross_entropy_error(y, t):
         y = y.reshape(1, y.size)
     # Convert into index of labels if leaning data is one-hot vector
     if t.size == y.size:
-        t = t.argmax(axis=1)
+        t = t.argmax(axis = 1)
     batch_size = y.shape[0]
     return -np.sum(np.log(y[np.arange(batch_size), t] + 1e-7)) / batch_size

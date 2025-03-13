@@ -58,7 +58,7 @@ class TestNegativeSamplingLoss(unittest.TestCase):
             [14. , 15.7, 17.3],
             [12. , 13.7, 15.3],
             [17. , 18.7, 20.3]
-        ]), np.round(dh, decimals=1))
+        ]), np.round(dh, decimals = 1))
 
 if __name__ == '__main__':
     unittest.main()

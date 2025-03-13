@@ -37,7 +37,7 @@ trainer   = Trainer(model, optimiser)
 
 acc_list = []
 for epoch in range(max_epoch):
-    trainer.fit(x_train, t_train, max_epoch=1, batch_size=batch_size, max_grad=max_grad)
+    trainer.fit(x_train, t_train, max_epoch=1, batch_size = batch_size, max_grad = max_grad)
     correct_num = 0
     for i in range(len(x_test)):
         question = x_test[[i]]

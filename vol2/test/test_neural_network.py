@@ -29,7 +29,7 @@ class TestNeuralNetwork(unittest.TestCase):
         self.assertEqual((10, 4), h.shape)
 
     def test_get_output_layer(self):
-        h = self.neural_network_1.get_hidden_layer()
+        h  = self.neural_network_1.get_hidden_layer()
         dx = self.neural_network_2.get_output_layer(h)
         self.assertEqual((10, 3), dx.shape)
 

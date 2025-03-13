@@ -25,7 +25,7 @@ class TestSigmoid(unittest.TestCase):
     def test_backward(self):
         self.sigmoid.forward(self.x)
         dout = np.random.randn(10, 4)
-        dx = self.sigmoid.backward(dout)
+        dx   = self.sigmoid.backward(dout)
         self.assertEqual((10, 4), dx.shape)
 
 if __name__ == '__main__':

@@ -2,9 +2,9 @@ import numpy as np
 
 class Momentum:
     def __init__(self, learning_rate=0.01, momentum=0.9):
-        self.lr = learning_rate
+        self.lr       = learning_rate
         self.momentum = momentum
-        self.v = None
+        self.v        = None
 
     def update(self, params, grads):
         if self.v is None:

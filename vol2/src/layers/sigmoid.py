@@ -7,7 +7,7 @@ class Sigmoid:
         self.out    = None
 
     def forward(self, x):
-        out = 1 / (1 + np.exp(-x))
+        out      = 1 / (1 + np.exp(-x))
         self.out = out
         return out
 
