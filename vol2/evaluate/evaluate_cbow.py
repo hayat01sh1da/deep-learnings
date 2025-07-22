@@ -17,7 +17,7 @@ queries    = ['you', 'year', 'car', 'toyota']
 for query in queries:
     rankings = cbm.rank_similarities(query, word_to_id, word_vecs, vocab_size, id_to_word, top=5)
     for key, value in rankings.items():
-        print('{}: {}'.format(key, value))
+        print(f'{key}: {value}')
 
 # query: you
 # we: 0.6103515625

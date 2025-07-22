@@ -15,7 +15,7 @@ class NeuralNetwork:
         plt.plot(x, y)
         plt.ylim(-0.1, 1.1)
         plt.tight_layout()
-        plt.savefig('../img/{}.png'.format(func_name))
+        plt.savefig(f'../img/{func_name}.png')
 
     def _sigmoid(self, x):
         y = 1 / (1 + np.exp(-x))
@@ -82,4 +82,4 @@ class NeuralNetwork:
             y_batch         = self._predict(network, x_batch)
             p               = np.argmax(y_batch, axis = 1)
             accuracy_count += np.sum(p == t[i:i+batch_size])
-        return '{}%'.format(((float(accuracy_count) / len(x)) * 100))
+        return f'{((float(accuracy_count) / len(x)) * 100)}%'

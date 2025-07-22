@@ -14,18 +14,18 @@ class BaseModel:
 
     def save_params(self, file_path=None):
         if file_path is None:
-            file_path = '../../pkl/{}.pkl'.format(self.__class__.__name__).lower()
+            file_path = f'../../pkl/{self.__class__.__name__.lower()}.pkl'
         params = [p.astype(np.float16) for p in self.params]
         with open(file_path, 'wb') as f:
             pickle.dump(params, f)
 
     def load_params(self, file_path=None):
         if file_path is None:
-            file_path = '../../pkl/{}.pkl'.format(self.__class__.__name__).lower()
+            file_path = f'../../pkl/{self.__class__.__name__.lower()}.pkl'
         if '/' in file_path:
             file_path = file_path.replace('/', os.sep)
         if not os.path.exists(file_path):
-            raise IOError('No file: {}'.format(file_path))
+            raise IOError(f'No file: {file_path}')
         with open(file_path, 'rb') as f:
             params = pickle.load(f)
         params = [p.astype('f') for p in params]

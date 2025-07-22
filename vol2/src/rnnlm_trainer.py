@@ -94,6 +94,6 @@ class RNNLMTrainer:
         if ylim is not None:
             plt.ylim(*ylim)
         plt.plot(x, self.ppl_list, label='train')
-        plt.xlabel('Iterations (x{})'.format(str(self.eval_interval)))
+        plt.xlabel(f'Iterations (x{str(self.eval_interval)})')
         plt.ylabel('Perplexity')
         plt.savefig(file_path)

@@ -18,10 +18,10 @@ vocab_file  = 'ptb.vocab.pkl'
 dataset_dir = os.path.dirname(os.path.abspath(__file__))
 
 def _download(file_name):
-    file_path = '{}/{}'.format(dataset_dir, file_name)
+    file_path = f'{dataset_dir}/{file_name}'
     if os.path.exists(file_path):
         return
-    print('Downloading {} ...'.format(file_name))
+    print(f'Downloading {file_name} ...')
     try:
         urllib.request.urlretrieve(url_base + file_name, file_path)
     except urllib.error.URLError:
@@ -31,7 +31,7 @@ def _download(file_name):
     print('Done')
 
 def load_vocab():
-    vocab_path = '{}/{}'.format(dataset_dir, vocab_file)
+    vocab_path = f'{dataset_dir}/{vocab_file}'
     if os.path.exists(vocab_path):
         with open(vocab_path, 'rb') as f:
             word_to_id, id_to_word = pickle.load(f)
@@ -40,7 +40,7 @@ def load_vocab():
     id_to_word = {}
     data_type  = 'train'
     file_name  = key_file[data_type]
-    file_path  = '{}/{}'.format(dataset_dir, file_name)
+    file_path  = f'{dataset_dir}/{file_name}'
     _download(file_name)
     words = open(file_path).read().replace('\n', '<eos>').strip().split()
     for i, word in enumerate(words):
@@ -58,13 +58,13 @@ def load_data(data_type='train'):
         :return:
     '''
     if data_type == 'val': data_type = 'valid'
-    save_path              = '{}/{}'.format(dataset_dir, save_file[data_type])
+    save_path              = f'{dataset_dir}/{save_file[data_type]}'
     word_to_id, id_to_word = load_vocab()
     if os.path.exists(save_path):
         corpus = np.load(save_path)
         return corpus, word_to_id, id_to_word
     file_name = key_file[data_type]
-    file_path = '{}/{}'.format(dataset_dir, file_name)
+    file_path = f'{dataset_dir}/{file_name}'
     _download(file_name)
     words  = open(file_path).read().replace('\n', '<eos>').strip().split()
     corpus = np.array([word_to_id[w] for w in words])

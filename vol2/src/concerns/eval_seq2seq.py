@@ -21,11 +21,11 @@ def eval_seq2seq(model, question, correct, id_to_char, verbose=False, is_reverse
             mark = colors['ok'] + '☑' + colors['close']
             if is_windows:
                 mark = 'O'
-            print('{} {}'.format(mark, guess))
+            print(f'{mark} {guess}')
         else:
             mark = colors['fail'] + '☒' + colors['close']
             if is_windows:
                 mark = 'X'
-            print('{} {}'.format(mark, guess))
+            print(f'{mark} {guess}')
         print('---')
     return 1 if guess == correct else 0

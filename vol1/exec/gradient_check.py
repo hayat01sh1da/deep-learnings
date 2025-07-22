@@ -23,7 +23,7 @@ grad_backprop  = net.gradient(x_batch, t_batch)
 # Calculate absolute diff of each weight
 for key in grad_numerical.keys():
     diff = np.average(np.abs(grad_backprop[key] - grad_numerical[key]))
-    print('{}: {}'.format(key, str(diff)))
+    print(f'{key}: {str(diff)}')
 
 pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 for pycache in pycaches:

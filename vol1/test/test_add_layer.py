@@ -44,7 +44,7 @@ class TestAddLayer(unittest.TestCase):
         dapple, dapple_num          = self.apple_layer.backward(dapple_price)
         self.assertEqual(2.2, dapple)
         self.assertEqual(110, int(dapple_num))
-        self.assertEqual(3.3, float('{:.1f}'.format(dorange)))
+        self.assertEqual(3.3, float(f'{dorange:.1f}'))
         self.assertEqual(165, int(dorange_num))
         self.assertEqual(650, dtax)
 

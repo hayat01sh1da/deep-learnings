@@ -47,7 +47,7 @@ for i in range(iters_num):
         test_acc  = net.accuracy(x_test, t_test)
         train_acc_list.append(train_acc)
         test_acc_list.append(test_acc)
-        print('train acc, test acc | {}, {}'.format(str(train_acc), str(test_acc)))
+        print(f'train acc, test acc | {str(train_acc)}, {str(test_acc)}')
 
 plt.figure()
 markers = {'train': 'o', 'test': 's'}
@@ -58,7 +58,7 @@ plt.xlabel('epochs')
 plt.ylabel('accuracy')
 plt.ylim(0, 1.0)
 plt.legend(loc='lower right')
-plt.savefig('../img/{}.png'.format('train_neural_network'))
+plt.savefig(f'../img/{"train_neural_network"}.png')
 
 pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 for pycache in pycaches:

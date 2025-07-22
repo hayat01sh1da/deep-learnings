@@ -94,6 +94,6 @@ class Trainer:
         if ylim is not None:
             plt.ylim(*ylim)
         plt.plot(x, self.loss_list, label='train')
-        plt.xlabel('iterations (x{})'.format(str(eval_interval)))
+        plt.xlabel(f'iterations (x{str(eval_interval)})')
         plt.ylabel('loss')
         plt.savefig(file_path)
