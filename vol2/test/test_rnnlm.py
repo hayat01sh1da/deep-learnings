@@ -59,7 +59,7 @@ class TestRNNLM(unittest.TestCase):
         self.rnnlm.forward(self.xs, self.ts)
         self.rnnlm.backward()
         self.rnnlm.save_params()
-        self.assertEqual(True, os.path.exists('../pkl/rnnlm.pkl'))
+        self.assertTrue(os.path.exists('../pkl/rnnlm.pkl'))
 
     def test_load_params(self):
         self.rnnlm.load_params()

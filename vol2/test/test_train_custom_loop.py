@@ -57,13 +57,13 @@ class TestTrainer(unittest.TestCase):
         self.train_custom_loop.update(self.x, self.t, self.max_epoch, self.batch_size)
         file_path = '../img/train_custom_loop_plot.png'
         self.train_custom_loop.save_plot_image(file_path)
-        self.assertEqual(True, os.path.exists(file_path))
+        self.assertTrue(os.path.exists(file_path))
 
     def test_save_dicision_boundary_image(self):
         self.train_custom_loop.update(self.x, self.t, self.max_epoch, self.batch_size)
         file_path = '../img/dicision_boundary.png'
         self.train_custom_loop.save_dicision_boundary_image(self.x, self.t, file_path)
-        self.assertEqual(True, os.path.exists(file_path))
+        self.assertTrue(os.path.exists(file_path))
 
 if __name__ == '__main__':
     unittest.main()

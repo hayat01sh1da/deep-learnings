@@ -27,7 +27,7 @@ class TestSeq2Seq(unittest.TestCase):
 
     def test_forward(self):
         loss = self.seq2seq.forward(self.xs, self.ts)
-        self.assertEqual(True, 2.55 < round(loss, 2) < 2.58)
+        self.assertTrue(2.55 < round(loss, 2) < 2.58)
 
     def test_backward(self):
         self.seq2seq.forward(self.xs, self.ts)

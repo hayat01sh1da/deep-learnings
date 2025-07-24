@@ -47,7 +47,7 @@ class TestNeuralNetwork(unittest.TestCase):
                 0.98901306, 0.9900482 , 0.9909867 , 0.99183743, 0.99260846
             ]
         ), y)
-        # self.assertEqual(True, os.path.exists('../img/sigmoid.png'))
+        # self.assertTrue(os.path.exists('../img/sigmoid.png'))
 
     def test_softmax(self):
         y = self.nnw._softmax(np.array([0.3, 2.9, 4.0]))
@@ -78,7 +78,7 @@ class TestNeuralNetwork(unittest.TestCase):
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
             ]
         ), y)
-        # self.assertEqual(True, os.path.exists('../img/step_func.png'))
+        # self.assertTrue(os.path.exists('../img/step_func.png'))
 
     def test_relu(self):
         x = np.arange(-5.0, 5.0, 0.1)
@@ -95,7 +95,7 @@ class TestNeuralNetwork(unittest.TestCase):
                 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9
             ]
         ), y)
-        # self.assertEqual(True, os.path.exists('../img/relu.png'))
+        # self.assertTrue(os.path.exists('../img/relu.png'))
 
     def test_matrix_product_1(self):
         a       = np.array([[1, 2], [3, 4]])

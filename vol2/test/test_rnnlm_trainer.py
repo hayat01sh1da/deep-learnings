@@ -72,7 +72,7 @@ class TestRNNLMTrainer(unittest.TestCase):
         self.rnnlm_trainer.fit(self.xs, self.ts, self.max_epoch, self.batch_size, self.time_size)
         file_path = '../img/rnnlm_trainer.png'
         self.rnnlm_trainer.save_plot_image(file_path)
-        self.assertEqual(True, os.path.exists(file_path))
+        self.assertTrue(os.path.exists(file_path))
 
 if __name__ == '__main__':
     unittest.main()

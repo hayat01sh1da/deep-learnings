@@ -151,7 +151,7 @@ class TestCountBasedMethod(unittest.TestCase):
         U         = self.cbm.singular_value_deconposition(M)
         file_path = '../img/svd_plot.png'
         self.cbm.save_svd_plot_image(self.word_to_id, U, file_path)
-        self.assertEqual(True, os.path.exists(file_path))
+        self.assertTrue(os.path.exists(file_path))
 
 if __name__ == '__main__':
     unittest.main()

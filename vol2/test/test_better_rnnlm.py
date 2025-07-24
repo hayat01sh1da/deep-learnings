@@ -61,7 +61,7 @@ class TestBetterRNNLM(unittest.TestCase):
     #     self.better_rnnlm.forward(self.xs, self.ts)
     #     self.better_rnnlm.backward()
     #     self.better_rnnlm.save_params(self.file_path)
-    #     self.assertEqual(True, os.path.exists(self.file_path))
+    #     self.assertTrue(os.path.exists(self.file_path))
     #
     # def test_load_params(self):
     #     self.better_rnnlm.load_params(self.file_path)

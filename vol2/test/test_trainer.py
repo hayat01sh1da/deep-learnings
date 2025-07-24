@@ -110,7 +110,7 @@ class TestTrainer(unittest.TestCase):
         self.trainer.fit(self.x, self.t, max_epoch=300, batch_size = 30)
         file_path = '../img/training_plot.png'
         self.trainer.save_plot_image(file_path)
-        self.assertEqual(True, os.path.exists(file_path))
+        self.assertTrue(os.path.exists(file_path))
 
 if __name__ == '__main__':
     unittest.main()

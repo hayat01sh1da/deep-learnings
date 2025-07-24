@@ -27,7 +27,7 @@ class TestSpiralDataset(unittest.TestCase):
     def test_save_plot_image(self):
         file_path = '../img/spiral_plot.png'
         self.spiral_dataset.save_plot_image(file_path)
-        self.assertEqual(True, os.path.exists(file_path))
+        self.assertTrue(os.path.exists(file_path))
 
 if __name__ == '__main__':
     unittest.main()

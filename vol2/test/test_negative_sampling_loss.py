@@ -49,7 +49,7 @@ class TestNegativeSamplingLoss(unittest.TestCase):
 
     def test_forward(self):
         loss = self.nsl.forward(self.h, self.target)
-        self.assertEqual(True, 65 <= loss < 75)
+        self.assertTrue(65 <= loss < 75)
 
     def test_backward(self):
         self.nsl.forward(self.h, self.target)

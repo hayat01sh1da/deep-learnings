@@ -31,7 +31,7 @@ class TestRNNLMGen(unittest.TestCase):
     def test_generate_text(self):
         word_ids = self.rnnlm_gen.word_ids_list(self.start_id, self.skip_ids)
         text     = self.rnnlm_gen.generate_text(self.id_to_word, word_ids)
-        self.assertEqual(True, 750 < len(text) < 870)
+        self.assertTrue(750 < len(text) < 870)
 
 if __name__ == '__main__':
     unittest.main()
