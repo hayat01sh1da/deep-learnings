@@ -1,9 +1,6 @@
 # Python
 **/__pycache__/
 
-# Vol.1
-vol1/dataset/*
-
 # Vol.2
 vol2/exec/cbow_params.pkl
 vol2/lib/concerns/ptb.train.npy
