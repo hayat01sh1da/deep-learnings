@@ -30,7 +30,7 @@ class TestSimpleWord2Vec(unittest.TestCase):
         assert_array_equal(np.array([0, 1, 2, 3, 4, 1, 5, 6]), self.corpus)
 
     def test_create_contexts_target(self):
-        self.assertEqual((6, 2), self.contexts_array.shape)
+        self.assertEqual(self.contexts_array.shape, (6, 2))
         assert_array_equal(np.array([
             [0, 2],
             [1, 3],
@@ -39,12 +39,12 @@ class TestSimpleWord2Vec(unittest.TestCase):
             [4, 5],
             [1, 6]
         ]), self.contexts_array)
-        self.assertEqual((6,), self.target_array.shape)
+        self.assertEqual(self.target_array.shape, (6,))
         assert_array_equal(np.array([1, 2, 3, 4, 1, 5]), self.target_array)
 
     def test_convert_to_one_hot(self):
         contexts = self.simple_word2vec.convert_to_one_hot(self.contexts_array, self.vocab_size)
-        self.assertEqual((6, 2, 7), contexts.shape)
+        self.assertEqual(contexts.shape, (6, 2, 7))
         assert_array_equal(np.array([
             [
                 [1, 0, 0, 0, 0, 0, 0],
@@ -72,7 +72,7 @@ class TestSimpleWord2Vec(unittest.TestCase):
             ]
         ]), contexts)
         target = self.simple_word2vec.convert_to_one_hot(self.target_array, self.vocab_size)
-        self.assertEqual((6, 7), target.shape)
+        self.assertEqual(target.shape, (6, 7))
         assert_array_equal(np.array([
             [0, 1, 0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0, 0, 0],

@@ -20,13 +20,13 @@ class TestSigmoid(unittest.TestCase):
 
     def test_forward(self):
         out = self.sigmoid.forward(self.x)
-        self.assertEqual((10, 4), out.shape)
+        self.assertEqual(out.shape, (10, 4))
 
     def test_backward(self):
         self.sigmoid.forward(self.x)
         dout = np.random.randn(10, 4)
         dx   = self.sigmoid.backward(dout)
-        self.assertEqual((10, 4), dx.shape)
+        self.assertEqual(dx.shape, (10, 4))
 
 if __name__ == '__main__':
     unittest.main()

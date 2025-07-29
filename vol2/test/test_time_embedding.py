@@ -34,7 +34,7 @@ class TestTimeEmbedding(unittest.TestCase):
 
     def test_forward(self):
         out = self.time_embedding.forward(self.xs)
-        self.assertEqual((2, 4, 3), out.shape)
+        self.assertEqual(out.shape, (2, 4, 3))
 
     def test_grads_diff(self):
         _grads,      = self.time_embedding.grads

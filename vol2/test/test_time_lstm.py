@@ -113,8 +113,8 @@ class TestTimeLSTM(unittest.TestCase):
         self.time_lstm.set_state(h)
         assert_array_equal(h, self.time_lstm.h)
         self.time_lstm.reset_state()
-        self.assertEqual(None, self.time_lstm.h)
-        self.assertEqual(None, self.time_lstm.c)
+        self.assertEqual(self.time_lstm.h, None)
+        self.assertEqual(self.time_lstm.c, None)
 
     def test_forward(self):
         hs = self.time_lstm.forward(self.xs)

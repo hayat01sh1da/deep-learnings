@@ -26,12 +26,12 @@ class TestNeuralNetwork(unittest.TestCase):
 
     def test_get_hidden_layer_dim(self):
         h = self.neural_network_1.get_hidden_layer()
-        self.assertEqual((10, 4), h.shape)
+        self.assertEqual(h.shape, (10, 4))
 
     def test_get_output_layer(self):
         h  = self.neural_network_1.get_hidden_layer()
         dx = self.neural_network_2.get_output_layer(h)
-        self.assertEqual((10, 3), dx.shape)
+        self.assertEqual(dx.shape, (10, 3))
 
 if __name__ == '__main__':
     unittest.main()

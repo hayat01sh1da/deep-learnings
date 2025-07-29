@@ -66,7 +66,7 @@ class TestRNNLMTrainer(unittest.TestCase):
 
     def test_fit(self):
         training_process = self.rnnlm_trainer.fit(self.xs, self.ts, self.max_epoch, self.batch_size, self.time_size)
-        self.assertEqual(100, len(training_process))
+        self.assertEqual(len(training_process), 100)
 
     def test_save_plot_image(self):
         self.rnnlm_trainer.fit(self.xs, self.ts, self.max_epoch, self.batch_size, self.time_size)

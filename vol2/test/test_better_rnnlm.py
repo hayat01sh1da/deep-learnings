@@ -39,23 +39,23 @@ class TestBetterRNNLM(unittest.TestCase):
 
     def test_predict(self):
         score = self.better_rnnlm._predict(self.xs)
-        self.assertEqual((2, 4, 7), score.shape)
+        self.assertEqual(score.shape, (2, 4, 7))
 
     def test_forward(self):
         loss = self.better_rnnlm.forward(self.xs, self.ts)
-        self.assertEqual(1.95, round(loss, 2))
+        self.assertEqual(round(loss, 2), 1.95)
 
     def test_backward(self):
         self.better_rnnlm.forward(self.xs, self.ts)
         dout = self.better_rnnlm.backward()
-        self.assertEqual(None, dout)
+        self.assertEqual(dout, None)
 
     def test_reset_state(self):
         self.better_rnnlm.forward(self.xs, self.ts)
         self.better_rnnlm.backward()
-        self.assertEqual((2, 100), self.better_rnnlm.lstm_layers[0].h.shape)
+        self.assertEqual(self.better_rnnlm.lstm_layers[0].h.shape, (2, 100))
         self.better_rnnlm.reset_state()
-        self.assertEqual(None, self.better_rnnlm.lstm_layers[0].h)
+        self.assertEqual(self.better_rnnlm.lstm_layers[0].h, None)
 
     # def test_save_params(self):
     #     self.better_rnnlm.forward(self.xs, self.ts)
@@ -66,15 +66,15 @@ class TestBetterRNNLM(unittest.TestCase):
     # def test_load_params(self):
     #     self.better_rnnlm.load_params(self.file_path)
     #     a, b, c, d, e, f, g, h, i = self.better_rnnlm.params
-    #     self.assertEqual((7, 100), a.shape)
-    #     self.assertEqual((100, 400), b.shape)
-    #     self.assertEqual((100, 400), c.shape)
-    #     self.assertEqual((400,), d.shape)
-    #     self.assertEqual((100, 400), e.shape)
-    #     self.assertEqual((100, 400), f.shape)
-    #     self.assertEqual((400,), g.shape)
-    #     self.assertEqual((100, 7), h.shape)
-    #     self.assertEqual((7,), i.shape)
+    #     self.assertEqual(a.shape, (7, 100))
+    #     self.assertEqual(b.shape, (100, 400))
+    #     self.assertEqual(c.shape, (100, 400))
+    #     self.assertEqual(d.shape, (400,))
+    #     self.assertEqual(e.shape, (100, 400))
+    #     self.assertEqual(f.shape, (100, 400))
+    #     self.assertEqual(g.shape, (400,))
+    #     self.assertEqual(h.shape, (100, 7))
+    #     self.assertEqual(i.shape, (7,))
 
 if __name__ == '__main__':
     unittest.main()

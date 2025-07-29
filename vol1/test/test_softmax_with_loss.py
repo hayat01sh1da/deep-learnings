@@ -23,7 +23,7 @@ class TestSoftmaxWithLoss(unittest.TestCase):
         x    = np.array([0.3, 0.6, 0.9])
         t    = np.array([0, 0, 1])
         loss = self.swl.forward(x, t)
-        self.assertEqual(0.8283899409431649, loss)
+        self.assertEqual(loss, 0.8283899409431649)
 
     def test_backward(self):
         x = np.array([0.3, 0.6, 0.9])

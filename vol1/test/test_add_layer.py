@@ -30,7 +30,7 @@ class TestAddLayer(unittest.TestCase):
         orange_price       = self.orange_layer.forward(self.orange, self.orange_num)
         apple_orange_price = self.apple_orange_layer.forward(apple_price, orange_price)
         price              = self.tax_layer.forward(apple_orange_price, self.tax)
-        self.assertEqual(715, int(price))
+        self.assertEqual(int(price), 715)
 
     def test_backward(self):
         apple_price        = self.apple_layer.forward(self.apple, self.apple_num)
@@ -42,11 +42,11 @@ class TestAddLayer(unittest.TestCase):
         dapple_price, dorange_price = self.apple_orange_layer.backward(dall_price)
         dorange, dorange_num        = self.orange_layer.backward(dorange_price)
         dapple, dapple_num          = self.apple_layer.backward(dapple_price)
-        self.assertEqual(2.2, dapple)
-        self.assertEqual(110, int(dapple_num))
-        self.assertEqual(3.3, float(f'{dorange:.1f}'))
-        self.assertEqual(165, int(dorange_num))
-        self.assertEqual(650, dtax)
+        self.assertEqual(dapple, 2.2)
+        self.assertEqual(int(dapple_num), 110)
+        self.assertEqual(float(f'{dorange:.1f}'), 3.3)
+        self.assertEqual(int(dorange_num), 165)
+        self.assertEqual(dtax, 650)
 
 if __name__ == '__main__':
     unittest.main()

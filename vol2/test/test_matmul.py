@@ -21,12 +21,12 @@ class TestMatMul(unittest.TestCase):
 
     def test_forward(self):
         out = self.matmul.forward(self.x)
-        self.assertEqual((2, 2), out.shape)
+        self.assertEqual(out.shape, (2, 2))
 
     def test_backward(self):
         dout = self.matmul.forward(self.x)
         dx   = self.matmul.backward(dout)
-        self.assertEqual((2, 4), dx.shape)
+        self.assertEqual(dx.shape, (2, 4))
 
 if __name__ == '__main__':
     unittest.main()

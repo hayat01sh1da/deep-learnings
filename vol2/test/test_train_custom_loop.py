@@ -31,12 +31,12 @@ class TestTrainer(unittest.TestCase):
 
     def test_shuffle_data(self):
         xx, tt = self.train_custom_loop._shuffle_data(self.x, self.t)
-        self.assertEqual((300, 2), xx.shape)
-        self.assertEqual((300, 3), tt.shape)
+        self.assertEqual(xx.shape, (300, 2))
+        self.assertEqual(tt.shape, (300, 3))
 
     def test_update_params_with_grads(self):
         loss = self.train_custom_loop._update_params_with_grads(self.batch_x, self.batch_t, self.total_loss, self.loss_count)
-        self.assertEqual(1.1074495352433567, loss)
+        self.assertEqual(loss, 1.1074495352433567)
 
     def test_learning_process(self):
         loss             = self.train_custom_loop._update_params_with_grads(self.batch_x, self.batch_t, self.total_loss, self.loss_count)
@@ -47,11 +47,11 @@ class TestTrainer(unittest.TestCase):
         data_size        = len(self.x)
         max_iters        = data_size // self.batch_size
         *_, process      = self.train_custom_loop._learning_process(self.total_loss, self.loss_count, epoch, iters, max_iters)
-        self.assertEqual('| epoch 10 | iter 10 / 10 | loss 1.07', process)
+        self.assertEqual(process, '| epoch 10 | iter 10 / 10 | loss 1.07')
 
     def test_update(self):
         loss_list = self.train_custom_loop.update(self.x, self.t, self.max_epoch, self.batch_size)
-        self.assertEqual(300, len(loss_list))
+        self.assertEqual(len(loss_list), 300)
 
     def test_save_plot_image(self):
         self.train_custom_loop.update(self.x, self.t, self.max_epoch, self.batch_size)

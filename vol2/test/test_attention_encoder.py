@@ -24,12 +24,12 @@ class TestAttentionEncoder(unittest.TestCase):
 
     def test_forward(self):
         hs = self.attention_encoder.forward(self.xs)
-        self.assertEqual((7, 3, 100), hs.shape)
+        self.assertEqual(hs.shape, (7, 3, 100))
 
     def test_backward(self):
         dhs  = self.attention_encoder.forward(self.xs)
         dout = self.attention_encoder.backward(dhs)
-        self.assertEqual(None, dout)
+        self.assertEqual(dout, None)
 
 if __name__ == '__main__':
     unittest.main()

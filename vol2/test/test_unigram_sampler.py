@@ -30,7 +30,7 @@ class TestUnigramSampler(unittest.TestCase):
     def test_get_negative_sample(self):
         target          = np.array([1, 3, 0])
         negative_sample = self.unigram_sampler.get_negative_sample(target)
-        self.assertEqual((3, 2), negative_sample.shape)
+        self.assertEqual(negative_sample.shape, (3, 2))
 
 if __name__ == '__main__':
     unittest.main()

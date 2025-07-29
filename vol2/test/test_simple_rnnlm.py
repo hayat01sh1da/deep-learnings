@@ -37,7 +37,7 @@ class TestSimpleRNNLM(unittest.TestCase):
 
     def test_predict(self):
         score = self.simple_rnnlm._predict(self.xs)
-        self.assertEqual((2, 4, 7), score.shape)
+        self.assertEqual(score.shape, (2, 4, 7))
 
     def test_forward(self):
         loss = self.simple_rnnlm.forward(self.xs, self.ts)
@@ -46,14 +46,14 @@ class TestSimpleRNNLM(unittest.TestCase):
     def test_backward(self):
         self.simple_rnnlm.forward(self.xs, self.ts)
         dout = self.simple_rnnlm.backward()
-        self.assertEqual(None, dout)
+        self.assertEqual(dout, None)
 
     def test_reset_state(self):
         self.simple_rnnlm.forward(self.xs, self.ts)
         self.simple_rnnlm.backward()
-        self.assertEqual((2, 100), self.simple_rnnlm.rnn_layer.h.shape)
+        self.assertEqual(self.simple_rnnlm.rnn_layer.h.shape, (2, 100))
         self.simple_rnnlm.reset_state()
-        self.assertEqual(None, self.simple_rnnlm.rnn_layer.h)
+        self.assertEqual(self.simple_rnnlm.rnn_layer.h, None)
 
 if __name__ == '__main__':
     unittest.main()

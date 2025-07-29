@@ -27,13 +27,13 @@ class TestTemplate(unittest.TestCase):
         a        = square_1(x)
         b        = self.exp(a)
         y        = square_2(b)
-        self.assertEqual(0.25, a.data)
-        self.assertEqual(1.2840254166877414, b.data)
-        self.assertEqual(1.648721270700128, y.data)
+        self.assertEqual(a.data, 0.25)
+        self.assertEqual(b.data, 1.2840254166877414)
+        self.assertEqual(y.data, 1.648721270700128)
 
     def test_forward(self):
         y = self.exp.forward(self.input)
-        self.assertEqual(1.6487212707001282, y)
+        self.assertEqual(y, 1.6487212707001282)
 
 if __name__ == '__main__':
     unittest.main()

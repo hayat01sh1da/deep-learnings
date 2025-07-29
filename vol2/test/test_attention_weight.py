@@ -21,13 +21,13 @@ class TestAttentionWeight(unittest.TestCase):
 
     def test_forward(self):
         a = self.attention_weight.forward(self.hs, self.h)
-        self.assertEqual((10, 5), a.shape)
+        self.assertEqual(a.shape, (10, 5))
 
     def test_backward(self):
         da      = self.attention_weight.forward(self.hs, self.h)
         dhs, da = self.attention_weight.backward(da)
-        self.assertEqual((10, 5, 4), dhs.shape)
-        self.assertEqual((10, 5), da.shape)
+        self.assertEqual(dhs.shape, (10, 5, 4))
+        self.assertEqual(da.shape, (10, 5))
 
 if __name__ == '__main__':
     unittest.main()

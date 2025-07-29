@@ -21,12 +21,12 @@ class TestAffine(unittest.TestCase):
 
     def test_forward(self):
         out = self.affine.forward(np.random.randn(4, 2))
-        self.assertEqual((4, 4), out.shape)
+        self.assertEqual(out.shape, (4, 4))
 
     def test_backward(self):
         self.affine.forward(np.random.randn(4, 2))
         dx = self.affine.backward(np.random.randn(4, 4))
-        self.assertEqual((4, 2), dx.shape)
+        self.assertEqual(dx.shape, (4, 2))
 
 if __name__ == '__main__':
     unittest.main()

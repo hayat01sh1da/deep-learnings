@@ -19,10 +19,10 @@ class TestSpiralDataset(unittest.TestCase):
                 shutil.rmtree(pycache)
 
     def test_x_shape(self):
-        self.assertEqual((300, 2), self.spiral_dataset.x.shape)
+        self.assertEqual(self.spiral_dataset.x.shape, (300, 2))
 
     def test_t_shape(self):
-        self.assertEqual((300, 3), self.spiral_dataset.t.shape)
+        self.assertEqual(self.spiral_dataset.t.shape, (300, 3))
 
     def test_save_plot_image(self):
         file_path = '../img/spiral_plot.png'

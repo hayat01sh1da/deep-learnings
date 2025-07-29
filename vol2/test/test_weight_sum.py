@@ -21,13 +21,13 @@ class TestWeightSum(unittest.TestCase):
 
     def test_forward(self):
         c = self.weight_sum.forward(self.hs, self.a)
-        self.assertEqual((10, 4), c.shape)
+        self.assertEqual(c.shape, (10, 4))
 
     def test_backward(self):
         dc      = self.weight_sum.forward(self.hs, self.a)
         dhs, da = self.weight_sum.backward(dc)
-        self.assertEqual((10, 5, 4), dhs.shape)
-        self.assertEqual((10, 5), da.shape)
+        self.assertEqual(dhs.shape, (10, 5, 4))
+        self.assertEqual(da.shape, (10, 5))
 
 if __name__ == '__main__':
     unittest.main()

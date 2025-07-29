@@ -19,11 +19,11 @@ class TestRepeat(unittest.TestCase):
 
     def test_forward(self):
         x = np.random.randn(1, self.repeat.D)
-        self.assertEqual((7, 8), self.repeat.forward(x).shape)
+        self.assertEqual(self.repeat.forward(x).shape, (7, 8))
 
     def test_backward(self):
         dy = np.random.randn(self.repeat.N, self.repeat.D)
-        self.assertEqual((1, 8), self.repeat.backward(dy).shape)
+        self.assertEqual(self.repeat.backward(dy).shape, (1, 8))
 
 if __name__ == '__main__':
     unittest.main()

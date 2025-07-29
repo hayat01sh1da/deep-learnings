@@ -24,13 +24,13 @@ class TestRNN(unittest.TestCase):
 
     def test_forward(self):
         h_next = self.rnn.forward(self.x, self.h_prev)
-        self.assertEqual((7, 3), h_next.shape)
+        self.assertEqual(h_next.shape, (7, 3))
 
     def test_backward(self):
         h_next      = self.rnn.forward(self.x, self.h_prev)
         dx, dh_prev = self.rnn.backward(h_next)
-        self.assertEqual((7, 3), dx.shape)
-        self.assertEqual((7, 7), dh_prev.shape)
+        self.assertEqual(dx.shape, (7, 3))
+        self.assertEqual(dh_prev.shape, (7, 7))
 
 if __name__ == '__main__':
     unittest.main()

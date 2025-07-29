@@ -21,11 +21,11 @@ class TestDifferenciation(unittest.TestCase):
 
     def test_numerical_diff_1(self):
         dy = numerical_diff(f, self.x)
-        self.assertEqual(3.2974426293330694, dy)
+        self.assertEqual(dy, 3.2974426293330694)
 
     def test_f(self):
         dy = f(self.x)
-        self.assertEqual(1.648721270700128, dy.data)
+        self.assertEqual(dy.data, 1.648721270700128)
 
 if __name__ == '__main__':
     unittest.main()

@@ -24,16 +24,16 @@ class TestTwoLayerNet(unittest.TestCase):
 
     def test_predict(self):
         x = self.two_layer_net._predict(self.x)
-        self.assertEqual((4, 3), x.shape)
+        self.assertEqual(x.shape, (4, 3))
 
     def test_forward(self):
         loss = self.two_layer_net.forward(self.x, self.t)
-        self.assertEqual(1, int(loss))
+        self.assertEqual(int(loss), 1)
 
     def test_backward(self):
         self.two_layer_net.forward(self.x, self.t)
         dout = self.two_layer_net.backward()
-        self.assertEqual((4, 2), dout.shape)
+        self.assertEqual(dout.shape, (4, 2))
 
 if __name__ == '__main__':
     unittest.main()

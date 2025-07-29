@@ -22,12 +22,12 @@ class TestTimeAffine(unittest.TestCase):
 
     def test_forward(self):
         out = self.time_affine.forward(self.x)
-        self.assertEqual((3, 3, 3), out.shape)
+        self.assertEqual(out.shape, (3, 3, 3))
 
     def test_backward(self):
         dout = self.time_affine.forward(self.x)
         dx   = self.time_affine.backward(dout)
-        self.assertEqual((3, 3, 3), dout.shape)
+        self.assertEqual(dout.shape, (3, 3, 3))
 
 if __name__ == '__main__':
     unittest.main()

@@ -35,7 +35,7 @@ class TestSimpleCBOW(unittest.TestCase):
 
     def test_forward(self):
         loss = self.cbow.forward(self.contexts, self.target)
-        self.assertEqual(4.159, round(loss, 3))
+        self.assertEqual(round(loss, 3), 4.159)
 
     def test_grads_diff(self):
         in_layer, *_                  = self.cbow.in_layers

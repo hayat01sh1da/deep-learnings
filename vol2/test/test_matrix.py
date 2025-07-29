@@ -19,13 +19,13 @@ class TestVector(unittest.TestCase):
                 shutil.rmtree(pycache)
 
     def test_get_class_name(self):
-        self.assertEqual("<class 'numpy.ndarray'>", str(self.matrix.W.__class__))
+        self.assertEqual(str(self.matrix.W.__class__), "<class 'numpy.ndarray'>")
 
     def test_get_shape(self):
-        self.assertEqual((2, 3), self.matrix.W.shape)
+        self.assertEqual(self.matrix.W.shape, (2, 3))
 
     def test_get_dim(self):
-        self.assertEqual(2, self.matrix.W.ndim)
+        self.assertEqual(self.matrix.W.ndim, 2)
 
     def test_calc_sum(self):
         sum = self.matrix.calc_sum(np.array([[0, 1 ,2], [3, 4, 5]]))

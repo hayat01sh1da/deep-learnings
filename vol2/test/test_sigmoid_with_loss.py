@@ -33,7 +33,7 @@ class TestNegativeSamplingLoss(unittest.TestCase):
 
     def test_forward(self):
         loss = self.sigmoid_with_loss.forward(self.x, self.t)
-        self.assertEqual(2.74623389782839, loss)
+        self.assertEqual(loss, 2.74623389782839)
 
     def test_backward(self):
         self.sigmoid_with_loss.forward(self.x, self.t)

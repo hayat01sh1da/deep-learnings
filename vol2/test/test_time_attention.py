@@ -22,13 +22,13 @@ class TestTimeAttention(unittest.TestCase):
 
     def test_forward(self):
         out = self.time_attention.forward(self.hs_enc, self.hs_dec)
-        self.assertEqual((10, 5, 4), out.shape)
+        self.assertEqual(out.shape, (10, 5, 4))
 
     def test_backward(self):
         dout             = self.time_attention.forward(self.hs_enc, self.hs_dec)
         dhs_enc, dhs_dec = self.time_attention.backward(dout)
-        self.assertEqual((10, 4, 4), dhs_enc.shape)
-        self.assertEqual((10, 5, 4), dhs_dec.shape)
+        self.assertEqual(dhs_enc.shape, (10, 4, 4))
+        self.assertEqual(dhs_dec.shape, (10, 5, 4))
 
 if __name__ == '__main__':
     unittest.main()

@@ -21,7 +21,7 @@ class TestVariable(unittest.TestCase):
         data     = np.array(1)
         variable = Variable(data)
         assert_array_equal(np.array(1), variable.get_data())
-        self.assertEqual(0, variable.get_data().ndim)
+        self.assertEqual(variable.get_data().ndim, 0)
         new_data = np.array([10])
         variable.set_data(new_data)
         assert_array_equal(np.array(10), variable.get_data())
@@ -30,7 +30,7 @@ class TestVariable(unittest.TestCase):
         data     = np.array([1, 2, 3])
         variable = Variable(data)
         assert_array_equal(np.array([1, 2, 3]), variable.get_data())
-        self.assertEqual(1, variable.get_data().ndim)
+        self.assertEqual(variable.get_data().ndim, 1)
         new_data = np.array([1.0, 2.0, 3.0])
         variable.set_data(new_data)
         assert_array_equal(np.array([1., 2., 3.]), variable.get_data())
@@ -45,7 +45,7 @@ class TestVariable(unittest.TestCase):
             [1, 2, 3],
             [4, 5, 6]
         ]), variable.get_data())
-        self.assertEqual(2, variable.get_data().ndim)
+        self.assertEqual(variable.get_data().ndim, 2)
         new_data = np.array([
             [1.0, 2.0, 3.0],
             [4.0, 5.0, 6.0]

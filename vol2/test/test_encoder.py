@@ -24,18 +24,18 @@ class TestEncoder(unittest.TestCase):
 
     def test_forward(self):
         a, b, c, d, e, f, g = self.encoder.forward(self.xs)
-        self.assertEqual((100,), a.shape)
-        self.assertEqual((100,), b.shape)
-        self.assertEqual((100,), c.shape)
-        self.assertEqual((100,), d.shape)
-        self.assertEqual((100,), e.shape)
-        self.assertEqual((100,), f.shape)
-        self.assertEqual((100,), g.shape)
+        self.assertEqual(a.shape, (100,))
+        self.assertEqual(b.shape, (100,))
+        self.assertEqual(c.shape, (100,))
+        self.assertEqual(d.shape, (100,))
+        self.assertEqual(e.shape, (100,))
+        self.assertEqual(f.shape, (100,))
+        self.assertEqual(g.shape, (100,))
 
     def test_backward(self):
         dh   = self.encoder.forward(self.xs)
         dout = self.encoder.backward(dh)
-        self.assertEqual(None, dout)
+        self.assertEqual(dout, None)
 
 if __name__ == '__main__':
     unittest.main()

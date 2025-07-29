@@ -26,7 +26,7 @@ class TestRNNLMGen(unittest.TestCase):
 
     def test_word_ids_list(self):
         word_ids = self.rnnlm_gen.word_ids_list(self.start_id, self.skip_ids)
-        self.assertEqual(100, len(word_ids))
+        self.assertEqual(len(word_ids), 100)
 
     def test_generate_text(self):
         word_ids = self.rnnlm_gen.word_ids_list(self.start_id, self.skip_ids)

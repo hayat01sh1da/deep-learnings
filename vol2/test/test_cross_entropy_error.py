@@ -28,7 +28,7 @@ class TestCrossEntropyError(unittest.TestCase):
             [0, 1, 0, 0],
             [0, 1, 0, 0],
         ])
-        self.assertEqual(0.5879459847664801, cross_entropy_error(y, t))
+        self.assertEqual(cross_entropy_error(y, t), 0.5879459847664801)
 
 if __name__ == '__main__':
     unittest.main()

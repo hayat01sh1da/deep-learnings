@@ -25,18 +25,18 @@ class TestCountBasedMethod(unittest.TestCase):
                 shutil.rmtree(pycache)
 
     def test_words(self):
-        self.assertEqual(['you', 'said', 'good-bye', 'and', 'i', 'said', 'hello', '.'], self.word_list)
+        self.assertEqual(self.word_list, ['you', 'said', 'good-bye', 'and', 'i', 'said', 'hello', '.'])
 
     def test_take_out_query(self):
         query_info, query_vec = self.cbm._take_out_query(self.query, self.word_to_id, self.co_matrix)
-        self.assertEqual({'query': 'you'}, query_info)
+        self.assertEqual(query_info, {'query': 'you'})
         assert_array_equal(np.array([0, 1, 0, 0, 0, 0, 0]), query_vec)
 
     def test_cos_similarity(self):
         x              = self.co_matrix[self.word_to_id['you']]
         y              = self.co_matrix[self.word_to_id['i']]
         cos_similarity = self.cbm._cos_similarity(x, y)
-        self.assertEqual(0.7071067691154799, cos_similarity)
+        self.assertEqual(cos_similarity, 0.7071067691154799)
 
     def test_calc_cos_similarity(self):
         *_, query_vec = self.cbm._take_out_query(self.query, self.word_to_id, self.co_matrix)

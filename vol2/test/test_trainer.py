@@ -32,8 +32,8 @@ class TestTrainer(unittest.TestCase):
 
     def test_shuffle_data(self):
         xx, tt = self.trainer._shuffle_data(self.data_size, self.x, self.t)
-        self.assertEqual((300, 2), np.array(xx).shape)
-        self.assertEqual((300, 3), np.array(tt).shape)
+        self.assertEqual(np.array(xx).shape, (300, 2))
+        self.assertEqual(np.array(tt).shape, (300, 3))
 
     def test_calculate_loss(self):
         batch_size = 32
@@ -41,7 +41,7 @@ class TestTrainer(unittest.TestCase):
         batch_x    = xx[1 * batch_size: (1 + 1) * batch_size]
         batch_t    = tt[1 * batch_size: (1 + 1) * batch_size]
         loss       = self.trainer._calculate_loss(batch_x, batch_t)
-        self.assertEqual(1.1, round(loss, 1))
+        self.assertEqual(round(loss, 1), 1.1)
 
     def test_remove_duplicate(self):
         batch_size                         = 32
@@ -52,14 +52,14 @@ class TestTrainer(unittest.TestCase):
         params, grads                      = self.trainer._remove_duplicate()
         param_1, param_2, param_3, param_4 = params
         grad_1, grad_2, grad_3, grad_4     = grads
-        self.assertEqual((2, 10), param_1.shape)
-        self.assertEqual((10,), param_2.shape)
-        self.assertEqual((10, 3), param_3.shape)
-        self.assertEqual((3,), param_4.shape)
-        self.assertEqual((2, 10), grad_1.shape)
-        self.assertEqual((10,), grad_2.shape)
-        self.assertEqual((10, 3), grad_3.shape)
-        self.assertEqual( (3,), grad_4.shape)
+        self.assertEqual(param_1.shape, (2, 10))
+        self.assertEqual(param_2.shape, (10,))
+        self.assertEqual(param_3.shape, (10, 3))
+        self.assertEqual(param_4.shape, (3,))
+        self.assertEqual(grad_1.shape, (2, 10))
+        self.assertEqual(grad_2.shape, (10,))
+        self.assertEqual(grad_3.shape, (10, 3))
+        self.assertEqual(grad_4.shape, (3,))
 
     def test_evaluate(self):
         batch_size                    = 32
@@ -76,8 +76,8 @@ class TestTrainer(unittest.TestCase):
         current_epoch                 = 0
         max_iters                     = self.data_size // batch_size
         average_loss, training_status = self.trainer._evaluate(total_loss, loss_count, start_time, current_epoch, 1, max_iters)
-        self.assertEqual(1.0982153338384055, average_loss)
-        self.assertEqual('| epoch 1 |  iter 2 / 9 | time 0[s] | loss 1.10', training_status)
+        self.assertEqual(average_loss, 1.0982153338384055)
+        self.assertEqual(training_status, '| epoch 1 |  iter 2 / 9 | time 0[s] | loss 1.10')
 
     def test_fit(self):
         training_process = self.trainer.fit(self.x, self.t)

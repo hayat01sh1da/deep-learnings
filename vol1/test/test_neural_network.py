@@ -56,9 +56,9 @@ class TestNeuralNetwork(unittest.TestCase):
     def test_show_image(self):
         x_train, t_train         = self.nnw._get_test_data()
         img, label, reshaped_img = self.nnw._process_image(x_train, t_train)
-        self.assertEqual(7, label)
-        self.assertEqual((784,), img.shape)
-        self.assertEqual((28, 28), reshaped_img.shape)
+        self.assertEqual(label, 7)
+        self.assertEqual(img.shape, (784,))
+        self.assertEqual(reshaped_img.shape, (28, 28))
         # self.nnw._show_image(reshaped_img)
 
     def test_step_func(self):
@@ -101,8 +101,8 @@ class TestNeuralNetwork(unittest.TestCase):
         a       = np.array([[1, 2], [3, 4]])
         b       = np.array([[5, 6], [7, 8]])
         product = self.nnw.matrix_product(a, b)
-        self.assertEqual((2, 2), a.shape)
-        self.assertEqual((2, 2), b.shape)
+        self.assertEqual(a.shape, (2, 2))
+        self.assertEqual(b.shape, (2, 2))
         assert_array_equal(np.array(
             [
                 [19, 22],
@@ -114,8 +114,8 @@ class TestNeuralNetwork(unittest.TestCase):
         a       = np.array([[1, 2, 3], [4, 5, 6]])
         b       = np.array([[1, 2], [3, 4], [5,6]])
         product = self.nnw.matrix_product(a, b)
-        self.assertEqual((2, 3), a.shape)
-        self.assertEqual((3, 2), b.shape)
+        self.assertEqual(a.shape, (2, 3))
+        self.assertEqual(b.shape, (3, 2))
         assert_array_equal(np.array(
             [
                 [22, 28],
@@ -127,12 +127,12 @@ class TestNeuralNetwork(unittest.TestCase):
         a       = np.array([[1, 2], [3, 4], [5,6]])
         b       = np.array([7, 8])
         product = self.nnw.matrix_product(a, b)
-        self.assertEqual((3, 2), a.shape)
-        self.assertEqual((2,), b.shape)
+        self.assertEqual(a.shape, (3, 2))
+        self.assertEqual(b.shape, (2,))
         assert_array_equal(np.array([23, 53, 83]), product)
 
     def test_evaluate(self):
-        self.assertEqual('92.07%', self.nnw.evaluate())
+        self.assertEqual(self.nnw.evaluate(), '92.07%')
 
 if __name__ == '__main__':
     unittest.main()

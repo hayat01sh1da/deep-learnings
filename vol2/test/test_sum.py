@@ -19,11 +19,11 @@ class TestSum(unittest.TestCase):
 
     def test_forward(self):
         x = np.random.randn(self.sum.N, self.sum.D)
-        self.assertEqual((1, 8), self.sum.forward(x).shape)
+        self.assertEqual(self.sum.forward(x).shape, (1, 8))
 
     def test_backward(self):
         dy = np.random.randn(1, self.sum.D)
-        self.assertEqual((7, 8), self.sum.backward(dy).shape)
+        self.assertEqual(self.sum.backward(dy).shape, (7, 8))
 
 if __name__ == '__main__':
     unittest.main()

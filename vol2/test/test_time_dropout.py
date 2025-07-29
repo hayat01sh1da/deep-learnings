@@ -28,12 +28,12 @@ class TestTimeDropout(unittest.TestCase):
 
     def test_forward(self):
         out = self.time_dropout.forward(self.xs)
-        self.assertEqual((7, 3), out.shape)
+        self.assertEqual(out.shape, (7, 3))
 
     def test_backward(self):
         dout = self.time_dropout.forward(self.xs)
         dx   = self.time_dropout.backward(dout)
-        self.assertEqual((7, 3), dx.shape)
+        self.assertEqual(dx.shape, (7, 3))
 
 if __name__ == '__main__':
     unittest.main()

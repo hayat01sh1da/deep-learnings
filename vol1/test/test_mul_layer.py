@@ -23,7 +23,7 @@ class TestMulLayer(unittest.TestCase):
     def test_forward(self):
         apple_price = self.apple_layer.forward(self.apple, self.apple_num)
         price       = self.tax_layer.forward(apple_price, self.tax)
-        self.assertEqual(220, int(price))
+        self.assertEqual(int(price), 220)
 
     def test_backward(self):
         apple_price = self.apple_layer.forward(self.apple, self.apple_num)
@@ -31,9 +31,9 @@ class TestMulLayer(unittest.TestCase):
         dprice             = 1
         dapple_price, dtax = self.tax_layer.backward(dprice)
         dapple, dapple_num = self.apple_layer.backward(dapple_price)
-        self.assertEqual(2.2, dapple)
-        self.assertEqual(110, int(dapple_num))
-        self.assertEqual(200, dtax)
+        self.assertEqual(dapple, 2.2)
+        self.assertEqual(int(dapple_num), 110)
+        self.assertEqual(dtax, 200)
 
 if __name__ == '__main__':
     unittest.main()

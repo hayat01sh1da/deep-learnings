@@ -31,7 +31,7 @@ class TestTimeSoftmaxWithLoss(unittest.TestCase):
 
     def test_forward(self):
         loss = self.time_softmax_with_loss.forward(self.xs, self.ts)
-        self.assertEqual(1.1399003832212435, loss)
+        self.assertEqual(loss, 1.1399003832212435)
 
     def test_backward(self):
         self.time_softmax_with_loss.forward(self.xs, self.ts)

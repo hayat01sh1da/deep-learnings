@@ -32,14 +32,14 @@ class TestSeq2Seq(unittest.TestCase):
     def test_backward(self):
         self.seq2seq.forward(self.xs, self.ts)
         dout = self.seq2seq.backward()
-        self.assertEqual(None, dout)
+        self.assertEqual(dout, None)
 
     def test_generate(self):
         xs          = np.random.randint(0, 13, (1, 100))
         start_id    = 0
         sample_size = 10
         sampled = self.seq2seq.generate(xs, start_id, sample_size)
-        self.assertEqual(10, len(sampled))
+        self.assertEqual(len(sampled), 10)
 
 if __name__ == '__main__':
     unittest.main()

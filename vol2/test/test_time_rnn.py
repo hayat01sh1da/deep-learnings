@@ -27,16 +27,16 @@ class TestTimeRNN(unittest.TestCase):
         self.time_rnn.set_state(h)
         assert_array_equal(h, self.time_rnn.h)
         self.time_rnn.reset_state()
-        self.assertEqual(None, self.time_rnn.h)
+        self.assertEqual(self.time_rnn.h, None)
 
     def test_forward(self):
         hs = self.time_rnn.forward(self.xs)
-        self.assertEqual((3, 3, 3), hs.shape)
+        self.assertEqual(hs.shape, (3, 3, 3))
 
     def test_backward(self):
         hs  = self.time_rnn.forward(self.xs)
         dxs = self.time_rnn.backward(hs)
-        self.assertEqual((3, 3, 3), dxs.shape)
+        self.assertEqual(dxs.shape, (3, 3, 3))
 
 if __name__ == '__main__':
     unittest.main()

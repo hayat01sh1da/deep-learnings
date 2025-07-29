@@ -25,19 +25,19 @@ class TestDecoder(unittest.TestCase):
 
     def test_forward(self):
         score = self.decoder.forward(self.xs, self.h)
-        self.assertEqual((13, 100, 13), score.shape)
+        self.assertEqual(score.shape, (13, 100, 13))
 
     def test_backward(self):
         dscore = self.decoder.forward(self.xs, self.h)
         dh     = self.decoder.backward(dscore)
-        self.assertEqual((13, 100), dh.shape)
+        self.assertEqual(dh.shape, (13, 100))
 
     def test_generate(self):
         h           = np.random.randn(1, 100)
         start_id    = 0
         sample_size = 10
         sampled     = self.decoder.generate(h, start_id, sample_size)
-        self.assertEqual(10, len(sampled))
+        self.assertEqual(len(sampled), 10)
 
 if __name__ == '__main__':
     unittest.main()
