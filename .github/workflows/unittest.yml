@@ -12,12 +12,14 @@ on:
       - 'run_unittests.sh'
       - 'requirements.txt'
       - '**.py'
+      - .python-version
   pull_request:
     paths:
       - '.github/workflows/unittest.yml'
       - 'run_unittests.sh'
       - 'requirements.txt'
       - '**.py'
+      - .python-version
 
 permissions:
   contents: read
