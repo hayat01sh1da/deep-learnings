@@ -12,4 +12,5 @@ do
         python -m unittest discover ./test
       done
   esac
+  cd ..
 done

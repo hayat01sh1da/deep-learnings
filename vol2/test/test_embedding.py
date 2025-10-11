@@ -30,7 +30,7 @@ class TestEmbedding(unittest.TestCase):
             [12, 13, 14],
             [15, 16, 17],
             [18, 19, 20]
-       ]), params)
+        ]), params)
 
     def test_grads(self):
         grads, = self.embedding.grads
@@ -42,7 +42,7 @@ class TestEmbedding(unittest.TestCase):
             [0, 0, 0],
             [0, 0, 0],
             [0, 0, 0]
-       ]), grads)
+        ]), grads)
 
     def test_forward(self):
         out = self.embedding.forward(self.index)
@@ -51,7 +51,7 @@ class TestEmbedding(unittest.TestCase):
             [ 6,  7,  8],
             [ 0,  1,  2],
             [12, 13, 14]
-       ]), out)
+        ]), out)
 
     def test_backward(self):
         dout = self.embedding.forward(self.index)

@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+from plot_shim import plt
 import sys
 sys.path.append('./models')
 sys.path.append('./optimisers')

@@ -1,5 +1,5 @@
 import numpy as np
-from rnn import RNN
+from layers.rnn import RNN
 
 class TimeRNN:
     def __init__(self, Wx, Wh, b, stateful = False):

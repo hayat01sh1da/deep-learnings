@@ -1,6 +1,6 @@
 import numpy as np
 import time
-import matplotlib.pyplot as plt
+from plot_shim import plt
 import sys
 sys.path.append('./concerns')
 from clip_grads import *
@@ -43,7 +43,7 @@ class Trainer:
                         grads.pop(j)
                     # In case of sharing heaviness as transpose list(weight typing)
                     elif params[i].ndim == 2 and params[j].ndim == 2 and \
-                         params[i].T.shape == params[j].shape and np.all(params[i].T == params[j]):
+                            params[i].T.shape == params[j].shape and np.all(params[i].T == params[j]):
                         grads[i] += grads[j].T
                         find_flag = True
                         params.pop(j)

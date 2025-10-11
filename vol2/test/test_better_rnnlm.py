@@ -29,6 +29,8 @@ class TestBetterRNNLM(unittest.TestCase):
             [0, 1, 0, 0],
             [0, 0, 0, 1]
         ])
+        import glob, os
+        self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 #         self.file_path = '../pkl/better_rnnlm.pkl'
         # self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 

@@ -1,5 +1,5 @@
 import numpy as np
-from embedding import Embedding
+from layers.embedding import Embedding
 
 class TimeEmbedding:
     def __init__(self, W):

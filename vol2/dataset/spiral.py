@@ -19,8 +19,7 @@ def load_data(seed=1984):
             theta = j * 4.0 + 4.0 * rate + np.random.randn() * 0.2
 
             ix = N * j + i
-            x[ix] = np.array([radius * np.sin(theta),
-                              radius * np.cos(theta)]).flatten()
+            x[ix] = np.array([radius * np.sin(theta), radius * np.cos(theta)]).flatten()
             t[ix, j] = 1
 
     return x, t

@@ -31,7 +31,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [12, 13, 14],
             [15, 16, 17],
             [18, 19, 20]
-       ]), params)
+        ]), params)
 
     def test_initial_grads(self):
         grads, = self.embedding_dot.grads
@@ -43,7 +43,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [0, 0, 0],
             [0, 0, 0],
             [0, 0, 0]
-       ]), grads)
+        ]), grads)
 
     def test_forward(self):
         out = self.embedding_dot.forward(self.h, self.index)
@@ -56,7 +56,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [0, 1, 2],
             [3, 4, 5],
             [6, 7, 8]
-       ]), h)
+        ]), h)
 
     def test_target_W(self):
         self.embedding_dot.forward(self.h, self.index)
@@ -97,7 +97,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [  0,   0,   0],
             [  0,   0,   0],
             [  0,   0,   0]
-       ]), grads)
+        ]), grads)
 
 if __name__ == '__main__':
     unittest.main()

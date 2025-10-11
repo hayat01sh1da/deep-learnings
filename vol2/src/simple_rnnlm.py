@@ -1,10 +1,9 @@
 import numpy as np
-import sys
-sys.path.append('.layers')
-from time_affine import TimeAffine
-from time_embedding import TimeEmbedding
-from time_rnn import TimeRNN
-from time_softmax_with_loss import TimeSoftmaxWithLoss
+from layers.time_affine import TimeAffine
+from layers.time_embedding import TimeEmbedding
+from layers.time_rnn import TimeRNN
+from layers.time_softmax_with_loss import TimeSoftmaxWithLoss
+
 
 class SimpleRNNLM:
     def __init__(self, vocab_size, wordvec_size, hidden_size):

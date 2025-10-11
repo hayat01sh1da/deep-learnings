@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+from plot_shim import plt
 
 class CountBasedMethod:
     def __init__(self):

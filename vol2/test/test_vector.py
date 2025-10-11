@@ -4,7 +4,7 @@ import sys
 import os
 import shutil
 import glob
-sys.path.append('./src')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from vector import Vector
 
 class TestVector(unittest.TestCase):
@@ -18,7 +18,8 @@ class TestVector(unittest.TestCase):
                 shutil.rmtree(pycache)
 
     def test_get_class_name(self):
-        self.assertEqual(str(self.vector.x.__class__), '<class 'numpy.ndarray'>')
+        # Use isinstance check instead of stringifying the class
+        self.assertIsInstance(self.vector.x, np.ndarray)
 
     def test_get_shape(self):
         self.assertEqual(self.vector.x.shape, (3,))

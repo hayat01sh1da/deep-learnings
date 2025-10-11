@@ -1,7 +1,8 @@
 import sys
 sys.path.append('./concerns')
 from spiral import *
-import matplotlib.pyplot as plt
+import numpy as np
+from plot_shim import plt
 
 class SpiralDataset:
     def __init__(self):
