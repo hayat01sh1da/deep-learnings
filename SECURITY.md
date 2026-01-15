@@ -26,5 +26,5 @@ Please report issues privately via:
 1. **GitHub Security Advisory** (preferred) — open through the repository’s **Security → Report a vulnerability** workflow.
 2. **Email** — contact `security@project.org` with reproduction steps, sample notebooks/scripts, and environment details.
 
-Acknowledgement occurs within **3 business days**; status updates follow at least every **7 business days** until resolution.  
+Acknowledgement occurs within **3 business days**; status updates follow at least every **7 business days** until resolution.
 After remediation we publish guidance alongside required dependency updates.
