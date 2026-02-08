@@ -1,7 +1,7 @@
 ## 1. Common Environment
 
 - WSL(Ubuntu 24.4.3 LTS)
-- Python 3.14.2
+- Python 3.14.3
 
 ## 2. READMEs
 
