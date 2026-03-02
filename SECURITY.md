@@ -1,5 +1,3 @@
-# Security Policy
-
 ## Supported Versions
 
 - Only the latest commit on `master` is supported. Run `bash run_unittests.sh` with current dependencies before opening a report.
@@ -21,10 +19,7 @@
 
 ## Reporting a Vulnerability
 
-Please report issues privately via:
+Please report issues privately via **GitHub Security Advisory** (preferred) — open through the repository’s **Security → Report a vulnerability** workflow.
 
-1. **GitHub Security Advisory** (preferred) — open through the repository’s **Security → Report a vulnerability** workflow.
-2. **Email** — contact `security@project.org` with reproduction steps, sample notebooks/scripts, and environment details.
-
-Acknowledgement occurs within **3 business days**; status updates follow at least every **7 business days** until resolution.
+Acknowledgement occurs and status updates follow as soon as possible.  
 After remediation we publish guidance alongside required dependency updates.
