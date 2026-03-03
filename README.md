@@ -1,3 +1,6 @@
+[![Actions Status: UnitTest](https://github.com/hayat01sh1da/deep-learnings/workflows/UnitTest/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22UnitTest%22)
+[![Actions Status: CodeQL](https://github.com/hayat01sh1da/deep-learnings/workflows/CodeQL/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22CodeQL%22)
+
 ## 1. Common Environment
 
 - WSL(Ubuntu 24.4.3 LTS)
