@@ -8,7 +8,7 @@
 | Component          | Version(s) / Tooling                           | Notes                                                                                             |
 | ------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | OS baseline        | WSL (Ubuntu 25.10)                             | Shared environment across tracks.                                                                 |
-| Python runtime     | CPython 3.14.3 (`.python-version`)             | Managed via pyenv.                                                                                |
+| Python runtime     | CPython 3.14.4 (`.python-version`)             | Managed via pyenv.                                                                                |
 | Core libraries     | `numpy`, `matplotlib` (see `requirements.txt`) | Install with `pip install -r requirements.txt`; additional lab-specific deps live in each volume. |
 | Datasets & tooling | MNIST loaders and local datasets               | Ensure datasets are available locally before running proofs-of-concept.                           |
 
