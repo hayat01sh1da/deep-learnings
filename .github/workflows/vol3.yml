@@ -1,24 +1,22 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: UnitTest
+name: Vol.3
 
 on:
   push:
     branches:
       - master
     paths:
-      - '.github/workflows/unittest.yml'
-      - 'run_unittests.sh'
+      - '.github/workflows/vol3.yml'
       - 'requirements.txt'
-      - '**.py'
+      - 'vol3/**/*.py'
       - .python-version
   pull_request:
     paths:
-      - '.github/workflows/unittest.yml'
-      - 'run_unittests.sh'
+      - '.github/workflows/vol3.yml'
       - 'requirements.txt'
-      - '**.py'
+      - 'vol3/**/*.py'
       - .python-version
 
 permissions:
@@ -38,10 +36,17 @@ jobs:
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
+        working-directory: ./vol3
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Run UnitTest
-        run: bash run_unittests.sh
+        working-directory: ./vol3
+        run: |
+          for chapter in $(ls -d */)
+          do
+            cd $chapter
+            python -m unittest discover ./test
+          done
