@@ -2,6 +2,8 @@ import os
 import urllib.request
 import pickle
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 url_base = 'https://raw.githubusercontent.com/tomsercu/lstm/master/data/'
 key_file = {
@@ -17,7 +19,7 @@ save_file = {
 vocab_file  = 'ptb.vocab.pkl'
 dataset_dir = os.path.dirname(os.path.abspath(__file__))
 
-def _download(file_name):
+def _download(file_name: str) -> None:
     file_path = f'{dataset_dir}/{file_name}'
     if os.path.exists(file_path):
         return
@@ -30,7 +32,7 @@ def _download(file_name):
         urllib.request.urlretrieve(url_base + file_name, file_path)
     print('Done')
 
-def load_vocab():
+def load_vocab() -> tuple[dict[str, int], dict[int, str]]:
     vocab_path = f'{dataset_dir}/{vocab_file}'
     if os.path.exists(vocab_path):
         with open(vocab_path, 'rb') as f:
@@ -52,7 +54,7 @@ def load_vocab():
         pickle.dump((word_to_id, id_to_word), f)
     return word_to_id, id_to_word
 
-def load_data(data_type='train'):
+def load_data(data_type: str = 'train') -> tuple[NDArray[Any], dict[str, int], dict[int, str]]:
     '''
         :param data_type: データの種類：'train' or 'test' or 'valid (val)'
         :return:

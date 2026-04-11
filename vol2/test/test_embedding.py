@@ -9,18 +9,18 @@ sys.path.append('./src/layers')
 from embedding import Embedding
 
 class TestEmbedding(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         W              = np.arange(21).reshape(7, 3)
         self.embedding = Embedding(W)
         self.index     = np.array([0, 2, 0, 4])
         self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_params(self):
+    def test_params(self) -> None:
         params, = self.embedding.params
         assert_array_equal(np.array([
             [ 0,  1,  2],
@@ -32,7 +32,7 @@ class TestEmbedding(unittest.TestCase):
             [18, 19, 20]
         ]), params)
 
-    def test_grads(self):
+    def test_grads(self) -> None:
         grads, = self.embedding.grads
         assert_array_equal(np.array([
             [0, 0, 0],
@@ -44,7 +44,7 @@ class TestEmbedding(unittest.TestCase):
             [0, 0, 0]
         ]), grads)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         out = self.embedding.forward(self.index)
         assert_array_equal(np.array([
             [ 0,  1,  2],
@@ -53,7 +53,7 @@ class TestEmbedding(unittest.TestCase):
             [12, 13, 14]
         ]), out)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dout = self.embedding.forward(self.index)
         self.embedding.backward(dout)
         grads, = self.embedding.grads

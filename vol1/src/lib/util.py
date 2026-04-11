@@ -1,8 +1,10 @@
 # coding: utf-8
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 
-def smooth_curve(x):
+def smooth_curve(x: NDArray[Any]) -> NDArray[Any]:
     '''損失関数のグラフを滑らかにするために用いる
 
     参考：http://glowingpython.blogspot.jp/2012/02/convolution-with-numpy.html
@@ -14,7 +16,7 @@ def smooth_curve(x):
     return y[5:len(y)-5]
 
 
-def shuffle_dataset(x, t):
+def shuffle_dataset(x: NDArray[Any], t: NDArray[Any]) -> tuple[NDArray[Any], NDArray[Any]]:
     '''データセットのシャッフルを行う
 
     Parameters
@@ -32,11 +34,11 @@ def shuffle_dataset(x, t):
 
     return x, t
 
-def conv_output_size(input_size, filter_size, stride=1, pad=0):
+def conv_output_size(input_size: int, filter_size: int, stride: int = 1, pad: int = 0) -> float:
     return (input_size + 2*pad - filter_size) / stride + 1
 
 
-def im2col(input_data, filter_h, filter_w, stride=1, pad=0):
+def im2col(input_data: NDArray[Any], filter_h: int, filter_w: int, stride: int = 1, pad: int = 0) -> NDArray[Any]:
     '''
 
     Parameters
@@ -68,7 +70,7 @@ def im2col(input_data, filter_h, filter_w, stride=1, pad=0):
     return col
 
 
-def col2im(col, input_shape, filter_h, filter_w, stride=1, pad=0):
+def col2im(col: NDArray[Any], input_shape: tuple[int, ...], filter_h: int, filter_w: int, stride: int = 1, pad: int = 0) -> NDArray[Any]:
     '''
 
     Parameters

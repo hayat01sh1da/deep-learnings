@@ -1,12 +1,14 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('../layers')
 from affine import Affine
 from sigmoid import Sigmoid
 from softmax_with_loss import SoftMaxWithLoss
 
 class TwoLayerNet:
-    def __init__(self, input_size, hidden_size, output_size):
+    def __init__(self, input_size: int, hidden_size: int, output_size: int) -> None:
         I  = input_size
         H  = hidden_size
         O  = output_size
@@ -29,17 +31,17 @@ class TwoLayerNet:
             self.params += layer.params
             self.grads  += layer.grads
 
-    def _predict(self, x):
+    def _predict(self, x: NDArray[Any]) -> NDArray[Any]:
         for layer in self.layers:
             x = layer.forward(x)
         return x
 
-    def forward(self, x, t):
+    def forward(self, x: NDArray[Any], t: NDArray[Any]) -> float:
         score = self._predict(x)
         loss  = self.loss_layer.forward(score, t)
         return loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> NDArray[Any]:
         dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)

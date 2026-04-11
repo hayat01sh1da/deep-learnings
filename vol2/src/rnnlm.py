@@ -1,6 +1,8 @@
 import pickle
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('./layers')
 from time_affine import TimeAffine
 from time_embedding import TimeEmbedding
@@ -8,7 +10,7 @@ from time_lstm import TimeLSTM
 from time_softmax_with_loss import TimeSoftmaxWithLoss
 
 class RNNLM:
-    def __init__(self, vocab_size, wordvec_size, hidden_size):
+    def __init__(self, vocab_size: int, wordvec_size: int, hidden_size: int) -> None:
         V  = vocab_size
         D  = wordvec_size
         H  = hidden_size
@@ -35,29 +37,29 @@ class RNNLM:
             self.params += layer.params
             self.grads  += layer.grads
 
-    def _predict(self, xs):
+    def _predict(self, xs: NDArray[Any]) -> NDArray[Any]:
         for layer in self.layers:
             xs = layer.forward(xs)
         return xs
 
-    def forward(self, xs, ts):
+    def forward(self, xs: NDArray[Any], ts: NDArray[Any]) -> float:
         score = self._predict(xs)
         loss  = self.loss_layer.forward(score, ts)
         return loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> NDArray[Any]:
         dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)
         return dout
 
-    def reset_state(self):
+    def reset_state(self) -> None:
         self.lstm_layer.reset_state()
 
-    def save_params(self, file_path='../pkl/rnnlm.pkl'):
+    def save_params(self, file_path: str = '../pkl/rnnlm.pkl') -> None:
         with open(file_path, 'wb') as f:
             pickle.dump(self.params, f)
 
-    def load_params(self, file_path='../pkl/rnnlm.pkl'):
+    def load_params(self, file_path: str = '../pkl/rnnlm.pkl') -> None:
         with open(file_path, 'rb') as f:
             self.params = pickle.load(f)

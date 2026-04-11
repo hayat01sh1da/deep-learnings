@@ -1,13 +1,15 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('./concerns')
 from count_based_methods import CountBasedMethod
 
 class SimpleWord2Vec:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def create_contexts_target(self, corpus, window_size = 1):
+    def create_contexts_target(self, corpus: NDArray[Any], window_size: int = 1) -> tuple[NDArray[Any], NDArray[Any]]:
         target   = corpus[window_size:-window_size]
         contexts = []
         for index in range(window_size, len(corpus) - window_size):
@@ -19,7 +21,7 @@ class SimpleWord2Vec:
             contexts.append(cs)
         return np.array(contexts), np.array(target)
 
-    def convert_to_one_hot(self, corpus, vocab_size):
+    def convert_to_one_hot(self, corpus: NDArray[Any], vocab_size: int) -> NDArray[Any]:
         N = corpus.shape[0]
         if corpus.ndim == 1:
             one_hot = np.zeros((N, vocab_size), dtype=np.int32)

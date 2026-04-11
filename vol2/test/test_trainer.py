@@ -17,7 +17,7 @@ from two_layer_net import TwoLayerNet
 from sgd import SGD
 
 class TestTrainer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         model          = TwoLayerNet(input_size = 2, hidden_size = 10, output_size = 3)
         optimizer      = SGD(lr=1.0)
         self.trainer   = Trainer(model, optimizer)
@@ -25,17 +25,17 @@ class TestTrainer(unittest.TestCase):
         self.data_size = len(self.x)
         self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_shuffle_data(self):
+    def test_shuffle_data(self) -> None:
         xx, tt = self.trainer._shuffle_data(self.data_size, self.x, self.t)
         self.assertEqual(np.array(xx).shape, (300, 2))
         self.assertEqual(np.array(tt).shape, (300, 3))
 
-    def test_calculate_loss(self):
+    def test_calculate_loss(self) -> None:
         batch_size = 32
         xx, tt     = self.trainer._shuffle_data(self.data_size, self.x, self.t)
         batch_x    = xx[1 * batch_size: (1 + 1) * batch_size]
@@ -43,7 +43,7 @@ class TestTrainer(unittest.TestCase):
         loss       = self.trainer._calculate_loss(batch_x, batch_t)
         self.assertEqual(round(loss, 1), 1.1)
 
-    def test_remove_duplicate(self):
+    def test_remove_duplicate(self) -> None:
         batch_size                         = 32
         xx, tt                             = self.trainer._shuffle_data(self.data_size, self.x, self.t)
         batch_x                            = xx[1 * batch_size: (1 + 1) * batch_size]
@@ -61,7 +61,7 @@ class TestTrainer(unittest.TestCase):
         self.assertEqual(grad_3.shape, (10, 3))
         self.assertEqual(grad_4.shape, (3,))
 
-    def test_evaluate(self):
+    def test_evaluate(self) -> None:
         batch_size                    = 32
         xx, tt                        = self.trainer._shuffle_data(self.data_size, self.x, self.t)
         batch_x                       = xx[1 * batch_size: (1 + 1) * batch_size]
@@ -79,7 +79,7 @@ class TestTrainer(unittest.TestCase):
         self.assertEqual(average_loss, 1.0982153338384055)
         self.assertEqual(training_status, '| epoch 1 |  iter 2 / 9 | time 0[s] | loss 1.10')
 
-    def test_fit(self):
+    def test_fit(self) -> None:
         training_process = self.trainer.fit(self.x, self.t)
         assert_array_equal(np.array([
             1.095670688853155,
@@ -106,7 +106,7 @@ class TestTrainer(unittest.TestCase):
             '| epoch 10 |  iter 1 / 9 | time 0[s] | loss 1.10'
         ], training_process)
 
-    def test_save_plot_image(self):
+    def test_save_plot_image(self) -> None:
         self.trainer.fit(self.x, self.t, max_epoch=300, batch_size = 30)
         file_path = '../img/training_plot.png'
         self.trainer.save_plot_image(file_path)

@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from decoder import Decoder
 
 class TestDecoder(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         vocab_size    = 13
         wordvec_size  = 100
         hidden_size   = 100
@@ -18,21 +18,21 @@ class TestDecoder(unittest.TestCase):
         self.h        = np.random.randn(13, 100)
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         score = self.decoder.forward(self.xs, self.h)
         self.assertEqual(score.shape, (13, 100, 13))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dscore = self.decoder.forward(self.xs, self.h)
         dh     = self.decoder.backward(dscore)
         self.assertEqual(dh.shape, (13, 100))
 
-    def test_generate(self):
+    def test_generate(self) -> None:
         h           = np.random.randn(1, 100)
         start_id    = 0
         sample_size = 10

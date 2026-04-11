@@ -1,4 +1,6 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from layers.time_affine import TimeAffine
 from layers.time_embedding import TimeEmbedding
 from layers.time_rnn import TimeRNN
@@ -6,7 +8,7 @@ from layers.time_softmax_with_loss import TimeSoftmaxWithLoss
 
 
 class SimpleRNNLM:
-    def __init__(self, vocab_size, wordvec_size, hidden_size):
+    def __init__(self, vocab_size: int, wordvec_size: int, hidden_size: int) -> None:
         V  = vocab_size
         D  = wordvec_size
         H  = hidden_size
@@ -33,21 +35,21 @@ class SimpleRNNLM:
             self.params += layer.params
             self.grads  += layer.grads
 
-    def _predict(self, xs):
+    def _predict(self, xs: NDArray[Any]) -> NDArray[Any]:
         for layer in self.layers:
             xs = layer.forward(xs)
         return xs
 
-    def forward(self, xs, ts):
+    def forward(self, xs: NDArray[Any], ts: NDArray[Any]) -> float:
         score = self._predict(xs)
         loss  = self.loss_layer.forward(score, ts)
         return loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> NDArray[Any]:
         dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)
         return dout
 
-    def reset_state(self):
+    def reset_state(self) -> None:
         self.rnn_layer.reset_state()

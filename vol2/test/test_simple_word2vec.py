@@ -11,7 +11,7 @@ from simple_word2vec import SimpleWord2Vec
 from count_based_methods import CountBasedMethod
 
 class TestSimpleWord2Vec(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         text                                   = 'You said good-bye and I said hello.'
         cbm                                    = CountBasedMethod()
         word_list                              = cbm.text_to_word_list(text)
@@ -21,15 +21,15 @@ class TestSimpleWord2Vec(unittest.TestCase):
         self.vocab_size                        = len(self.word_to_id)
         self.pycaches                          = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_corpus(self):
+    def test_corpus(self) -> None:
         assert_array_equal(np.array([0, 1, 2, 3, 4, 1, 5, 6]), self.corpus)
 
-    def test_create_contexts_target(self):
+    def test_create_contexts_target(self) -> None:
         self.assertEqual(self.contexts_array.shape, (6, 2))
         assert_array_equal(np.array([
             [0, 2],
@@ -42,7 +42,7 @@ class TestSimpleWord2Vec(unittest.TestCase):
         self.assertEqual(self.target_array.shape, (6,))
         assert_array_equal(np.array([1, 2, 3, 4, 1, 5]), self.target_array)
 
-    def test_convert_to_one_hot(self):
+    def test_convert_to_one_hot(self) -> None:
         contexts = self.simple_word2vec.convert_to_one_hot(self.contexts_array, self.vocab_size)
         self.assertEqual(contexts.shape, (6, 2, 7))
         assert_array_equal(np.array([

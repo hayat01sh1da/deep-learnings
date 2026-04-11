@@ -5,6 +5,9 @@ figure, annotate, contourf, scatter, savefig, imshow, plot, xlabel, ylabel, ylim
 If real matplotlib is available, we use it; otherwise we provide no-op implementations
 that still create an empty image file on savefig so file-creation tests pass.
 """
+from __future__ import annotations
+
+from typing import Any
 from types import SimpleNamespace
 import os
 try:
@@ -15,76 +18,76 @@ except Exception:
     import numpy as _np
 
     class _NoopFigure:
-        def __init__(self):
+        def __init__(self) -> None:
             self._w, self._h = 640, 480
 
-    def _ensure_dir(fp):
+    def _ensure_dir(fp: str) -> None:
         d = os.path.dirname(fp)
         if d and not os.path.exists(d):
             os.makedirs(d, exist_ok=True)
 
-    def figure(*args, **kwargs):
+    def figure(*args: Any, **kwargs: Any) -> _NoopFigure:
         return _NoopFigure()
 
-    def annotate(*args, **kwargs):
+    def annotate(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def contourf(*args, **kwargs):
+    def contourf(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def scatter(*args, **kwargs):
+    def scatter(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def imshow(*args, **kwargs):
+    def imshow(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def plot(*args, **kwargs):
+    def plot(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def xlabel(*args, **kwargs):
+    def xlabel(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def ylabel(*args, **kwargs):
+    def ylabel(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def ylim(*args, **kwargs):
+    def ylim(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def savefig(fp, *args, **kwargs):
+    def savefig(fp: str, *args: Any, **kwargs: Any) -> None:
         # create a tiny blank PNG so tests that check file existence pass
         _ensure_dir(fp)
         arr = _np.zeros((10, 10, 3), dtype=_np.uint8)
         Image.fromarray(arr).save(fp)
 
     # Additional plotting functions commonly used in tests
-    def axis(*args, **kwargs):
+    def axis(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def legend(*args, **kwargs):
+    def legend(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def subplot(*args, **kwargs):
+    def subplot(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def subplots(*args, **kwargs):
+    def subplots(*args: Any, **kwargs: Any) -> tuple[None, None]:
         return (None, None)
 
-    def show(*args, **kwargs):
+    def show(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def xlim(*args, **kwargs):
+    def xlim(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def xticks(*args, **kwargs):
+    def xticks(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def yticks(*args, **kwargs):
+    def yticks(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def contour(*args, **kwargs):
+    def contour(*args: Any, **kwargs: Any) -> None:
         return None
 
-    def colorbar(*args, **kwargs):
+    def colorbar(*args: Any, **kwargs: Any) -> None:
         return None
 
     # Minimal colormap namespace used like plt.cm.gray_r

@@ -3,6 +3,8 @@ sys.path.append('./dataset')
 import sys
 sys.path.append('./dataset')
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 try:
     import matplotlib.pylab as plt
@@ -33,10 +35,10 @@ class NeuralNetwork:
     are unavailable.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def _save_image(self, x, y, func_name):
+    def _save_image(self, x: NDArray[Any], y: NDArray[Any], func_name: str) -> None:
         if plt is None:
             return
         plt.figure()
@@ -45,29 +47,29 @@ class NeuralNetwork:
         plt.tight_layout()
         plt.savefig(os.path.join(os.path.dirname(__file__), '..', 'img', f'{func_name}.png'))
 
-    def _sigmoid(self, x):
+    def _sigmoid(self, x: NDArray[Any]) -> NDArray[Any]:
         return 1.0 / (1.0 + np.exp(-x))
 
-    def _softmax(self, a):
+    def _softmax(self, a: NDArray[Any]) -> NDArray[Any]:
         a = np.array(a)
         c = np.max(a)
         exp_a = np.exp(a - c)
         sum_exp_a = np.sum(exp_a)
         return exp_a / sum_exp_a
 
-    def _process_image(self, x_train, t_train):
+    def _process_image(self, x_train: NDArray[Any], t_train: NDArray[Any]) -> tuple[NDArray[Any], Any, NDArray[Any]]:
         img = x_train[0]
         label = t_train[0]
         reshaped_img = img.reshape(28, 28)
         return img, label, reshaped_img
 
-    def _show_image(self, img):
+    def _show_image(self, img: NDArray[Any]) -> None:
         if Image is None:
             return
         pil_img = Image.fromarray(np.uint8(img))
         pil_img.show()
 
-    def _get_test_data(self):
+    def _get_test_data(self) -> tuple[NDArray[Any], NDArray[Any]]:
         # Defer importing dataset code until runtime; raise clear error if absent.
         try:
             from mnist import load_mnist
@@ -76,7 +78,7 @@ class NeuralNetwork:
         (x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize=False)
         return x_test, t_test
 
-    def _init_network(self):
+    def _init_network(self) -> dict[str, Any]:
         weights_path = os.path.join(os.path.dirname(__file__), '..', 'dataset', 'sample_weight.pkl')
         if not os.path.exists(weights_path):
             raise RuntimeError('sample_weight.pkl not found')
@@ -84,7 +86,7 @@ class NeuralNetwork:
             network = pickle.load(f)
         return network
 
-    def _predict(self, network, x):
+    def _predict(self, network: dict[str, Any], x: NDArray[Any]) -> NDArray[Any]:
         W1, W2, W3 = network['W1'], network['W2'], network['W3']
         b1, b2, b3 = network['b1'], network['b2'], network['b3']
         a1 = np.dot(x, W1) + b1
@@ -95,16 +97,16 @@ class NeuralNetwork:
         y = self._softmax(a3)
         return y
 
-    def step_func(self, x):
+    def step_func(self, x: NDArray[Any]) -> NDArray[Any]:
         return np.array(x > 0, dtype=int)
 
-    def relu(self, x):
+    def relu(self, x: NDArray[Any]) -> NDArray[Any]:
         return np.maximum(0, x)
 
-    def matrix_product(self, a, b):
+    def matrix_product(self, a: NDArray[Any], b: NDArray[Any]) -> NDArray[Any]:
         return np.dot(a, b)
 
-    def evaluate(self):
+    def evaluate(self) -> str:
         # Attempt to run evaluation; if dataset or weights are missing, return a clear fallback.
         try:
             x, t = self._get_test_data()

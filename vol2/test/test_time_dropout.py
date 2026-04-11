@@ -8,7 +8,7 @@ sys.path.append('./src/layers')
 from time_dropout import TimeDropout
 
 class TestTimeDropout(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.time_dropout = TimeDropout()
         self.xs           = np.array([
             [-2.02263879,  1.79293276, -0.64214657],
@@ -21,16 +21,16 @@ class TestTimeDropout(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         out = self.time_dropout.forward(self.xs)
         self.assertEqual(out.shape, (7, 3))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dout = self.time_dropout.forward(self.xs)
         dx   = self.time_dropout.backward(dout)
         self.assertEqual(dx.shape, (7, 3))

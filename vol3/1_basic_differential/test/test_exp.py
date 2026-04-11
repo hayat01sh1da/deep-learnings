@@ -10,17 +10,17 @@ from variable import Variable
 import numpy as np
 
 class TestTemplate(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.input    = np.array(0.5)
-        self.exp      = Exp()
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+        self.exp: Exp      = Exp()
+        self.pycaches: list[str] = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_call(self):
+    def test_call(self) -> None:
         square_1 = Square()
         square_2 = Square()
         x        = Variable(self.input)
@@ -31,7 +31,7 @@ class TestTemplate(unittest.TestCase):
         self.assertEqual(b.data, 1.2840254166877414)
         self.assertEqual(y.data, 1.648721270700128)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         y = self.exp.forward(self.input)
         self.assertEqual(y, 1.6487212707001282)
 

@@ -1,16 +1,18 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 import sys
 sys.path.append('./lib')
 from util import im2col
 
 class Convolution:
-    def __init__(self, W, b, stride=1, pad=0):
+    def __init__(self, W: NDArray[Any], b: NDArray[Any], stride: int = 1, pad: int = 0) -> None:
          self.W      = W
          self.b      = b
          self.stride = stride
          self.pad    = pad
 
-    def forward(self, x):
+    def forward(self, x: NDArray[Any]) -> NDArray[Any]:
         FN, C, FH  = self.W.shape
         N, C, H, W = x.shape
         out_h      = int(1 + (H + 2 * self.pad - FH) / self.stride)

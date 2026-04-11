@@ -8,26 +8,26 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from vector import Vector
 
 class TestVector(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.vector   = Vector(np.array([1, 2, 3]))
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_get_class_name(self):
+    def test_get_class_name(self) -> None:
         # Use isinstance check instead of stringifying the class
         self.assertIsInstance(self.vector.x, np.ndarray)
 
-    def test_get_shape(self):
+    def test_get_shape(self) -> None:
         self.assertEqual(self.vector.x.shape, (3,))
 
-    def test_get_dim(self):
+    def test_get_dim(self) -> None:
         self.assertEqual(self.vector.x.ndim, 1)
 
-    def test_calc_inner_product(self):
+    def test_calc_inner_product(self) -> None:
         inner_product = self.vector.calc_inner_product(np.array([4, 5, 6]))
         self.assertEqual(inner_product, 32)
 

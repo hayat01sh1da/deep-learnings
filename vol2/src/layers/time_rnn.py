@@ -1,8 +1,10 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from layers.rnn import RNN
 
 class TimeRNN:
-    def __init__(self, Wx, Wh, b, stateful = False):
+    def __init__(self, Wx: NDArray[Any], Wh: NDArray[Any], b: NDArray[Any], stateful: bool = False) -> None:
         self.params   = [Wx, Wh, b]
         self.grads    = [np.zeros_like(Wx), np.zeros_like(Wh), np.zeros_like(b)]
         self.layers   = None
@@ -10,13 +12,13 @@ class TimeRNN:
         self.dh       = None
         self.stateful = stateful
 
-    def set_state(self, h):
+    def set_state(self, h: NDArray[Any]) -> None:
         self.h = h
 
-    def reset_state(self):
+    def reset_state(self) -> None:
         self.h = None
 
-    def forward(self, xs):
+    def forward(self, xs: NDArray[Any]) -> NDArray[Any]:
         Wx, Wh, b = self.params
         N, T, D   = xs.shape
         D, H      = Wx.shape
@@ -31,7 +33,7 @@ class TimeRNN:
             self.layers.append(layer)
         return hs
 
-    def backward(self, dhs):
+    def backward(self, dhs: NDArray[Any]) -> NDArray[Any]:
         Wx, Wh, b = self.params
         N, T, H   = dhs.shape
         D, H      = Wx.shape

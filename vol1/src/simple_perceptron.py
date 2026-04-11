@@ -1,10 +1,10 @@
 import numpy as np
 
 class SimplePerceptron:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def and_gate(self, x1, x2):
+    def and_gate(self, x1: int, x2: int) -> int:
         x   = np.array([x1, x2])
         W   = np.array([0.5, 0.5])
         b   = -0.7
@@ -14,7 +14,7 @@ class SimplePerceptron:
         else:
             return 0
 
-    def nand_gate(self, x1, x2):
+    def nand_gate(self, x1: int, x2: int) -> int:
         x   = np.array([x1, x2])
         W   = np.array([-0.5, -0.5])
         b   = 0.7
@@ -24,7 +24,7 @@ class SimplePerceptron:
         else:
             return 0
 
-    def or_gate(self, x1, x2):
+    def or_gate(self, x1: int, x2: int) -> int:
         x   = np.array([x1, x2])
         W   = np.array([0.8, 0.8])
         b   = -0.7

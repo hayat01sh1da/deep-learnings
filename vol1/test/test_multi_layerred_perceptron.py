@@ -7,16 +7,16 @@ sys.path.append('./src')
 from multi_layered_perceptron import MultiLayeredPerceptron
 
 class TestPerceptron(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.mp       = MultiLayeredPerceptron()
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_xor_gate(self):
+    def test_xor_gate(self) -> None:
         self.assertEqual(self.mp.xor_gate(0, 0), 0)
         self.assertEqual(self.mp.xor_gate(1, 0), 1)
         self.assertEqual(self.mp.xor_gate(0, 1), 1)

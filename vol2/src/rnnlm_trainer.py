@@ -1,10 +1,12 @@
 import numpy as np
 import time
+from numpy.typing import NDArray
+from typing import Any
 from plot_shim import plt
 from clip_grads import *
 
 class RNNLMTrainer:
-    def __init__(self, model, optimizer):
+    def __init__(self, model: Any, optimizer: Any) -> None:
         self.model         = model
         self.optimizer     = optimizer
         self.time_index    = 0
@@ -12,7 +14,7 @@ class RNNLMTrainer:
         self.eval_interval = None
         self.current_epoch = 0
 
-    def _remove_duplicate(self, params, grads):
+    def _remove_duplicate(self, params: list[NDArray[Any]], grads: list[NDArray[Any]]) -> tuple[list[NDArray[Any]], list[NDArray[Any]]]:
         '''
         Integrate duplicate weights into one and add gradients corresponding to the weights.
         '''
@@ -43,7 +45,7 @@ class RNNLMTrainer:
             if not find_flag: break
         return params, grads
 
-    def _get_batch(self, x, t, batch_size, time_size):
+    def _get_batch(self, x: NDArray[Any], t: NDArray[Any], batch_size: int, time_size: int) -> tuple[NDArray[Any], NDArray[Any]]:
         batch_x   = np.empty((batch_size, time_size), dtype = 'i')
         batch_t   = np.empty((batch_size, time_size), dtype = 'i')
         data_size = len(x)
@@ -57,7 +59,7 @@ class RNNLMTrainer:
             self.time_index     += 1
         return batch_x, batch_t
 
-    def fit(self, xs, ts, max_epoch = 10, batch_size = 20, time_size = 35, max_grad = None, eval_interval = 20):
+    def fit(self, xs: NDArray[Any], ts: NDArray[Any], max_epoch: int = 10, batch_size: int = 20, time_size: int = 35, max_grad: float | None = None, eval_interval: int | None = 20) -> list[str]:
         data_size          = len(xs)
         max_iters          = data_size // (batch_size * time_size)
         self.eval_interval = eval_interval
@@ -88,7 +90,7 @@ class RNNLMTrainer:
             self.current_epoch += 1
         return training_process
 
-    def save_plot_image(self, file_path, ylim = None):
+    def save_plot_image(self, file_path: str, ylim: tuple[float, float] | None = None) -> None:
         plt.figure()
         x = np.arange(len(self.ppl_list))
         if ylim is not None:

@@ -1,28 +1,30 @@
 import numpy as np
 import time
+from numpy.typing import NDArray
+from typing import Any
 from plot_shim import plt
 import sys
 sys.path.append('./concerns')
 from clip_grads import *
 
 class Trainer:
-    def __init__(self, model, optimizer):
+    def __init__(self, model: Any, optimizer: Any) -> None:
         self.model     = model
         self.optimizer = optimizer
         self.loss_list = []
 
-    def _shuffle_data(self, data_size, x, t):
+    def _shuffle_data(self, data_size: int, x: NDArray[Any], t: NDArray[Any]) -> tuple[NDArray[Any], NDArray[Any]]:
         index = np.random.permutation(data_size)
         xx    = x[index]
         tt    = t[index]
         return xx, tt
 
-    def _calculate_loss(self, batch_x, batch_t):
+    def _calculate_loss(self, batch_x: NDArray[Any], batch_t: NDArray[Any]) -> float:
         loss = self.model.forward(batch_x, batch_t)
         self.model.backward()
         return loss
 
-    def _remove_duplicate(self):
+    def _remove_duplicate(self) -> tuple[list[NDArray[Any]], list[NDArray[Any]]]:
         '''
         Integrate duplicate weights into one and add gradients corresponding to the weights.
         '''
@@ -53,13 +55,13 @@ class Trainer:
             if not find_flag: break
         return params, grads
 
-    def _evaluate(self, total_loss, loss_count, start_time, current_epoch, iters, max_iters):
+    def _evaluate(self, total_loss: float, loss_count: int, start_time: float, current_epoch: int, iters: int, max_iters: int) -> tuple[float, str]:
         average_loss    = (total_loss / loss_count)
         elapsed_time    = time.time() - start_time
         training_status = '| epoch %d |  iter %d / %d | time %d[s] | loss %.2f' % (current_epoch + 1, iters + 1, max_iters, elapsed_time, average_loss)
         return average_loss, training_status
 
-    def fit(self, x, t, max_epoch=10, batch_size = 32, max_grad = None, eval_interval = 20):
+    def fit(self, x: NDArray[Any], t: NDArray[Any], max_epoch: int = 10, batch_size: int = 32, max_grad: float | None = None, eval_interval: int | None = 20) -> list[str]:
         total_loss       = 0
         loss_count       = 0
         data_size        = len(x)
@@ -88,7 +90,7 @@ class Trainer:
             current_epoch += 1
         return training_process
 
-    def save_plot_image(self, file_path, eval_interval = 20, ylim = None):
+    def save_plot_image(self, file_path: str, eval_interval: int = 20, ylim: tuple[float, float] | None = None) -> None:
         plt.figure()
         x = np.arange(len(self.loss_list))
         if ylim is not None:

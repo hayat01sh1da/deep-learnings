@@ -1,12 +1,14 @@
 from os import path
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 class Sequence:
-    def __init__(self):
+    def __init__(self) -> None:
         self.id_to_char = {}
         self.char_to_id = {}
 
-    def _text_to_dict(self, file_path, questions, answers):
+    def _text_to_dict(self, file_path: str, questions: list[str], answers: list[str]) -> tuple[list[str], list[str]]:
         # If the original dataset file is missing in this environment, return
         # a deterministic synthetic dataset so unit tests can run.
         if not path.exists(file_path):
@@ -28,7 +30,7 @@ class Sequence:
         lines.close()
         return questions, answers
 
-    def _update_vocab(self, text):
+    def _update_vocab(self, text: str) -> None:
         chars = list(text)
         for i, char in enumerate(chars):
             if char not in self.char_to_id:
@@ -36,12 +38,12 @@ class Sequence:
                 self.char_to_id[char]   = tmp_id
                 self.id_to_char[tmp_id] = char
 
-    def _create_vocab_dict(self, questions, answers):
+    def _create_vocab_dict(self, questions: list[str], answers: list[str]) -> None:
         for i in range(len(questions)):
             self._update_vocab(questions[i])
             self._update_vocab(answers[i])
 
-    def _create_numpy_array(self, questions, answers):
+    def _create_numpy_array(self, questions: list[str], answers: list[str]) -> tuple[NDArray[Any], NDArray[Any]]:
         x = np.zeros((len(questions), len(questions[0])), dtype=np.int32)
         t = np.zeros((len(questions), len(answers[0])), dtype=np.int32)
         for i, sentence in enumerate(questions):
@@ -50,7 +52,7 @@ class Sequence:
             t[i] = [self.char_to_id[c] for c in list(sentence)]
         return x, t
 
-    def _shuffle_data(self, x, t, seed=None):
+    def _shuffle_data(self, x: NDArray[Any], t: NDArray[Any], seed: int | None = None) -> tuple[NDArray[Any], NDArray[Any]]:
         indices = np.arange(len(x))
         if seed is not None:
             np.random.seed(seed)
@@ -59,7 +61,7 @@ class Sequence:
         t = t[indices]
         return x, t
 
-    def load_data(self, file_path, seed=1984):
+    def load_data(self, file_path: str, seed: int = 1984) -> tuple[tuple[NDArray[Any], NDArray[Any]], tuple[NDArray[Any], NDArray[Any]]]:
         if not path.exists(file_path):
             # Synthetic fallback for test environment: create deterministic
             # x and t arrays and a fixed vocab so unit tests receive exactly
@@ -95,5 +97,5 @@ class Sequence:
         (t_train, t_test) = t[:split_at], t[split_at:]
         return (x_train, t_train), (x_test, t_test)
 
-    def get_vocab(self):
+    def get_vocab(self) -> tuple[dict[str, int], dict[int, str]]:
         return (self.char_to_id, self.id_to_char)

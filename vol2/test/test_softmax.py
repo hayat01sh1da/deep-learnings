@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from softmax import Softmax
 
 class TestSoftmax(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.softmax = Softmax()
         self.x       = np.array([
             [-0.27291637,  3.0623984 ,  1.08772839,  1.21167545],
@@ -19,12 +19,12 @@ class TestSoftmax(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_calcsoftmax(self):
+    def test_calcsoftmax(self) -> None:
         x = self.softmax.calc_softmax(self.x)
         assert_almost_equal(np.array([
             [0.02673862, 0.75101348, 0.10424601, 0.11800189],
@@ -33,7 +33,7 @@ class TestSoftmax(unittest.TestCase):
             [0.29471841, 0.58029664, 0.04932731, 0.07565764]
         ]), x)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         self.softmax.forward(self.x)
         assert_almost_equal(np.array([
             [0.02673862, 0.75101348, 0.10424601, 0.11800189],
@@ -42,7 +42,7 @@ class TestSoftmax(unittest.TestCase):
             [0.29471841, 0.58029664, 0.04932731, 0.07565764]
         ]), self.softmax.out)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         self.softmax.forward(self.x)
         dout = np.array([
             [ 0.11843554, -1.15122357,  1.47778478, -1.61246747],

@@ -8,14 +8,14 @@ sys.path.append('./src/concerns')
 from cross_entropy_error import *
 
 class TestCrossEntropyError(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
-    def test_cross_entropy_error(self):
+    def test_cross_entropy_error(self) -> None:
         y = np.array([
             [0.02673862, 0.75101348, 0.10424601, 0.11800189],
             [0.16568116, 0.2526557 , 0.05246332, 0.52919982],

@@ -7,11 +7,11 @@ sys.path.append('./4_neural_network/src')
 from template import Template
 
 class TestTemplate(unittest.TestCase):
-    def setUp(self):
-        self.template = Template()
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+    def setUp(self) -> None:
+        self.template: Template = Template()
+        self.pycaches: list[str] = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)

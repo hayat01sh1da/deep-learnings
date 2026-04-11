@@ -9,7 +9,7 @@ sys.path.append('./src/concerns')
 from count_based_methods import CountBasedMethod
 
 class TestCountBasedMethod(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         text                                          = 'You said good-bye and I said hello.'
         self.cbm                                      = CountBasedMethod()
         self.word_list                                = self.cbm.text_to_word_list(text)
@@ -19,33 +19,33 @@ class TestCountBasedMethod(unittest.TestCase):
         self.co_matrix                                = self.cbm.create_co_matrix(self.corpus, self.vocab_size)
         self.pycaches                                 = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_words(self):
+    def test_words(self) -> None:
         self.assertEqual(self.word_list, ['you', 'said', 'good-bye', 'and', 'i', 'said', 'hello', '.'])
 
-    def test_take_out_query(self):
+    def test_take_out_query(self) -> None:
         query_info, query_vec = self.cbm._take_out_query(self.query, self.word_to_id, self.co_matrix)
         self.assertEqual(query_info, {'query': 'you'})
         assert_array_equal(np.array([0, 1, 0, 0, 0, 0, 0]), query_vec)
 
-    def test_cos_similarity(self):
+    def test_cos_similarity(self) -> None:
         x              = self.co_matrix[self.word_to_id['you']]
         y              = self.co_matrix[self.word_to_id['i']]
         cos_similarity = self.cbm._cos_similarity(x, y)
         self.assertEqual(cos_similarity, 0.7071067691154799)
 
-    def test_calc_cos_similarity(self):
+    def test_calc_cos_similarity(self) -> None:
         *_, query_vec = self.cbm._take_out_query(self.query, self.word_to_id, self.co_matrix)
         similarity    = self.cbm._calc_cos_similarity(self.vocab_size, self.co_matrix, query_vec)
         assert_almost_equal(np.array([
             1., 0., 0.7071068, 0., 0.7071068, 0.7071068, 0.
         ]), similarity)
 
-    def test_output_result_asc(self):
+    def test_output_result_asc(self) -> None:
         *_, query_vec = self.cbm._take_out_query(self.query, self.word_to_id, self.co_matrix)
         similarity    = self.cbm._calc_cos_similarity(self.vocab_size, self.co_matrix, query_vec)
         result        = self.cbm._output_result_asc(similarity, self.query, self.id_to_word)
@@ -57,7 +57,7 @@ class TestCountBasedMethod(unittest.TestCase):
             'and': 0.0
         }, result)
 
-    def test_preprocess(self):
+    def test_preprocess(self) -> None:
         self.assertEqual({
             'you': 0,
             'said': 1,
@@ -78,7 +78,7 @@ class TestCountBasedMethod(unittest.TestCase):
         }, self.id_to_word)
         assert_array_equal(np.array([0, 1, 2, 3, 4, 1, 5, 6]), self.corpus)
 
-    def test_create_co_matrix(self):
+    def test_create_co_matrix(self) -> None:
         assert_array_equal(np.array([
             [0, 1, 0, 0, 0, 0, 0],
             [1, 0, 1, 0, 1, 1, 0],
@@ -89,7 +89,7 @@ class TestCountBasedMethod(unittest.TestCase):
             [0, 0, 0, 0, 0, 1, 0]
         ]), self.co_matrix)
 
-    def test_rank_similarity(self):
+    def test_rank_similarity(self) -> None:
         top_five_similarities = self.cbm.rank_similarities(self.query, self.word_to_id, self.co_matrix, self.vocab_size, self.id_to_word)
         self.assertEqual({
             'query': 'you',
@@ -100,7 +100,7 @@ class TestCountBasedMethod(unittest.TestCase):
             'and': 0.0
         }, top_five_similarities)
 
-    def test_ppmi(self):
+    def test_ppmi(self) -> None:
         M = self.cbm.ppmi(self.co_matrix)
         assert_almost_equal(np.array([
             [0., 1.8073549, 0., 0., 0., 0., 0.],
@@ -112,7 +112,7 @@ class TestCountBasedMethod(unittest.TestCase):
             [0., 0., 0., 0., 0., 2.807355, 0.]
         ]), M)
 
-    def test_svd(self):
+    def test_svd(self) -> None:
         M = self.cbm.ppmi(self.co_matrix)
         U = self.cbm.singular_value_deconposition(M)
         assert_almost_equal(np.array([
@@ -146,7 +146,7 @@ class TestCountBasedMethod(unittest.TestCase):
             ]
         ]), U)
 
-    def test_save_svd_plot_image(self):
+    def test_save_svd_plot_image(self) -> None:
         M         = self.cbm.ppmi(self.co_matrix)
         U         = self.cbm.singular_value_deconposition(M)
         file_path = '../img/svd_plot.png'

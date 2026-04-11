@@ -11,7 +11,7 @@ sys.path.append('./src/layers')
 from seq2seq import Seq2Seq
 
 class TestSeq2Seq(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         vocab_size    = 13
         wordvec_size  = 100
         hidden_size   = 100
@@ -20,21 +20,21 @@ class TestSeq2Seq(unittest.TestCase):
         self.ts       = np.random.randint(0, 13, (13, 100))
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         loss = self.seq2seq.forward(self.xs, self.ts)
         self.assertTrue(2.55 < round(loss, 2) < 2.58)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         self.seq2seq.forward(self.xs, self.ts)
         dout = self.seq2seq.backward()
         self.assertEqual(dout, None)
 
-    def test_generate(self):
+    def test_generate(self) -> None:
         xs          = np.random.randint(0, 13, (1, 100))
         start_id    = 0
         sample_size = 10

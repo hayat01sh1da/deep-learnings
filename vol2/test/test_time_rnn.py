@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from time_rnn import TimeRNN
 
 class TestTimeRNN(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         Wx            = np.random.randn(3, 3)
         Wh            = np.random.randn(3, 3)
         b             = np.random.randn(3,)
@@ -17,23 +17,23 @@ class TestTimeRNN(unittest.TestCase):
         self.xs       = np.random.randn(3, 3, 3)
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_state(self):
+    def test_state(self) -> None:
         h = np.random.randn(7, 7)
         self.time_rnn.set_state(h)
         assert_array_equal(h, self.time_rnn.h)
         self.time_rnn.reset_state()
         self.assertEqual(self.time_rnn.h, None)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         hs = self.time_rnn.forward(self.xs)
         self.assertEqual(hs.shape, (3, 3, 3))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         hs  = self.time_rnn.forward(self.xs)
         dxs = self.time_rnn.backward(hs)
         self.assertEqual(dxs.shape, (3, 3, 3))

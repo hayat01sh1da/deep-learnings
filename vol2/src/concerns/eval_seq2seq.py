@@ -1,6 +1,8 @@
 import os
+from numpy.typing import NDArray
+from typing import Any
 
-def eval_seq2seq(model, question, correct, id_to_char, verbose=False, is_reverse=False):
+def eval_seq2seq(model: Any, question: NDArray[Any], correct: NDArray[Any], id_to_char: dict[int, str], verbose: bool = False, is_reverse: bool = False) -> int:
     correct = correct.flatten()
     # Head devider
     start_id = correct[0]

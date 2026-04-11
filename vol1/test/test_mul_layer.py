@@ -7,7 +7,7 @@ sys.path.append('./src')
 from mul_layer import MulLayer
 
 class TestMulLayer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.apple_layer = MulLayer()
         self.tax_layer   = MulLayer()
         self.apple       = 100
@@ -15,17 +15,17 @@ class TestMulLayer(unittest.TestCase):
         self.tax         = 1.1
         self.pycaches    = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         apple_price = self.apple_layer.forward(self.apple, self.apple_num)
         price       = self.tax_layer.forward(apple_price, self.tax)
         self.assertEqual(int(price), 220)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         apple_price = self.apple_layer.forward(self.apple, self.apple_num)
         self.tax_layer.forward(apple_price, self.tax)
         dprice             = 1

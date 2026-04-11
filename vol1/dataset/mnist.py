@@ -8,6 +8,8 @@ import gzip
 import pickle
 import os
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 
 #url_base = 'http://yann.lecun.com/exdb/mnist/'
@@ -29,7 +31,7 @@ img_dim = (1, 28, 28)
 img_size = 784
 
 
-def _download(file_name):
+def _download(file_name: str) -> None:
     file_path = dataset_dir + "/" + file_name
 
     if os.path.exists(file_path):
@@ -43,11 +45,11 @@ def _download(file_name):
         f.write(response)
     print("Done")
 
-def download_mnist():
+def download_mnist() -> None:
     for v in key_file.values():
         _download(v)
 
-def _load_label(file_name):
+def _load_label(file_name: str) -> NDArray[Any]:
     file_path = dataset_dir + "/" + file_name
 
     print("Converting " + file_name + " to NumPy Array ...")
@@ -57,7 +59,7 @@ def _load_label(file_name):
 
     return labels
 
-def _load_img(file_name):
+def _load_img(file_name: str) -> NDArray[Any]:
     file_path = dataset_dir + "/" + file_name
 
     print("Converting " + file_name + " to NumPy Array ...")
@@ -68,7 +70,7 @@ def _load_img(file_name):
 
     return data
 
-def _convert_numpy():
+def _convert_numpy() -> dict[str, NDArray[Any]]:
     dataset = {}
     dataset['train_img'] =  _load_img(key_file['train_img'])
     dataset['train_label'] = _load_label(key_file['train_label'])
@@ -77,7 +79,7 @@ def _convert_numpy():
 
     return dataset
 
-def init_mnist():
+def init_mnist() -> None:
     download_mnist()
     dataset = _convert_numpy()
     print("Creating pickle file ...")
@@ -85,7 +87,7 @@ def init_mnist():
         pickle.dump(dataset, f, -1)
     print("Done!")
 
-def _change_one_hot_label(X):
+def _change_one_hot_label(X: NDArray[Any]) -> NDArray[Any]:
     T = np.zeros((X.size, 10))
     for idx, row in enumerate(T):
         row[X[idx]] = 1
@@ -93,7 +95,7 @@ def _change_one_hot_label(X):
     return T
 
 
-def load_mnist(normalize=True, flatten=True, one_hot_label=False):
+def load_mnist(normalize: bool = True, flatten: bool = True, one_hot_label: bool = False) -> tuple[tuple[NDArray[Any], NDArray[Any]], tuple[NDArray[Any], NDArray[Any]]]:
     """MNISTデータセットの読み込み
 
     Parameters

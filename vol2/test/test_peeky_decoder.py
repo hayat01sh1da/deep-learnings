@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from peeky_decoder import PeekyDecoder
 
 class TestPeekyDecoder(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         vocab_size         = 13
         wordvec_size       = 16
         hidden_size        = 128
@@ -18,21 +18,21 @@ class TestPeekyDecoder(unittest.TestCase):
         self.h             = np.random.randn(13, 128)
         self.pycaches      = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         score = self.peeky_decoder.forward(self.xs, self.h)
         self.assertEqual(score.shape, (13, 16, 13))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dscore = self.peeky_decoder.forward(self.xs, self.h)
         dh     = self.peeky_decoder.backward(dscore)
         self.assertEqual(dh.shape, (13, 128))
 
-    def test_generate(self):
+    def test_generate(self) -> None:
         h           = np.random.randn(1, 128)
         start_id    = 0
         sample_size = 10

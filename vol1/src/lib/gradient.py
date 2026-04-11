@@ -1,6 +1,8 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any, Callable
 
-def _numerical_gradient_1d(f, x):
+def _numerical_gradient_1d(f: Callable[[NDArray[Any]], float], x: NDArray[Any]) -> NDArray[Any]:
     h = 1e-4
     grad = np.zeros_like(x)
     for idx in range(x.size):
@@ -16,7 +18,7 @@ def _numerical_gradient_1d(f, x):
         x[idx] = tmp_val
     return grad
 
-def numerical_gradient_2d(f, X):
+def numerical_gradient_2d(f: Callable[[NDArray[Any]], float], X: NDArray[Any]) -> NDArray[Any]:
     if X.ndim == 1:
         return _numerical_gradient_1d(f, X)
     else:
@@ -25,7 +27,7 @@ def numerical_gradient_2d(f, X):
             grad[idx] = _numerical_gradient_1d(f, x)
         return grad
 
-def numerical_gradient(f, x):
+def numerical_gradient(f: Callable[[NDArray[Any]], float], x: NDArray[Any]) -> NDArray[Any]:
     h = 1e-4
     grad = np.zeros_like(x)
     it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])

@@ -1,11 +1,13 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('../layers')
 from matmul import MatMul
 from softmax_with_loss import SoftMaxWithLoss
 
 class SimpleCBOW:
-    def __init__(self, vocab_size, hidden_size):
+    def __init__(self, vocab_size: int, hidden_size: int) -> None:
         V = vocab_size
         H = hidden_size
         # Initialise weight
@@ -26,7 +28,7 @@ class SimpleCBOW:
         # Assign a word embedding to an instance variable
         self.word_vecs = W_in
 
-    def forward(self, contexts, target):
+    def forward(self, contexts: NDArray[Any], target: NDArray[Any]) -> float:
         h0    = self.in_layer_0.forward(contexts[:, 0])
         h1    = self.in_layer_1.forward(contexts[:, 1])
         h     = (h0 + h1) * 0.5
@@ -34,7 +36,7 @@ class SimpleCBOW:
         loss  = self.loss_layer.forward(score, target)
         return loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> None:
         ds = self.loss_layer.backward(dout)
         da = self.out_layer.backward(ds)
         da *= 0.5

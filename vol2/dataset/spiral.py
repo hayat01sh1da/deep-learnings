@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 
-def load_data(seed=1984):
+def load_data(seed: int = 1984) -> tuple[NDArray[Any], NDArray[Any]]:
     np.random.seed(seed)
     N = 100     # number of sample each class
     DIM = 2     # number of data elements

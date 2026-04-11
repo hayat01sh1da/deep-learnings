@@ -9,14 +9,14 @@ from function import Function
 import numpy as np
 
 class TestFunction(unittest.TestCase):
-    def setUp(self):
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+    def setUp(self) -> None:
+        self.pycaches: list[str] = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
-    def test_call(self):
+    def test_call(self) -> None:
         data = np.array([
             [0, 4, 0],
             [0, 2, 5],

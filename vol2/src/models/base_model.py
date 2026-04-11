@@ -1,25 +1,27 @@
 import os
 import pickle
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 class BaseModel:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def forward(self, *args):
+    def forward(self, *args: Any) -> Any:
         raise NotImplementedError
 
-    def backward(self, *args):
+    def backward(self, *args: Any) -> Any:
         raise NotImplementedError
 
-    def save_params(self, file_path=None):
+    def save_params(self, file_path: str | None = None) -> None:
         if file_path is None:
             file_path = f'../../pkl/{self.__class__.__name__.lower()}.pkl'
         params = [p.astype(np.float16) for p in self.params]
         with open(file_path, 'wb') as f:
             pickle.dump(params, f)
 
-    def load_params(self, file_path=None):
+    def load_params(self, file_path: str | None = None) -> None:
         if file_path is None:
             file_path = f'../../pkl/{self.__class__.__name__.lower()}.pkl'
         if '/' in file_path:

@@ -9,22 +9,22 @@ sys.path.append('./src/concerns')
 from spiral_dataset import SpiralDataset
 
 class TestSpiralDataset(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.spiral_dataset = SpiralDataset()
         self.pycaches       = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_x_shape(self):
+    def test_x_shape(self) -> None:
         self.assertEqual(self.spiral_dataset.x.shape, (300, 2))
 
-    def test_t_shape(self):
+    def test_t_shape(self) -> None:
         self.assertEqual(self.spiral_dataset.t.shape, (300, 3))
 
-    def test_save_plot_image(self):
+    def test_save_plot_image(self) -> None:
         file_path = '../img/spiral_plot.png'
         self.spiral_dataset.save_plot_image(file_path)
         self.assertTrue(os.path.exists(file_path))

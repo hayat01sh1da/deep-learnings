@@ -9,20 +9,20 @@ sys.path.append('./src')
 from relu import Relu
 
 class TestRelu(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.relu     = Relu()
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         x = np.array([[1.0, -0.5], [-2.0, 3.0]])
         assert_array_equal(np.array([[1., 0.], [0., 3.]]), self.relu.forward(x))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         x = np.array([[1.0, -0.5], [-2.0, 3.0]])
         assert_array_equal(np.array([[1., 0.], [0., 3.]]), self.relu.backward(self.relu.forward(x)))
 

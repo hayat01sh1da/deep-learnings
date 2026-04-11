@@ -1,22 +1,24 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 from sigmoid import Sigmoid
 
 class LSTM:
-    def __init__(self, Wx, Wh, b):
+    def __init__(self, Wx: NDArray[Any], Wh: NDArray[Any], b: NDArray[Any]) -> None:
         self.params  = [Wx, Wh, b]
         self.grads   = [np.zeros_like(Wx), np.zeros_like(Wh), np.zeros_like(b)]
         self.cache   = None
         self.sigmoid = Sigmoid()
 
-    def _slice(self, A, H):
+    def _slice(self, A: NDArray[Any], H: int) -> tuple[NDArray[Any], NDArray[Any], NDArray[Any], NDArray[Any]]:
         f = A[:, :H]
         g = A[:, H:2*H]
         i = A[:, 2*H:3*H]
         o = A[:, 3*H:]
         return f, g, i, o
 
-    def forward(self, x, h_prev, c_prev):
+    def forward(self, x: NDArray[Any], h_prev: NDArray[Any], c_prev: NDArray[Any]) -> tuple[NDArray[Any], NDArray[Any]]:
         Wx, Wh, b  = self.params
         N, H       = h_prev.shape
         A          = np.dot(x, Wx) + np.dot(h_prev, Wh) + b
@@ -30,7 +32,7 @@ class LSTM:
         self.cache = (x, h_prev, c_prev, (i, f, g, o), c_next)
         return c_next, h_next
 
-    def backward(self, dh_next, dc_next):
+    def backward(self, dh_next: NDArray[Any], dc_next: NDArray[Any]) -> tuple[NDArray[Any], NDArray[Any], NDArray[Any]]:
         Wx, Wh, b                        = self.params
         x, h_prev, c_prev, gates, c_next = self.cache
         i, f, g, o                       = gates

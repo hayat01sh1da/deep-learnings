@@ -1,34 +1,36 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
-def identity_function(x):
+def identity_function(x: NDArray[Any]) -> NDArray[Any]:
     return x
 
-def step_function(x):
+def step_function(x: NDArray[Any]) -> NDArray[Any]:
     return np.array(x > 0, dtype=np.int)
 
-def sigmoid(x):
+def sigmoid(x: NDArray[Any]) -> NDArray[Any]:
     return 1 / (1 + np.exp(-x))
 
-def sigmoid_grad(x):
+def sigmoid_grad(x: NDArray[Any]) -> NDArray[Any]:
     return (1.0 - sigmoid(x)) * sigmoid(x)
 
-def relu(x):
+def relu(x: NDArray[Any]) -> NDArray[Any]:
     return np.maximum(0, x)
 
-def relu_grad(x):
+def relu_grad(x: NDArray[Any]) -> NDArray[Any]:
     grad = np.zeros_like(x)
     grad[x>=0] = 1
     return grad
 
-def softmax(x):
+def softmax(x: NDArray[Any]) -> NDArray[Any]:
     # Prevent overflow
     x = x - np.max(x, axis = -1, keepdims = True)
     return np.exp(x) / np.sum(np.exp(x), axis = -1, keepdims = True)
 
-def sum_squared_error(y, t):
+def sum_squared_error(y: NDArray[Any], t: NDArray[Any]) -> float:
     return 0.5 * np.sum((y-t)**2)
 
-def cross_entropy_error(y, t):
+def cross_entropy_error(y: NDArray[Any], t: NDArray[Any]) -> float:
     if y.ndim == 1:
         t = t.reshape(1, t.size)
         y = y.reshape(1, y.size)

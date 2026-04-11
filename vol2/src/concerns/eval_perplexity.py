@@ -1,6 +1,8 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
-def eval_perplexity(model, corpus, batch_size = 10, time_size = 35):
+def eval_perplexity(model: Any, corpus: NDArray[Any], batch_size: int = 10, time_size: int = 35) -> float:
     print('=== Evaluating perplexity... ===')
     corpus_size          = len(corpus)
     total_loss, loss_cnt = 0, 0

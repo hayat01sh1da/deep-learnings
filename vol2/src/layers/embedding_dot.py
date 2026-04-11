@@ -1,21 +1,23 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from layers.embedding import Embedding
 
 
 class EmbeddingDot:
-    def __init__(self, W):
+    def __init__(self, W: NDArray[Any]) -> None:
         self.embedding = Embedding(W)
         self.params = self.embedding.params
         self.grads = self.embedding.grads
         self.cache = None
 
-    def forward(self, h, index):
+    def forward(self, h: NDArray[Any], index: NDArray[Any]) -> NDArray[Any]:
         target_W = self.embedding.forward(index)
         out = np.sum(target_W * h, axis=1)
         self.cache = (h, target_W)
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         h, target_W = self.cache
         # Reshape (3,) to (3, 1)
         dout = dout.reshape(dout.shape[0], 1)
@@ -25,22 +27,24 @@ class EmbeddingDot:
         dh = dout * target_W
         return dh
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from embedding import Embedding
 
 class EmbeddingDot:
-    def __init__(self, W):
+    def __init__(self, W: NDArray[Any]) -> None:
         self.embedding = Embedding(W)
         self.params    = self.embedding.params
         self.grads     = self.embedding.grads
         self.cache     = None
 
-    def forward(self, h, index):
+    def forward(self, h: NDArray[Any], index: NDArray[Any]) -> NDArray[Any]:
         target_W   = self.embedding.forward(index)
         out        = np.sum(target_W * h, axis = 1)
         self.cache = (h, target_W)
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         h, target_W = self.cache
         # Reshape (3,) to (3, 1)
         dout       = dout.reshape(dout.shape[0], 1)
