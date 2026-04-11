@@ -9,20 +9,20 @@ sys.path.append('./src')
 from sigmoid import Sigmoid
 
 class TestSigmoid(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.sigmoid  = Sigmoid()
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         x = np.array([[1.0, -0.5], [-2.0, 3.0]])
         assert_almost_equal(([[0.73105858, 0.37754067], [0.11920292, 0.95257413]]), self.sigmoid.forward(x))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         x = np.array([[1.0, -0.5], [-2.0, 3.0]])
         self.sigmoid.forward(x)
         dout = 1

@@ -1,12 +1,14 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('./layers')
 from time_embedding import TimeEmbedding
 from time_lstm import TimeLSTM
 from time_affine import TimeAffine
 
 class PeekyDecoder:
-    def __init__(self, vocab_size, wordvec_size, hidden_size):
+    def __init__(self, vocab_size: int, wordvec_size: int, hidden_size: int) -> None:
         V           = vocab_size
         D           = wordvec_size
         H           = hidden_size
@@ -27,7 +29,7 @@ class PeekyDecoder:
             self.grads  += layer.grads
         self.cache = None
 
-    def forward(self, xs, h):
+    def forward(self, xs: NDArray[Any], h: NDArray[Any]) -> NDArray[Any]:
         N, T = xs.shape
         N, H = h.shape
         self.lstm.set_state(h)
@@ -40,7 +42,7 @@ class PeekyDecoder:
         self.cache = H
         return score
 
-    def backward(self, dscore):
+    def backward(self, dscore: NDArray[Any]) -> NDArray[Any]:
         H      = self.cache
         dout   = self.affine.backward(dscore)
         dout   = dout[:, :, H:]
@@ -53,7 +55,7 @@ class PeekyDecoder:
         dh  = self.lstm.dh + np.sum(dhs, axis = 1)
         return dh
 
-    def generate(self, h, start_id, sample_size):
+    def generate(self, h: NDArray[Any], start_id: int, sample_size: int) -> list[int]:
         sampled = []
         char_id = start_id
         self.lstm.set_state(h)

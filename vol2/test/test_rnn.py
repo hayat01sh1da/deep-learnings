@@ -8,7 +8,7 @@ sys.path.append('./src/layers')
 from rnn import RNN
 
 class TestRNN(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         Wx            = np.random.randn(3, 3)
         Wh            = np.random.randn(7, 3)
         b             = np.random.randn(3,)
@@ -17,16 +17,16 @@ class TestRNN(unittest.TestCase):
         self.h_prev   = np.random.randn(7, 7)
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         h_next = self.rnn.forward(self.x, self.h_prev)
         self.assertEqual(h_next.shape, (7, 3))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         h_next      = self.rnn.forward(self.x, self.h_prev)
         dx, dh_prev = self.rnn.backward(h_next)
         self.assertEqual(dx.shape, (7, 3))

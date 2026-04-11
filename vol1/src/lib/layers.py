@@ -1,21 +1,23 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 import sys
 from functions import *
 from util import im2col, col2im
 
 
 class Relu:
-    def __init__(self):
+    def __init__(self) -> None:
         self.mask = None
 
-    def forward(self, x):
+    def forward(self, x: NDArray[Any]) -> NDArray[Any]:
         self.mask = (x <= 0)
         out = x.copy()
         out[self.mask] = 0
 
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         dout[self.mask] = 0
         dx = dout
 
@@ -23,22 +25,22 @@ class Relu:
 
 
 class Sigmoid:
-    def __init__(self):
+    def __init__(self) -> None:
         self.out = None
 
-    def forward(self, x):
+    def forward(self, x: NDArray[Any]) -> NDArray[Any]:
         out = sigmoid(x)
         self.out = out
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         dx = dout * (1.0 - self.out) * self.out
 
         return dx
 
 
 class Affine:
-    def __init__(self, W, b):
+    def __init__(self, W: NDArray[Any], b: NDArray[Any]) -> None:
         self.W =W
         self.b = b
 
@@ -48,7 +50,7 @@ class Affine:
         self.dW = None
         self.db = None
 
-    def forward(self, x):
+    def forward(self, x: NDArray[Any]) -> NDArray[Any]:
         # テンソル対応
         self.original_x_shape = x.shape
         x = x.reshape(x.shape[0], -1)
@@ -58,7 +60,7 @@ class Affine:
 
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         dx = np.dot(dout, self.W.T)
         self.dW = np.dot(self.x.T, dout)
         self.db = np.sum(dout, axis = 0)
@@ -68,19 +70,19 @@ class Affine:
 
 
 class SoftmaxWithLoss:
-    def __init__(self):
+    def __init__(self) -> None:
         self.loss = None
         self.y = None # softmaxの出力
         self.t = None # 教師データ
 
-    def forward(self, x, t):
+    def forward(self, x: NDArray[Any], t: NDArray[Any]) -> float:
         self.t = t
         self.y = softmax(x)
         self.loss = cross_entropy_error(self.y, self.t)
 
         return self.loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> NDArray[Any]:
         batch_size = self.t.shape[0]
         if self.t.size == self.y.size: # 教師データがone-hot-vectorの場合
             dx = (self.y - self.t) / batch_size
@@ -96,18 +98,18 @@ class Dropout:
     '''
     http://arxiv.org/abs/1207.0580
     '''
-    def __init__(self, dropout_ratio=0.5):
+    def __init__(self, dropout_ratio: float = 0.5) -> None:
         self.dropout_ratio = dropout_ratio
         self.mask = None
 
-    def forward(self, x, train_flg=True):
+    def forward(self, x: NDArray[Any], train_flg: bool = True) -> NDArray[Any]:
         if train_flg:
             self.mask = np.random.rand(*x.shape) > self.dropout_ratio
             return x * self.mask
         else:
             return x * (1.0 - self.dropout_ratio)
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         return dout * self.mask
 
 
@@ -115,7 +117,7 @@ class BatchNormalization:
     '''
     http://arxiv.org/abs/1502.03167
     '''
-    def __init__(self, gamma, beta, momentum=0.9, running_mean=None, running_var=None):
+    def __init__(self, gamma: NDArray[Any], beta: NDArray[Any], momentum: float = 0.9, running_mean: NDArray[Any] | None = None, running_var: NDArray[Any] | None = None) -> None:
         self.gamma = gamma
         self.beta = beta
         self.momentum = momentum
@@ -132,7 +134,7 @@ class BatchNormalization:
         self.dgamma = None
         self.dbeta = None
 
-    def forward(self, x, train_flg=True):
+    def forward(self, x: NDArray[Any], train_flg: bool = True) -> NDArray[Any]:
         self.input_shape = x.shape
         if x.ndim != 2:
             N, C, H, W = x.shape
@@ -142,7 +144,7 @@ class BatchNormalization:
 
         return out.reshape(*self.input_shape)
 
-    def __forward(self, x, train_flg):
+    def __forward(self, x: NDArray[Any], train_flg: bool) -> NDArray[Any]:
         if self.running_mean is None:
             N, D = x.shape
             self.running_mean = np.zeros(D)
@@ -168,7 +170,7 @@ class BatchNormalization:
         out = self.gamma * xn + self.beta
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         if dout.ndim != 2:
             N, C, H, W = dout.shape
             dout = dout.reshape(N, -1)
@@ -178,7 +180,7 @@ class BatchNormalization:
         dx = dx.reshape(*self.input_shape)
         return dx
 
-    def __backward(self, dout):
+    def __backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         dbeta = dout.sum(axis = 0)
         dgamma = np.sum(self.xn * dout, axis = 0)
         dxn = self.gamma * dout
@@ -196,7 +198,7 @@ class BatchNormalization:
 
 
 class Convolution:
-    def __init__(self, W, b, stride=1, pad=0):
+    def __init__(self, W: NDArray[Any], b: NDArray[Any], stride: int = 1, pad: int = 0) -> None:
         self.W = W
         self.b = b
         self.stride = stride
@@ -211,7 +213,7 @@ class Convolution:
         self.dW = None
         self.db = None
 
-    def forward(self, x):
+    def forward(self, x: NDArray[Any]) -> NDArray[Any]:
         FN, C, FH, FW = self.W.shape
         N, C, H, W = x.shape
         out_h = 1 + int((H + 2*self.pad - FH) / self.stride)
@@ -229,7 +231,7 @@ class Convolution:
 
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         FN, C, FH, FW = self.W.shape
         dout = dout.transpose(0,2,3,1).reshape(-1, FN)
 
@@ -244,7 +246,7 @@ class Convolution:
 
 
 class Pooling:
-    def __init__(self, pool_h, pool_w, stride=2, pad=0):
+    def __init__(self, pool_h: int, pool_w: int, stride: int = 2, pad: int = 0) -> None:
         self.pool_h = pool_h
         self.pool_w = pool_w
         self.stride = stride
@@ -253,7 +255,7 @@ class Pooling:
         self.x = None
         self.arg_max = None
 
-    def forward(self, x):
+    def forward(self, x: NDArray[Any]) -> NDArray[Any]:
         N, C, H, W = x.shape
         out_h = int(1 + (H - self.pool_h) / self.stride)
         out_w = int(1 + (W - self.pool_w) / self.stride)
@@ -270,7 +272,7 @@ class Pooling:
 
         return out
 
-    def backward(self, dout):
+    def backward(self, dout: NDArray[Any]) -> NDArray[Any]:
         dout = dout.transpose(0, 2, 3, 1)
 
         pool_size = self.pool_h * self.pool_w

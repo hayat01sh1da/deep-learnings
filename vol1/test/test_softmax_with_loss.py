@@ -10,22 +10,22 @@ sys.path.append('./src/lib')
 from softmax_with_loss import SoftmaxWithLoss
 
 class TestSoftmaxWithLoss(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.swl      = SoftmaxWithLoss()
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         x    = np.array([0.3, 0.6, 0.9])
         t    = np.array([0, 0, 1])
         loss = self.swl.forward(x, t)
         self.assertEqual(loss, 0.8283899409431649)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         x = np.array([0.3, 0.6, 0.9])
         t = np.array([0, 0, 1])
         self.swl.forward(x, t)

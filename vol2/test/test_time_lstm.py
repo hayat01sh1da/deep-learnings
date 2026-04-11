@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from time_lstm import TimeLSTM
 
 class TestTimeLSTM(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         Wx = np.array([
             [
                 9.72009451e-01, -4.97642862e-01,  6.45448952e-01,
@@ -103,12 +103,12 @@ class TestTimeLSTM(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_state(self):
+    def test_state(self) -> None:
         h = np.random.randn(7, 7)
         self.time_lstm.set_state(h)
         assert_array_equal(h, self.time_lstm.h)
@@ -116,7 +116,7 @@ class TestTimeLSTM(unittest.TestCase):
         self.assertEqual(self.time_lstm.h, None)
         self.assertEqual(self.time_lstm.c, None)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         hs = self.time_lstm.forward(self.xs)
         assert_almost_equal(np.array([
             [
@@ -162,7 +162,7 @@ class TestTimeLSTM(unittest.TestCase):
             ]
         ]), hs)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dhs = self.time_lstm.forward(self.xs)
         dxs = self.time_lstm.backward(dhs)
         assert_almost_equal(np.array([

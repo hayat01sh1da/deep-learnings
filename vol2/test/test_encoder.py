@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from encoder import Encoder
 
 class TestEncoder(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         vocab_size    = 13
         wordvec_size  = 100
         hidden_size   = 100
@@ -17,12 +17,12 @@ class TestEncoder(unittest.TestCase):
         self.xs       = np.random.randint(0, 13, (7, 3))
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         a, b, c, d, e, f, g = self.encoder.forward(self.xs)
         self.assertEqual(a.shape, (100,))
         self.assertEqual(b.shape, (100,))
@@ -32,7 +32,7 @@ class TestEncoder(unittest.TestCase):
         self.assertEqual(f.shape, (100,))
         self.assertEqual(g.shape, (100,))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dh   = self.encoder.forward(self.xs)
         dout = self.encoder.backward(dh)
         self.assertEqual(dout, None)

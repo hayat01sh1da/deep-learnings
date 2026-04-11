@@ -1,5 +1,7 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('./layers')
 sys.path.append('./models')
 from base_model import BaseModel
@@ -8,7 +10,7 @@ from decoder import Decoder
 from time_softmax_with_loss import TimeSoftmaxWithLoss
 
 class Seq2Seq(BaseModel):
-    def __init__(self, vocab_size, wordvec_size, hidden_size):
+    def __init__(self, vocab_size: int, wordvec_size: int, hidden_size: int) -> None:
         V            = vocab_size
         D            = wordvec_size
         H            = hidden_size
@@ -18,7 +20,7 @@ class Seq2Seq(BaseModel):
         self.params  = self.encoder.params + self.decoder.params
         self.grads   = self.encoder.grads  + self.decoder.grads
 
-    def forward(self, xs, ts):
+    def forward(self, xs: NDArray[Any], ts: NDArray[Any]) -> float:
         decoder_xs = ts[:, :-1]
         decoder_ts = ts[:, 1:]
         h          = self.encoder.forward(xs)
@@ -26,13 +28,13 @@ class Seq2Seq(BaseModel):
         loss       = self.softmax.forward(score, decoder_ts)
         return loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> NDArray[Any]:
         dout = self.softmax.backward(dout)
         dh   = self.decoder.backward(dout)
         dout = self.encoder.backward(dh)
         return dout
 
-    def generate(self, xs, start_id, sample_size):
+    def generate(self, xs: NDArray[Any], start_id: int, sample_size: int) -> list[int]:
         h       = self.encoder.forward(xs)
         sampled = self.decoder.generate(h, start_id, sample_size)
         return sampled

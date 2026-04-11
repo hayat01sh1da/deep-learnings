@@ -10,16 +10,16 @@ import numpy as np
 from numpy.testing import assert_array_equal
 
 class TestSquare(unittest.TestCase):
-    def setUp(self):
-        self.square   = Square()
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+    def setUp(self) -> None:
+        self.square: Square   = Square()
+        self.pycaches: list[str] = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_call(self):
+    def test_call(self) -> None:
         data = np.array([
             [0, 4, 0],
             [0, 2, 5],
@@ -33,7 +33,7 @@ class TestSquare(unittest.TestCase):
             [81, 81,  1]
         ]), output.data)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         x = np.array([
             [0, 4, 0],
             [0, 2, 5],

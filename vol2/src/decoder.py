@@ -1,12 +1,14 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('./layers')
 from time_embedding import TimeEmbedding
 from time_lstm import TimeLSTM
 from time_affine import TimeAffine
 
 class Decoder:
-    def __init__(self, vocab_size, wordvec_size, hidden_size):
+    def __init__(self, vocab_size: int, wordvec_size: int, hidden_size: int) -> None:
         V           = vocab_size
         D           = wordvec_size
         H           = hidden_size
@@ -26,21 +28,21 @@ class Decoder:
             self.params += layer.params
             self.grads  += layer.grads
 
-    def forward(self, xs, h):
+    def forward(self, xs: NDArray[Any], h: NDArray[Any]) -> NDArray[Any]:
         self.lstm.set_state(h)
         out   = self.embed.forward(xs)
         out   = self.lstm.forward(out)
         score = self.affine.forward(out)
         return score
 
-    def backward(self, dscore):
+    def backward(self, dscore: NDArray[Any]) -> NDArray[Any]:
         dout = self.affine.backward(dscore)
         dout = self.lstm.backward(dout)
         dout = self.embed.backward(dout)
         dh = self.lstm.dh
         return dh
 
-    def generate(self, h, start_id, sample_size):
+    def generate(self, h: NDArray[Any], start_id: int, sample_size: int) -> list[int]:
         sampled = []
         sample_id = start_id
         self.lstm.set_state(h)

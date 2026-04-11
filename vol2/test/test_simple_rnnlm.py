@@ -11,7 +11,7 @@ from simple_rnnlm import SimpleRNNLM
 from count_based_methods import CountBasedMethod
 
 class TestSimpleRNNLM(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         text              = 'You said good-bye and I said hello.'
         cbm               = CountBasedMethod()
         word_list         = cbm.text_to_word_list(text)
@@ -30,25 +30,25 @@ class TestSimpleRNNLM(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_predict(self):
+    def test_predict(self) -> None:
         score = self.simple_rnnlm._predict(self.xs)
         self.assertEqual(score.shape, (2, 4, 7))
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         loss = self.simple_rnnlm.forward(self.xs, self.ts)
         self.assertTrue(1.93 < round(loss, 2) < 1.96)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         self.simple_rnnlm.forward(self.xs, self.ts)
         dout = self.simple_rnnlm.backward()
         self.assertEqual(dout, None)
 
-    def test_reset_state(self):
+    def test_reset_state(self) -> None:
         self.simple_rnnlm.forward(self.xs, self.ts)
         self.simple_rnnlm.backward()
         self.assertEqual(self.simple_rnnlm.rnn_layer.h.shape, (2, 100))

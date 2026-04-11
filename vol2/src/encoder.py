@@ -1,11 +1,13 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('./layers')
 from time_embedding import TimeEmbedding
 from time_lstm import TimeLSTM
 
 class Encoder:
-    def __init__(self, vocab_size, wordvec_size, hidden_size):
+    def __init__(self, vocab_size: int, wordvec_size: int, hidden_size: int) -> None:
         V           = vocab_size
         D           = wordvec_size
         H           = hidden_size
@@ -20,13 +22,13 @@ class Encoder:
         self.grads  = self.embed.grads  + self.lstm.grads
         self.hs     = None
 
-    def forward(self, xs):
+    def forward(self, xs: NDArray[Any]) -> NDArray[Any]:
         xs      = self.embed.forward(xs)
         hs      = self.lstm.forward(xs)
         self.hs = hs
         return hs[:, -1, :]
 
-    def backward(self, dh):
+    def backward(self, dh: NDArray[Any]) -> NDArray[Any]:
         dhs           = np.zeros_like(self.hs)
         dhs[:, -1, :] = dh
         dout          = self.lstm.backward(dhs)

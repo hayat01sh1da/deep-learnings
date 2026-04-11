@@ -1,6 +1,8 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
-def load_data(seed=1984):
+def load_data(seed: int = 1984) -> tuple[NDArray[Any], NDArray[Any]]:
     np.random.seed(seed)
     SAMPLE_NUMS_PER_CLASS = 100
     DATA_ELEM_NUMS        = 2

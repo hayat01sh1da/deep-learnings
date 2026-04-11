@@ -8,21 +8,21 @@ sys.path.append('./src/layers')
 from sigmoid import Sigmoid
 
 class TestSigmoid(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.sigmoid  = Sigmoid()
         self.x        = np.random.randn(10, 4)
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         out = self.sigmoid.forward(self.x)
         self.assertEqual(out.shape, (10, 4))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         self.sigmoid.forward(self.x)
         dout = np.random.randn(10, 4)
         dx   = self.sigmoid.backward(dout)

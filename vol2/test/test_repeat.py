@@ -8,20 +8,20 @@ sys.path.append('./src/layers')
 from repeat import Repeat
 
 class TestRepeat(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.repeat   = Repeat(8, 7)
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         x = np.random.randn(1, self.repeat.D)
         self.assertEqual(self.repeat.forward(x).shape, (7, 8))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dy = np.random.randn(self.repeat.N, self.repeat.D)
         self.assertEqual(self.repeat.backward(dy).shape, (1, 8))
 

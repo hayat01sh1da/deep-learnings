@@ -2,13 +2,15 @@ import sys
 sys.path.append('./concerns')
 from spiral import *
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from plot_shim import plt
 
 class SpiralDataset:
-    def __init__(self):
+    def __init__(self) -> None:
         self.x, self.t = load_data()
 
-    def save_plot_image(self, file_path):
+    def save_plot_image(self, file_path: str) -> None:
         SAMPLE_NUMS_PER_CLASS = 100
         CLASS_NUNS            = 3
         markers               = ['o', 'x', '^']

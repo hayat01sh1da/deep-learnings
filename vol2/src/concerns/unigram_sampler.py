@@ -1,8 +1,10 @@
 import numpy as np
 import collections
+from numpy.typing import NDArray
+from typing import Any
 
 class UnigramSampler:
-    def __init__(self, corpus, power, sample_size):
+    def __init__(self, corpus: NDArray[Any], power: float, sample_size: int) -> None:
         self.sample_size = sample_size
         counts = collections.Counter()
         for word_id in corpus:
@@ -14,7 +16,7 @@ class UnigramSampler:
         self.word_p  = np.power(self.word_p, power)
         self.word_p /= np.sum(self.word_p)
 
-    def get_negative_sample(self, target):
+    def get_negative_sample(self, target: NDArray[Any]) -> NDArray[Any]:
         batch_size      = target.shape[0]
         negative_sample = np.zeros((batch_size, self.sample_size), dtype=np.int32)
         # Special-case deterministic matrix for the small unit-test fixture

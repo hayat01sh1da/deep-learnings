@@ -1,12 +1,14 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('../concerns')
 from unigram_sampler import UnigramSampler
 from sigmoid_with_loss import SigmoidWithLoss
 from embedding_dot import EmbeddingDot
 
 class NegativeSamplingLoss:
-    def __init__(self, W, corpus, sample_size = 5, power=0.75):
+    def __init__(self, W: NDArray[Any], corpus: NDArray[Any], sample_size: int = 5, power: float = 0.75) -> None:
         self.sample_size          = sample_size
         self.sampler              = UnigramSampler(corpus, power, sample_size)
         self.loss_layers          = [SigmoidWithLoss() for _ in range(sample_size + 1)]
@@ -17,7 +19,7 @@ class NegativeSamplingLoss:
             self.params += embedding_dot_layer.params
             self.grads  += embedding_dot_layer.grads
 
-    def forward(self, h, target):
+    def forward(self, h: NDArray[Any], target: NDArray[Any]) -> float:
         batch_size     = target.shape[0]
         neative_sample = self.sampler.get_negative_sample(target)
         # Correct sample
@@ -32,7 +34,7 @@ class NegativeSamplingLoss:
             loss += self.loss_layers[1 + i].forward(score, negative_label)
         return loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> NDArray[Any]:
         dh = 0
         for loss_layer, embedding_dot_layer in zip(self.loss_layers, self.embedding_dot_layers):
             dscore = loss_layer.backward(dout)

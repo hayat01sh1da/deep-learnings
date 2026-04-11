@@ -8,20 +8,20 @@ sys.path.append('./src/layers')
 from sum import Sum
 
 class TestSum(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.sum      = Sum(8, 7)
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         x = np.random.randn(self.sum.N, self.sum.D)
         self.assertEqual(self.sum.forward(x).shape, (1, 8))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dy = np.random.randn(1, self.sum.D)
         self.assertEqual(self.sum.backward(dy).shape, (7, 8))
 

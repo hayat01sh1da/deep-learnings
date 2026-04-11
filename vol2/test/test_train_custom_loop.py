@@ -13,7 +13,7 @@ from train_custom_loop import TrainCustomLoop
 from spiral import *
 
 class TestTrainer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.train_custom_loop = TrainCustomLoop()
         self.x, self.t         = load_data()
         self.max_epoch         = 300
@@ -24,21 +24,21 @@ class TestTrainer(unittest.TestCase):
         self.loss_count        = 0
         self.pycaches          = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_shuffle_data(self):
+    def test_shuffle_data(self) -> None:
         xx, tt = self.train_custom_loop._shuffle_data(self.x, self.t)
         self.assertEqual(xx.shape, (300, 2))
         self.assertEqual(tt.shape, (300, 3))
 
-    def test_update_params_with_grads(self):
+    def test_update_params_with_grads(self) -> None:
         loss = self.train_custom_loop._update_params_with_grads(self.batch_x, self.batch_t, self.total_loss, self.loss_count)
         self.assertEqual(loss, 1.1074495352433567)
 
-    def test_learning_process(self):
+    def test_learning_process(self) -> None:
         loss             = self.train_custom_loop._update_params_with_grads(self.batch_x, self.batch_t, self.total_loss, self.loss_count)
         self.total_loss += loss
         self.loss_count += 1
@@ -49,17 +49,17 @@ class TestTrainer(unittest.TestCase):
         *_, process      = self.train_custom_loop._learning_process(self.total_loss, self.loss_count, epoch, iters, max_iters)
         self.assertEqual(process, '| epoch 10 | iter 10 / 10 | loss 1.07')
 
-    def test_update(self):
+    def test_update(self) -> None:
         loss_list = self.train_custom_loop.update(self.x, self.t, self.max_epoch, self.batch_size)
         self.assertEqual(len(loss_list), 300)
 
-    def test_save_plot_image(self):
+    def test_save_plot_image(self) -> None:
         self.train_custom_loop.update(self.x, self.t, self.max_epoch, self.batch_size)
         file_path = '../img/train_custom_loop_plot.png'
         self.train_custom_loop.save_plot_image(file_path)
         self.assertTrue(os.path.exists(file_path))
 
-    def test_save_dicision_boundary_image(self):
+    def test_save_dicision_boundary_image(self) -> None:
         self.train_custom_loop.update(self.x, self.t, self.max_epoch, self.batch_size)
         file_path = '../img/dicision_boundary.png'
         self.train_custom_loop.save_dicision_boundary_image(self.x, self.t, file_path)

@@ -9,21 +9,21 @@ from variable import Variable
 import numpy as np
 
 class TestDifferenciation(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         data          = np.array(0.5)
-        self.x        = Variable(data)
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+        self.x: Variable        = Variable(data)
+        self.pycaches: list[str] = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_numerical_diff_1(self):
+    def test_numerical_diff_1(self) -> None:
         dy = numerical_diff(f, self.x)
         self.assertEqual(dy, 3.2974426293330694)
 
-    def test_f(self):
+    def test_f(self) -> None:
         dy = f(self.x)
         self.assertEqual(dy.data, 1.648721270700128)
 

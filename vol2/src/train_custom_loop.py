@@ -1,4 +1,6 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from plot_shim import plt
 import sys
 sys.path.append('./models')
@@ -7,31 +9,31 @@ from sgd import SGD
 from two_layer_net import TwoLayerNet
 
 class TrainCustomLoop:
-    def __init__(self, input_size = 2, hidden_size = 10, output_size = 3, learning_rate=1.0):
+    def __init__(self, input_size: int = 2, hidden_size: int = 10, output_size: int = 3, learning_rate: float = 1.0) -> None:
         # Generate model, optimiser
         self.model     = TwoLayerNet(input_size, hidden_size, output_size)
         self.optimizer = SGD(learning_rate)
         self.loss_list = []
 
-    def _shuffle_data(self, x, t):
+    def _shuffle_data(self, x: NDArray[Any], t: NDArray[Any]) -> tuple[NDArray[Any], NDArray[Any]]:
         data_size = len(x)
         index     = np.random.permutation(data_size)
         xx        = x[index]
         tt        = t[index]
         return xx, tt
 
-    def _update_params_with_grads(self, batch_x, batch_t, total_loss, loss_count):
+    def _update_params_with_grads(self, batch_x: NDArray[Any], batch_t: NDArray[Any], total_loss: float, loss_count: int) -> float:
         loss = self.model.forward(batch_x, batch_t)
         self.model.backward()
         self.optimizer.update(self.model.params, self.model.grads)
         return loss
 
-    def _learning_process(self, total_loss, loss_count, epoch, iters, max_iters):
+    def _learning_process(self, total_loss: float, loss_count: int, epoch: int, iters: int, max_iters: int) -> tuple[float, str]:
         average_loss = total_loss / loss_count
         process = '| epoch %d | iter %d / %d | loss %.2f' % (epoch + 1, iters + 1, max_iters, average_loss)
         return average_loss, process
 
-    def update(self, x, t, max_epoch, batch_size):
+    def update(self, x: NDArray[Any], t: NDArray[Any], max_epoch: int, batch_size: int) -> list[float]:
         data_size  = len(x)
         max_iters  = data_size // batch_size
         total_loss = 0
@@ -51,14 +53,14 @@ class TrainCustomLoop:
                     loss_count = 0
         return self.loss_list
 
-    def save_plot_image(self, file_path):
+    def save_plot_image(self, file_path: str) -> None:
         plt.figure()
         plt.plot(np.arange(len(self.loss_list)), self.loss_list, label='train')
         plt.xlabel('iterations (x10)')
         plt.ylabel('loss')
         plt.savefig(file_path)
 
-    def save_dicision_boundary_image(self, x, t, file_path, h=0.001):
+    def save_dicision_boundary_image(self, x: NDArray[Any], t: NDArray[Any], file_path: str, h: float = 0.001) -> None:
         # Plot boundary
         x_min, x_max = x[:, 0].min() - .1, x[:, 0].max() + .1
         y_min, y_max = x[:, 1].min() - .1, x[:, 1].max() + .1

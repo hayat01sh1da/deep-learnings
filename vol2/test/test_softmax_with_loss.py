@@ -10,7 +10,7 @@ sys.path.append('./src/layers')
 from softmax_with_loss import SoftMaxWithLoss
 
 class TestSoftMaxWithLoss(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.softmax_with_loss = SoftMaxWithLoss()
         self.x                 = np.array([
             [-0.27291637,  3.0623984 ,  1.08772839,  1.21167545],
@@ -26,16 +26,16 @@ class TestSoftMaxWithLoss(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         loss = self.softmax_with_loss.forward(self.x, self.t)
         self.assertEqual(loss, 0.5879459780961449)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         self.softmax_with_loss.forward(self.x, self.t)
         dx = self.softmax_with_loss.backward()
         assert_almost_equal(np.array([

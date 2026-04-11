@@ -1,8 +1,10 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from lstm import LSTM
 
 class TimeLSTM:
-    def __init__(self, Wx, Wh, b, stateful = False):
+    def __init__(self, Wx: NDArray[Any], Wh: NDArray[Any], b: NDArray[Any], stateful: bool = False) -> None:
         self.params   = [Wx, Wh, b]
         self.grads    = [np.zeros_like(Wx), np.zeros_like(Wh), np.zeros_like(b)]
         self.layers   = []
@@ -11,15 +13,15 @@ class TimeLSTM:
         self.dh       = None
         self.stateful = stateful
 
-    def set_state(self, h, c = None):
+    def set_state(self, h: NDArray[Any], c: NDArray[Any] | None = None) -> None:
         self.h = h
         self.c = c
 
-    def reset_state(self):
+    def reset_state(self) -> None:
         self.h = None
         self.c = None
 
-    def forward(self, xs):
+    def forward(self, xs: NDArray[Any]) -> NDArray[Any]:
         Wx, Wh, b = self.params
         N, T, D   = xs.shape
         H         = Wh.shape[0]
@@ -35,7 +37,7 @@ class TimeLSTM:
             self.layers.append(layer)
         return hs
 
-    def backward(self, dhs):
+    def backward(self, dhs: NDArray[Any]) -> NDArray[Any]:
         Wx, Wh, b = self.params
         N, T, H   = dhs.shape
         D         = Wx.shape[0]

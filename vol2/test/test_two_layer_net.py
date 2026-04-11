@@ -11,26 +11,26 @@ sys.path.append('./src/models')
 from two_layer_net import TwoLayerNet
 
 class TestTwoLayerNet(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.two_layer_net = TwoLayerNet(2, 4, 3)
         self.x             = np.random.randn(4, 2)
         self.t             = np.random.randn(4, 3)
         self.pycaches      = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_predict(self):
+    def test_predict(self) -> None:
         x = self.two_layer_net._predict(self.x)
         self.assertEqual(x.shape, (4, 3))
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         loss = self.two_layer_net.forward(self.x, self.t)
         self.assertEqual(int(loss), 1)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         self.two_layer_net.forward(self.x, self.t)
         dout = self.two_layer_net.backward()
         self.assertEqual(dout.shape, (4, 2))

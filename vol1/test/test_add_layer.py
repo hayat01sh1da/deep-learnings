@@ -8,7 +8,7 @@ from add_layer import AddLayer
 from mul_layer import MulLayer
 
 class TestAddLayer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.apple_layer        = MulLayer()
         self.orange_layer       = MulLayer()
         self.apple_orange_layer = AddLayer()
@@ -20,19 +20,19 @@ class TestAddLayer(unittest.TestCase):
         self.tax                = 1.1
         self.pycaches           = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         apple_price        = self.apple_layer.forward(self.apple, self.apple_num)
         orange_price       = self.orange_layer.forward(self.orange, self.orange_num)
         apple_orange_price = self.apple_orange_layer.forward(apple_price, orange_price)
         price              = self.tax_layer.forward(apple_orange_price, self.tax)
         self.assertEqual(int(price), 715)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         apple_price        = self.apple_layer.forward(self.apple, self.apple_num)
         orange_price       = self.orange_layer.forward(self.orange, self.orange_num)
         apple_orange_price = self.apple_orange_layer.forward(apple_price, orange_price)

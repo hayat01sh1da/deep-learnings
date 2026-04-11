@@ -9,19 +9,19 @@ sys.path.append('./src/layers')
 from embedding_dot import EmbeddingDot
 
 class TestEmbeddingDot(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         W                  = np.arange(21).reshape(7, 3)
         self.embedding_dot = EmbeddingDot(W)
         self.index         = np.array([0, 3, 1])
         self.h             = np.arange(9).reshape(3, 3)
         self.pycaches      = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_params(self):
+    def test_params(self) -> None:
         params, = self.embedding_dot.params
         assert_array_equal(np.array([
             [ 0,  1,  2],
@@ -33,7 +33,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [18, 19, 20]
         ]), params)
 
-    def test_initial_grads(self):
+    def test_initial_grads(self) -> None:
         grads, = self.embedding_dot.grads
         assert_array_equal(np.array([
             [0, 0, 0],
@@ -45,11 +45,11 @@ class TestEmbeddingDot(unittest.TestCase):
             [0, 0, 0]
         ]), grads)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         out = self.embedding_dot.forward(self.h, self.index)
         assert_array_equal(np.array([5, 122, 86]), out)
 
-    def test_h(self):
+    def test_h(self) -> None:
         self.embedding_dot.forward(self.h, self.index)
         h, *_ = self.embedding_dot.cache
         assert_array_equal(np.array([
@@ -58,7 +58,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [6, 7, 8]
         ]), h)
 
-    def test_target_W(self):
+    def test_target_W(self) -> None:
         self.embedding_dot.forward(self.h, self.index)
         *_, target_W = self.embedding_dot.cache
         assert_array_equal(np.array([
@@ -67,7 +67,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [3,  4,  5]
         ]), target_W)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dout = self.embedding_dot.forward(self.h, self.index)
         dh   = self.embedding_dot.backward(dout)
         assert_array_equal(np.array([
@@ -76,7 +76,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [ 258,  344,  430]
         ]), dh)
 
-    def test_dtarget_W(self):
+    def test_dtarget_W(self) -> None:
         dout = self.embedding_dot.forward(self.h, self.index)
         self.embedding_dot.backward(dout)
         assert_array_equal(np.array([
@@ -85,7 +85,7 @@ class TestEmbeddingDot(unittest.TestCase):
             [516, 602, 688]
         ]), self.embedding_dot.cache)
 
-    def test_grads(self):
+    def test_grads(self) -> None:
         dout = self.embedding_dot.forward(self.h, self.index)
         self.embedding_dot.backward(dout)
         grads, = self.embedding_dot.grads

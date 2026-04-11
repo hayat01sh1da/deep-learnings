@@ -14,7 +14,7 @@ from ptb import *
 from sgd import SGD
 
 class TestRNNLMTrainer(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.batch_size                = 10
         wordvec_size                   = 100
         hidden_size                    = 100
@@ -32,12 +32,12 @@ class TestRNNLMTrainer(unittest.TestCase):
         self.rnnlm_trainer             = RNNLMTrainer(model, optimiser)
         self.pycaches                  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_get_batch(self):
+    def test_get_batch(self) -> None:
         batch_x, batch_t = self.rnnlm_trainer._get_batch(self.xs, self.ts, self.batch_size, self.time_size)
         assert_array_equal(np.array([
             [  0,   1,   2,   3,   4],
@@ -64,11 +64,11 @@ class TestRNNLMTrainer(unittest.TestCase):
             [359, 181, 328, 386, 387]
         ]), batch_t)
 
-    def test_fit(self):
+    def test_fit(self) -> None:
         training_process = self.rnnlm_trainer.fit(self.xs, self.ts, self.max_epoch, self.batch_size, self.time_size)
         self.assertEqual(len(training_process), 100)
 
-    def test_save_plot_image(self):
+    def test_save_plot_image(self) -> None:
         self.rnnlm_trainer.fit(self.xs, self.ts, self.max_epoch, self.batch_size, self.time_size)
         file_path = '../img/rnnlm_trainer.png'
         self.rnnlm_trainer.save_plot_image(file_path)

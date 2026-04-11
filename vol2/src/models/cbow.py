@@ -1,10 +1,12 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from layers.embedding import Embedding
 from layers.negative_sampling_loss import NegativeSamplingLoss
 
 
 class CBOW:
-    def __init__(self, vocab_size, hidden_size, window_size, corpus):
+    def __init__(self, vocab_size: int, hidden_size: int, window_size: int, corpus: NDArray[Any]) -> None:
         V = vocab_size
         H = hidden_size
 
@@ -30,7 +32,7 @@ class CBOW:
         # Assign a word embedding to an instance variable
         self.word_vecs = W_in
 
-    def forward(self, contexts, target):
+    def forward(self, contexts: NDArray[Any], target: NDArray[Any]) -> float:
         h = 0
         for i, in_layer in enumerate(self.in_layers):
             h += in_layer.forward(contexts[:, i])
@@ -38,7 +40,7 @@ class CBOW:
         loss = self.ns_loss_layer.forward(h, target)
         return loss
 
-    def backward(self, dout=1):
+    def backward(self, dout: int = 1) -> None:
         dout = self.ns_loss_layer.backward(dout)
         dout *= 1 / len(self.in_layers)
         for layer in self.in_layers:

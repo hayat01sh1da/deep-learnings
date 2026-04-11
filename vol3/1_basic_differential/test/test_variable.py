@@ -9,15 +9,15 @@ import numpy as np
 from numpy.testing import assert_array_equal
 
 class TestVariable(unittest.TestCase):
-    def setUp(self):
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+    def setUp(self) -> None:
+        self.pycaches: list[str] = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_variable_1(self):
+    def test_variable_1(self) -> None:
         data     = np.array(1)
         variable = Variable(data)
         assert_array_equal(np.array(1), variable.get_data())
@@ -26,7 +26,7 @@ class TestVariable(unittest.TestCase):
         variable.set_data(new_data)
         assert_array_equal(np.array(10), variable.get_data())
 
-    def test_variable_2(self):
+    def test_variable_2(self) -> None:
         data     = np.array([1, 2, 3])
         variable = Variable(data)
         assert_array_equal(np.array([1, 2, 3]), variable.get_data())
@@ -35,7 +35,7 @@ class TestVariable(unittest.TestCase):
         variable.set_data(new_data)
         assert_array_equal(np.array([1., 2., 3.]), variable.get_data())
 
-    def test_variable_3(self):
+    def test_variable_3(self) -> None:
         data = np.array([
             [1, 2, 3],
             [4, 5, 6]

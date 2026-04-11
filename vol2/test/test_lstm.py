@@ -10,7 +10,7 @@ sys.path.append('./src/layers')
 from lstm import LSTM
 
 class TestLSTM(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         Wx = np.array([
             [
                 9.72009451e-01, -4.97642862e-01,  6.45448952e-01,
@@ -102,12 +102,12 @@ class TestLSTM(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         c_next, h_next = self.lstm.forward(self.x, self.h_prev, self.c_prev)
         assert_almost_equal(np.array([
             [ 0.59989084, -0.56519862,  0.98400225],
@@ -138,7 +138,7 @@ class TestLSTM(unittest.TestCase):
             [ 1.86996338e-01, -5.96078729e-01,  2.76307207e-01]
         ]), h_next)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dc_next, dh_next     = self.lstm.forward(self.x, self.h_prev, self.c_prev)
         dx, dh_prev, dc_prev = self.lstm.backward(dc_next, dh_next)
         assert_almost_equal(np.array([
@@ -184,7 +184,7 @@ class TestLSTM(unittest.TestCase):
             [ 1.32898508e-01, -6.72948492e-01,  1.87992760e-01]
         ]), dc_prev)
 
-    def test_grads_diff(self):
+    def test_grads_diff(self) -> None:
         _before_Wx_grads, _before_Wh_grads, _before_b_grads = self.lstm.grads
         before_Wx_grads                                     = copy.copy(_before_Wx_grads)
         before_Wh_grads                                     = copy.copy(_before_Wh_grads)

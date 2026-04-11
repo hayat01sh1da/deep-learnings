@@ -15,7 +15,7 @@ from simple_word2vec import SimpleWord2Vec
 from count_based_methods import CountBasedMethod
 
 class TestSimpleCBOW(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         text                       = 'You said good-bye and I said hello.'
         cbm                        = CountBasedMethod()
         word_list                  = cbm.text_to_word_list(text)
@@ -28,16 +28,16 @@ class TestSimpleCBOW(unittest.TestCase):
         self.contexts, self.target = self.simple_word2vec.create_contexts_target(self.corpus)
         self.pycaches              = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         loss = self.cbow.forward(self.contexts, self.target)
         self.assertEqual(round(loss, 3), 4.159)
 
-    def test_grads_diff(self):
+    def test_grads_diff(self) -> None:
         in_layer, *_                  = self.cbow.in_layers
         before_in_layer_grad,         = in_layer.grads
         before_in_layer_grad          = copy.copy(before_in_layer_grad)

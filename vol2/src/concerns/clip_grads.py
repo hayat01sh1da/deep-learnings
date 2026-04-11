@@ -1,6 +1,8 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
-def clip_grads(grads, max_norm):
+def clip_grads(grads: list[NDArray[Any]], max_norm: float) -> None:
     total_norm = 0
     for grad in grads:
         total_norm += np.sum(grad ** 2)

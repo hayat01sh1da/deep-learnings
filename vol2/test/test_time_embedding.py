@@ -10,7 +10,7 @@ sys.path.append('./src/layers')
 from time_embedding import TimeEmbedding
 
 class TestTimeEmbedding(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         W = np.array([
             [ 0.3280114 ,  0.51719588,  2.56566087],
             [ 0.53182669,  0.85125353, -0.05985388],
@@ -27,16 +27,16 @@ class TestTimeEmbedding(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         out = self.time_embedding.forward(self.xs)
         self.assertEqual(out.shape, (2, 4, 3))
 
-    def test_grads_diff(self):
+    def test_grads_diff(self) -> None:
         _grads,      = self.time_embedding.grads
         before_grads = copy.copy(_grads)
         dout         = self.time_embedding.forward(self.xs)

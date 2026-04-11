@@ -4,6 +4,8 @@ import os
 import urllib.request
 import pickle
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 
 
 url_base = 'https://raw.githubusercontent.com/tomsercu/lstm/master/data/'
@@ -22,7 +24,7 @@ vocab_file = 'ptb.vocab.pkl'
 dataset_dir = os.path.dirname(os.path.abspath(__file__))
 
 
-def _download(file_name):
+def _download(file_name: str) -> None:
     file_path = os.path.join(dataset_dir, file_name)
 
     if os.path.exists(file_path):
@@ -40,7 +42,7 @@ def _download(file_name):
     print('Done')
 
 
-def load_vocab():
+def load_vocab() -> tuple[dict[str, int], dict[int, str]]:
     vocab_path = os.path.join(dataset_dir, vocab_file)
 
     if os.path.exists(vocab_path):
@@ -70,7 +72,7 @@ def load_vocab():
     return word_to_id, id_to_word
 
 
-def load_data(data_type='train'):
+def load_data(data_type: str = 'train') -> tuple[NDArray[Any], dict[str, int], dict[int, str]]:
     """
     :param data_type: data type: 'train', 'test' or 'valid(val)'
     :return:

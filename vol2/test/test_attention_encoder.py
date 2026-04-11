@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from attention_encoder import AttentionEncoder
 
 class TestAttentionEncoder(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         vocab_size             = 13
         wordvec_size           = 100
         hidden_size            = 100
@@ -17,16 +17,16 @@ class TestAttentionEncoder(unittest.TestCase):
         self.xs                = np.random.randint(0, 13, (7, 3))
         self.pycaches          = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         hs = self.attention_encoder.forward(self.xs)
         self.assertEqual(hs.shape, (7, 3, 100))
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         dhs  = self.attention_encoder.forward(self.xs)
         dout = self.attention_encoder.backward(dhs)
         self.assertEqual(dout, None)

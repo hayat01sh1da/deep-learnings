@@ -9,7 +9,7 @@ sys.path.append('./src/layers')
 from neural_network import NeuralNetwork
 
 class TestNeuralNetwork(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         x                     = np.random.randn(10, 2)
         W1                    = np.random.randn(2, 4)
         b1                    = np.random.randn(4)
@@ -19,16 +19,16 @@ class TestNeuralNetwork(unittest.TestCase):
         self.neural_network_2 = NeuralNetwork(x, W2, b2)
         self.pycaches         = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_get_hidden_layer_dim(self):
+    def test_get_hidden_layer_dim(self) -> None:
         h = self.neural_network_1.get_hidden_layer()
         self.assertEqual(h.shape, (10, 4))
 
-    def test_get_output_layer(self):
+    def test_get_output_layer(self) -> None:
         h  = self.neural_network_1.get_hidden_layer()
         dx = self.neural_network_2.get_output_layer(h)
         self.assertEqual(dx.shape, (10, 3))

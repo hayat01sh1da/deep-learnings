@@ -1,4 +1,6 @@
 import numpy as np
+from numpy.typing import NDArray
+from typing import Any
 from collections import OrderedDict
 from convolution import Convolution
 from relu import Relu
@@ -7,7 +9,7 @@ from affine import Affine
 from soft_max_with_loss import SoftmaxWithLoss
 
 class SimpleConvolutionNetwork:
-    def __init__(self, input_dim = (1, 28, 28), conv_param = {'filter_num': 30, 'filter_size': 5, 'pad': 0, 'stride': 1}, hidden_size = 100, output_size = 10, weight_init_std = 0.01):
+    def __init__(self, input_dim: tuple[int, ...] = (1, 28, 28), conv_param: dict[str, int] = {'filter_num': 30, 'filter_size': 5, 'pad': 0, 'stride': 1}, hidden_size: int = 100, output_size: int = 10, weight_init_std: float = 0.01) -> None:
         filter_num             = conv_param['filter_num']
         filter_size            = conv_param['filter_size']
         filter_pad             = conv_param['pad']
@@ -31,16 +33,16 @@ class SimpleConvolutionNetwork:
         self.layers['Affine2'] = Affine(self.params['W3'], self.params['b3'])
         self.last_layer        = SoftmaxWithLoss()
 
-    def predict(self, x):
+    def predict(self, x: NDArray[Any]) -> NDArray[Any]:
         for layer in self.layers.values():
             x = layer.forward()
         return x
 
-    def loss(self, x, t):
+    def loss(self, x: NDArray[Any], t: NDArray[Any]) -> float:
         y = self.predict(x)
         return self.last_layer.forward(y, t)
 
-    def gradient(self, x, t):
+    def gradient(self, x: NDArray[Any], t: NDArray[Any]) -> dict[str, NDArray[Any]]:
         # forward
         self.loss(x, t)
 

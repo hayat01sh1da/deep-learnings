@@ -1,6 +1,8 @@
 import pickle
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 sys.path.append('./layers')
 sys.path.append('./models')
 from base_model import BaseModel
@@ -12,7 +14,7 @@ from softmax import Softmax
 from time_softmax_with_loss import TimeSoftmaxWithLoss
 
 class BetterRNNLM(BaseModel):
-    def __init__(self, vocab_size = 10000, wordvec_size = 650, hidden_size = 650, dropout_ratio = 0.5):
+    def __init__(self, vocab_size: int = 10000, wordvec_size: int = 650, hidden_size: int = 650, dropout_ratio: float = 0.5) -> None:
         V  = vocab_size
         D  = wordvec_size
         H  = hidden_size
@@ -47,25 +49,25 @@ class BetterRNNLM(BaseModel):
             self.params += layer.params
             self.grads  += layer.grads
 
-    def _predict(self, xs, train_flag=False):
+    def _predict(self, xs: NDArray[Any], train_flag: bool = False) -> NDArray[Any]:
         for dropout_layer in self.dropout_layers:
             dropout_layer.train_flag = train_flag
         for layer in self.layers:
             xs = layer.forward(xs)
         return xs
 
-    def forward(self, xs, ts, train_flag=True):
+    def forward(self, xs: NDArray[Any], ts: NDArray[Any], train_flag: bool = True) -> float:
         score = self._predict(xs, train_flag)
         loss  = self.loss_layer.forward(score, ts)
         return loss
 
-    def backward(self, dout = 1):
+    def backward(self, dout: int = 1) -> NDArray[Any]:
         dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)
         return dout
 
-    def reset_state(self):
+    def reset_state(self) -> None:
         for lstm_layer in self.lstm_layers:
             lstm_layer.reset_state()
 

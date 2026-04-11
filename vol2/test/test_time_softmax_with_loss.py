@@ -10,7 +10,7 @@ sys.path.append('./src/layers')
 from time_softmax_with_loss import TimeSoftmaxWithLoss
 
 class TestTimeSoftmaxWithLoss(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.time_softmax_with_loss = TimeSoftmaxWithLoss()
         self.xs                     = np.array([
             [[3, 1, 3], [1, 3, 0], [2, 1, 1]],
@@ -24,16 +24,16 @@ class TestTimeSoftmaxWithLoss(unittest.TestCase):
         ])
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_forward(self):
+    def test_forward(self) -> None:
         loss = self.time_softmax_with_loss.forward(self.xs, self.ts)
         self.assertEqual(loss, 1.1399003832212435)
 
-    def test_backward(self):
+    def test_backward(self) -> None:
         self.time_softmax_with_loss.forward(self.xs, self.ts)
         dx = self.time_softmax_with_loss.backward()
         assert_almost_equal(np.array([

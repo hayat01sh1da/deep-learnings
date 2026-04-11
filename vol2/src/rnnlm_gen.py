@@ -1,9 +1,11 @@
 import numpy as np
 import sys
+from numpy.typing import NDArray
+from typing import Any
 from better_rnnlm import BetterRNNLM
 
 class RNNLMGen(BetterRNNLM):
-    def word_ids_list(self, start_id, skip_ids = None, sample_size = 100):
+    def word_ids_list(self, start_id: int, skip_ids: list[int] | None = None, sample_size: int = 100) -> list[int]:
         word_ids = [start_id]
         x        = start_id
         while len(word_ids) < sample_size:
@@ -16,7 +18,7 @@ class RNNLMGen(BetterRNNLM):
                 word_ids.append(int(x))
         return word_ids
 
-    def generate_text(self, id_to_word, word_ids):
+    def generate_text(self, id_to_word: dict[int, str], word_ids: list[int]) -> str:
         _text = ' '.join([id_to_word[i] for i in word_ids])
         text  = _text.replace(' <eos>', '.\n')
         return text
