@@ -1,7 +1,7 @@
 import numpy as np
 import os, sys
-sys.path.append(os.pardir)
-from dataset.mnist import load_mnist
+sys.path.append('../dataset/mnist.py')
+from mnist import load_mnist
 
 class NeuralNetworkLearning:
     def __init__(self):
