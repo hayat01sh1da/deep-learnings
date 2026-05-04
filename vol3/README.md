@@ -2,8 +2,14 @@
 
 - [『ゼロから作るDeep Learning ❸ ―フレームワーク編』](https://bookmeter.com/books/15556819)
 
-## 2. Clone the repository
+## 2. Install Libraries via requirements.txt
 
-```bash
-$ git clone git@github.com:hayat01sh1da/deep_learning_vol3.git
+```command
+$ pip install -r requirements.txt
+```
+
+## 3. Unit Test
+
+```command
+$ TBA
 ```
