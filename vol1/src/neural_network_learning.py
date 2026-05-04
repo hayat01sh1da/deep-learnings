@@ -2,8 +2,8 @@ import numpy as np
 from numpy.typing import NDArray
 from typing import Any, Callable
 import os, sys
-sys.path.append(os.pardir)
-from dataset.mnist import load_mnist
+sys.path.append('../dataset/mnist.py')
+from mnist import load_mnist
 
 class NeuralNetworkLearning:
     def __init__(self) -> None:

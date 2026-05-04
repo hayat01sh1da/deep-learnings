@@ -47,4 +47,4 @@ jobs:
         run: mypy .
       - name: Run UnitTest
         working-directory: ./vol2
-        run: python -m unittest discover ./test
+        run: pytest
