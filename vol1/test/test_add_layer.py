@@ -1,52 +1,47 @@
-import unittest
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
+import pytest
+
 from add_layer import AddLayer
 from mul_layer import MulLayer
 
-class TestAddLayer(unittest.TestCase):
-    def setUp(self):
-        self.apple_layer        = MulLayer()
-        self.orange_layer       = MulLayer()
-        self.apple_orange_layer = AddLayer()
-        self.tax_layer          = MulLayer()
-        self.apple              = 100
-        self.apple_num          = 2
-        self.orange             = 150
-        self.orange_num         = 3
-        self.tax                = 1.1
-        self.pycaches           = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def layers():
+    return {
+        'apple': MulLayer(),
+        'orange': MulLayer(),
+        'apple_orange': AddLayer(),
+        'tax': MulLayer(),
+    }
 
-    def test_forward(self):
-        apple_price        = self.apple_layer.forward(self.apple, self.apple_num)
-        orange_price       = self.orange_layer.forward(self.orange, self.orange_num)
-        apple_orange_price = self.apple_orange_layer.forward(apple_price, orange_price)
-        price              = self.tax_layer.forward(apple_orange_price, self.tax)
-        self.assertEqual(int(price), 715)
 
-    def test_backward(self):
-        apple_price        = self.apple_layer.forward(self.apple, self.apple_num)
-        orange_price       = self.orange_layer.forward(self.orange, self.orange_num)
-        apple_orange_price = self.apple_orange_layer.forward(apple_price, orange_price)
-        self.tax_layer.forward(apple_orange_price, self.tax)
-        dprice                      = 1
-        dall_price, dtax            = self.tax_layer.backward(dprice)
-        dapple_price, dorange_price = self.apple_orange_layer.backward(dall_price)
-        dorange, dorange_num        = self.orange_layer.backward(dorange_price)
-        dapple, dapple_num          = self.apple_layer.backward(dapple_price)
-        self.assertEqual(dapple, 2.2)
-        self.assertEqual(int(dapple_num), 110)
-        self.assertEqual(float(f'{dorange:.1f}'), 3.3)
-        self.assertEqual(int(dorange_num), 165)
-        self.assertEqual(dtax, 650)
+APPLE = 100
+APPLE_NUM = 2
+ORANGE = 150
+ORANGE_NUM = 3
+TAX = 1.1
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_forward(layers):
+    apple_price = layers['apple'].forward(APPLE, APPLE_NUM)
+    orange_price = layers['orange'].forward(ORANGE, ORANGE_NUM)
+    apple_orange_price = layers['apple_orange'].forward(apple_price, orange_price)
+    price = layers['tax'].forward(apple_orange_price, TAX)
+    assert int(price) == 715
+
+
+def test_backward(layers):
+    apple_price = layers['apple'].forward(APPLE, APPLE_NUM)
+    orange_price = layers['orange'].forward(ORANGE, ORANGE_NUM)
+    apple_orange_price = layers['apple_orange'].forward(apple_price, orange_price)
+    layers['tax'].forward(apple_orange_price, TAX)
+
+    dall_price, dtax = layers['tax'].backward(1)
+    dapple_price, dorange_price = layers['apple_orange'].backward(dall_price)
+    dorange, dorange_num = layers['orange'].backward(dorange_price)
+    dapple, dapple_num = layers['apple'].backward(dapple_price)
+
+    assert dapple == 2.2
+    assert int(dapple_num) == 110
+    assert float(f'{dorange:.1f}') == 3.3
+    assert int(dorange_num) == 165
+    assert dtax == 650

@@ -1,36 +1,19 @@
-import unittest
 import numpy as np
+import pytest
 from numpy.testing import assert_almost_equal
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
-sys.path.append('./src/lib')
+
 from softmax_with_loss import SoftmaxWithLoss
 
-class TestSoftmaxWithLoss(unittest.TestCase):
-    def setUp(self):
-        self.swl      = SoftmaxWithLoss()
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def swl():
+    return SoftmaxWithLoss()
 
-    def test_forward(self):
-        x    = np.array([0.3, 0.6, 0.9])
-        t    = np.array([0, 0, 1])
-        loss = self.swl.forward(x, t)
-        self.assertEqual(loss, 0.8283899409431649)
 
-    def test_backward(self):
-        x = np.array([0.3, 0.6, 0.9])
-        t = np.array([0, 0, 1])
-        self.swl.forward(x, t)
-        dx = self.swl.backward()
-        assert_almost_equal(np.array([0.07989816,  0.10785123, -0.18774939]), dx)
+def test_forward(swl):
+    assert swl.forward(np.array([0.3, 0.6, 0.9]), np.array([0, 0, 1])) == 0.8283899409431649
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_backward(swl):
+    swl.forward(np.array([0.3, 0.6, 0.9]), np.array([0, 0, 1]))
+    assert_almost_equal(swl.backward(), np.array([0.07989816, 0.10785123, -0.18774939]))
