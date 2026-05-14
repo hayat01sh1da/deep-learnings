@@ -1,34 +1,25 @@
-import unittest
 import numpy as np
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
-sys.path.append('./src/layers')
+import pytest
+
 from attention import Attention
 
-class TestAttemtion(unittest.TestCase):
-    def setUp(self):
-        self.attention = Attention()
-        self.hs        = np.random.randn(10, 5, 4)
-        self.h         = np.random.randn(10, 4)
-        self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def attention_setup():
+    attention = Attention()
+    hs = np.random.randn(10, 5, 4)
+    h = np.random.randn(10, 4)
+    return attention, hs, h
 
-    def test_forward(self):
-        out = self.attention.forward(self.hs, self.h)
-        self.assertEqual(out.shape, (10, 4))
 
-    def test_backward(self):
-        dout    = self.attention.forward(self.hs, self.h)
-        dhs, dh = self.attention.backward(dout)
-        self.assertEqual(dhs.shape, (10, 5, 4))
-        self.assertEqual(dh.shape, (10, 5))
+def test_forward(attention_setup):
+    attention, hs, h = attention_setup
+    assert attention.forward(hs, h).shape == (10, 4)
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_backward(attention_setup):
+    attention, hs, h = attention_setup
+    dout = attention.forward(hs, h)
+    dhs, dh = attention.backward(dout)
+    assert dhs.shape == (10, 5, 4)
+    assert dh.shape == (10, 5)
