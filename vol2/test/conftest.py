@@ -7,6 +7,7 @@ sys.path.append('./src')
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
 sys.path.append('./src/models')
+sys.path.append('./src/optimisers')
 
 
 import pytest
