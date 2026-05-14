@@ -24,7 +24,8 @@ TAX = 1.1
 def test_forward(layers):
     apple_price = layers['apple'].forward(APPLE, APPLE_NUM)
     orange_price = layers['orange'].forward(ORANGE, ORANGE_NUM)
-    apple_orange_price = layers['apple_orange'].forward(apple_price, orange_price)
+    apple_orange_price = layers['apple_orange'].forward(
+        apple_price, orange_price)
     price = layers['tax'].forward(apple_orange_price, TAX)
     assert int(price) == 715
 
@@ -32,7 +33,8 @@ def test_forward(layers):
 def test_backward(layers):
     apple_price = layers['apple'].forward(APPLE, APPLE_NUM)
     orange_price = layers['orange'].forward(ORANGE, ORANGE_NUM)
-    apple_orange_price = layers['apple_orange'].forward(apple_price, orange_price)
+    apple_orange_price = layers['apple_orange'].forward(
+        apple_price, orange_price)
     layers['tax'].forward(apple_orange_price, TAX)
 
     dall_price, dtax = layers['tax'].backward(1)

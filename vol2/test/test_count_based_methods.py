@@ -26,7 +26,8 @@ def cbm_setup():
 
 
 def test_words(cbm_setup):
-    assert cbm_setup['word_list'] == ['you', 'said', 'good-bye', 'and', 'i', 'said', 'hello', '.']
+    assert cbm_setup['word_list'] == ['you', 'said',
+                                      'good-bye', 'and', 'i', 'said', 'hello', '.']
 
 
 def test_take_out_query(cbm_setup):
@@ -76,10 +77,22 @@ def test_output_result_asc(cbm_setup):
 
 def test_preprocess(cbm_setup):
     assert cbm_setup['word_to_id'] == {
-        'you': 0, 'said': 1, 'good-bye': 2, 'and': 3, 'i': 4, 'hello': 5, '.': 6,
+        'you': 0,
+        'said': 1,
+        'good-bye': 2,
+        'and': 3,
+        'i': 4,
+        'hello': 5,
+        '.': 6,
     }
     assert cbm_setup['id_to_word'] == {
-        0: 'you', 1: 'said', 2: 'good-bye', 3: 'and', 4: 'i', 5: 'hello', 6: '.',
+        0: 'you',
+        1: 'said',
+        2: 'good-bye',
+        3: 'and',
+        4: 'i',
+        5: 'hello',
+        6: '.',
     }
     assert_array_equal(cbm_setup['corpus'], np.array([0, 1, 2, 3, 4, 1, 5, 6]))
 

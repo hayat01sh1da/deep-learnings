@@ -17,7 +17,8 @@ def test_sigmoid(nnw):
 
 def test_softmax(nnw):
     a = np.array([0.3, 2.9, 4.0])
-    assert_almost_equal(nnw._softmax(a), np.array([0.01821127, 0.24519181, 0.73659691]))
+    assert_almost_equal(nnw._softmax(a), np.array(
+        [0.01821127, 0.24519181, 0.73659691]))
 
 
 def test_step_func_and_relu_and_matrix(nnw):
@@ -27,4 +28,5 @@ def test_step_func_and_relu_and_matrix(nnw):
 
     a = np.array([[1, 2], [3, 4]])
     b = np.array([[5, 6], [7, 8]])
-    assert_array_equal(nnw.matrix_product(a, b), np.array([[19, 22], [43, 50]]))
+    assert_array_equal(nnw.matrix_product(
+        a, b), np.array([[19, 22], [43, 50]]))

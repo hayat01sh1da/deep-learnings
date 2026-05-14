@@ -10,25 +10,63 @@ def nwl():
     return NeuralNetworkLearning()
 
 
-@pytest.mark.parametrize(
-    ('y', 'expected'),
-    [
-        ([0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0], 0.09750000000000003),
-        ([0.1, 0.05, 0.1, 0.0, 0.05, 0.1, 0.0, 0.6, 0.0, 0.0], 0.5975),
-    ],
-)
+@pytest.mark.parametrize(('y',
+                          'expected'),
+                         [([0.1,
+                            0.05,
+                            0.6,
+                            0.0,
+                            0.05,
+                            0.1,
+                            0.0,
+                            0.1,
+                            0.0,
+                            0.0],
+                           0.09750000000000003),
+                          ([0.1,
+                            0.05,
+                            0.1,
+                            0.0,
+                            0.05,
+                            0.1,
+                            0.0,
+                            0.6,
+                            0.0,
+                            0.0],
+                           0.5975),
+                          ],
+                         )
 def test_mean_squared_error(nwl, y, expected):
     t = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
     assert nwl.mean_squared_error(np.array(y), np.array(t)) == expected
 
 
-@pytest.mark.parametrize(
-    ('y', 'expected'),
-    [
-        ([0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0], 0.510825457099338),
-        ([0.1, 0.05, 0.1, 0.0, 0.05, 0.1, 0.0, 0.6, 0.0, 0.0], 2.302584092994546),
-    ],
-)
+@pytest.mark.parametrize(('y',
+                          'expected'),
+                         [([0.1,
+                            0.05,
+                            0.6,
+                            0.0,
+                            0.05,
+                            0.1,
+                            0.0,
+                            0.1,
+                            0.0,
+                            0.0],
+                           0.510825457099338),
+                          ([0.1,
+                            0.05,
+                            0.1,
+                            0.0,
+                            0.05,
+                            0.1,
+                            0.0,
+                            0.6,
+                            0.0,
+                            0.0],
+                           2.302584092994546),
+                          ],
+                         )
 def test_cross_entropy_error(nwl, y, expected):
     t = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
     assert nwl.cross_entropy_error(np.array(y), np.array(t)) == expected
@@ -59,11 +97,15 @@ def test_numerical_diff_function_2(nwl, x, expected):
 
 
 def test_numerical_diff_function_3(nwl):
-    assert nwl.numerical_diff(lambda x0: x0 * x0 + 4.0 ** 2.0, 3.0) == 6.00000000000378
+    assert nwl.numerical_diff(
+        lambda x0: x0 * x0 + 4.0 ** 2.0,
+        3.0) == 6.00000000000378
 
 
 def test_numerical_diff_function_4(nwl):
-    assert nwl.numerical_diff(lambda x1: 3.0 ** 2.0 + x1 * x1, 4.0) == 7.999999999999119
+    assert nwl.numerical_diff(
+        lambda x1: 3.0 ** 2.0 + x1 * x1,
+        4.0) == 7.999999999999119
 
 
 @pytest.mark.parametrize(
@@ -75,9 +117,14 @@ def test_numerical_diff_function_4(nwl):
     ],
 )
 def test_numerial_gradient(nwl, point, expected):
-    assert_almost_equal(nwl.numerial_gradient(_function_2, np.array(point)), np.array(expected))
+    assert_almost_equal(
+        nwl.numerial_gradient(
+            _function_2,
+            np.array(point)),
+        np.array(expected))
 
 
 def test_gradient_descent(nwl):
-    result = nwl.gradient_descent(_function_2, np.array([3.0, 4.0]), learning_rate=0.1)
+    result = nwl.gradient_descent(
+        _function_2, np.array([3.0, 4.0]), learning_rate=0.1)
     assert_almost_equal(result, np.array([6.11110793e-10, 8.14814391e-10]))

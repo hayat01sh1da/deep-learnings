@@ -1,3 +1,5 @@
+from gradient import numerical_gradient
+from simple_net import SimpleNet
 import numpy as np
 import sys
 import os
@@ -5,8 +7,6 @@ import shutil
 import glob
 sys.path.append('./src')
 sys.path.append('./src/lib')
-from simple_net import SimpleNet
-from gradient import numerical_gradient
 
 net = SimpleNet()
 print(net.W)
@@ -25,13 +25,16 @@ t = np.array([0, 0, 1])
 print(net.loss(x, t))
 # >>> 1.704819611629646
 
-f = lambda w: net.loss(x, t)
+
+def f(w): return net.loss(x, t)
+
+
 dW = numerical_gradient(f, net.W)
 print(dW)
 # >>> [[ 0.09999078  0.39092591 -0.49091668]
 #      [ 0.14998616  0.58638886 -0.73637502]]
 
-pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive=True)
 for pycache in pycaches:
     if os.path.exists(pycache):
         shutil.rmtree(pycache)

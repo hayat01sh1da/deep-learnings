@@ -11,9 +11,11 @@ def swl():
 
 
 def test_forward(swl):
-    assert swl.forward(np.array([0.3, 0.6, 0.9]), np.array([0, 0, 1])) == 0.8283899409431649
+    assert swl.forward(np.array([0.3, 0.6, 0.9]),
+                       np.array([0, 0, 1])) == 0.8283899409431649
 
 
 def test_backward(swl):
     swl.forward(np.array([0.3, 0.6, 0.9]), np.array([0, 0, 1]))
-    assert_almost_equal(swl.backward(), np.array([0.07989816, 0.10785123, -0.18774939]))
+    assert_almost_equal(swl.backward(), np.array(
+        [0.07989816, 0.10785123, -0.18774939]))

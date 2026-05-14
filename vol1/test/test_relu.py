@@ -12,4 +12,5 @@ def test_forward():
 def test_backward():
     relu = Relu()
     x = np.array([[1.0, -0.5], [-2.0, 3.0]])
-    assert_array_equal(relu.backward(relu.forward(x)), np.array([[1.0, 0.0], [0.0, 3.0]]))
+    assert_array_equal(relu.backward(relu.forward(x)),
+                       np.array([[1.0, 0.0], [0.0, 3.0]]))

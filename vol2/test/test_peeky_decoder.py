@@ -7,7 +7,9 @@ from peeky_decoder import PeekyDecoder
 @pytest.fixture
 def setup():
     decoder = PeekyDecoder(13, 16, 128)
-    return decoder, np.random.randint(0, 13, (13, 16)), np.random.randn(13, 128)
+    return decoder, np.random.randint(
+        0, 13, (13, 16)), np.random.randn(
+        13, 128)
 
 
 def test_forward(setup):

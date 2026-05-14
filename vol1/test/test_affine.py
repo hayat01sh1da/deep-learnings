@@ -17,7 +17,9 @@ def affine():
 
 def test_forward(affine):
     x = np.array([1.52949391, -0.81788271])
-    assert_almost_equal(affine.forward(x), [1.32051278, 0.41801982, -0.28411748])
+    assert_almost_equal(
+        affine.forward(x), [
+            1.32051278, 0.41801982, -0.28411748])
 
 
 def test_backward(affine):

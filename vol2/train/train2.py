@@ -1,34 +1,34 @@
+from simple_word2vec import SimpleWord2Vec
+from count_based_methods import CountBasedMethod
+from simple_cbow import SimpleCBOW
+from adam import Adam
+from trainer import Trainer
 import sys
 sys.path.append('./src')
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
 sys.path.append('./src/models')
 sys.path.append('./src/optimisers')
-from trainer import Trainer
-from adam import Adam
-from simple_cbow import SimpleCBOW
-from count_based_methods import CountBasedMethod
-from simple_word2vec import SimpleWord2Vec
 
 window_size = 1
 hidden_size = 5
-batch_size  = 3
-max_epoch   = 1000
+batch_size = 3
+max_epoch = 1000
 
-text                           = 'You said good-bye and I said hello.'
-cbm                            = CountBasedMethod()
-word_list                      = cbm.text_to_word_list(text)
+text = 'You said good-bye and I said hello.'
+cbm = CountBasedMethod()
+word_list = cbm.text_to_word_list(text)
 word_to_id, id_to_word, corpus = cbm.preprocess(word_list)
 
-vocab_size       = len(word_to_id)
-sw               = SimpleWord2Vec()
+vocab_size = len(word_to_id)
+sw = SimpleWord2Vec()
 contexts, target = sw.create_contexts_target(corpus)
-contexts         = sw.convert_to_one_hot(contexts, vocab_size)
-target           = sw.convert_to_one_hot(target, vocab_size)
+contexts = sw.convert_to_one_hot(contexts, vocab_size)
+target = sw.convert_to_one_hot(target, vocab_size)
 
-model     = SimpleCBOW(vocab_size, hidden_size)
+model = SimpleCBOW(vocab_size, hidden_size)
 optimiser = Adam()
-trainer   = Trainer(model, optimiser)
+trainer = Trainer(model, optimiser)
 
 trainer.fit(contexts, target, max_epoch, batch_size)
 file_path = '../img/simple_cbow.png'

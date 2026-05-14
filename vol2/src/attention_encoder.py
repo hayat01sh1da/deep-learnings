@@ -1,7 +1,7 @@
-import numpy as np
+from encoder import Encoder
 import sys
 sys.path.append('./layers')
-from encoder import Encoder
+
 
 class AttentionEncoder(Encoder):
     def forward(self, xs):

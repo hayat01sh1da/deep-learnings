@@ -28,7 +28,8 @@ def test_shuffle_data(setup):
 
 def test_update_params_with_grads(setup):
     loop, _, _, batch_x, batch_t = setup
-    assert loop._update_params_with_grads(batch_x, batch_t, 0, 0) == 1.1074495352433567
+    assert loop._update_params_with_grads(
+        batch_x, batch_t, 0, 0) == 1.1074495352433567
 
 
 def test_learning_process(setup):
