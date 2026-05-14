@@ -1,4 +1,7 @@
+import sys
+
 import numpy as np
+
 
 def eval_perplexity(model, corpus, batch_size = 10, time_size = 35):
     print('=== Evaluating perplexity... ===')
