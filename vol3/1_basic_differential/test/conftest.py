@@ -3,7 +3,7 @@ import os
 import shutil
 import sys
 
-sys.path.append('./1_basic_differential/src')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 
 import pytest

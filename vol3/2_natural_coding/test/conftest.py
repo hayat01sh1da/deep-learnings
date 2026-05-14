@@ -3,7 +3,7 @@ import os
 import shutil
 import sys
 
-sys.path.append('./2_natural_coding/src')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 
 import pytest
