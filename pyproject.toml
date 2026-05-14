@@ -1,0 +1,4 @@
+[tool.mypy]
+exclude = [
+    "vol2/dataset/",
+]
