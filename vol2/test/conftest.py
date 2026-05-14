@@ -4,11 +4,12 @@ import os
 import shutil
 import sys
 
-sys.path.append('./src')
-sys.path.append('./src/concerns')
-sys.path.append('./src/layers')
-sys.path.append('./src/models')
-sys.path.append('./src/optimisers')
+_SRC = os.path.join(os.path.dirname(__file__), '..', 'src')
+sys.path.append(_SRC)
+sys.path.append(os.path.join(_SRC, 'concerns'))
+sys.path.append(os.path.join(_SRC, 'layers'))
+sys.path.append(os.path.join(_SRC, 'models'))
+sys.path.append(os.path.join(_SRC, 'optimisers'))
 
 
 @pytest.fixture(autouse=True)

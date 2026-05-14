@@ -4,8 +4,9 @@ import os
 import shutil
 import sys
 
-sys.path.append('./src')
-sys.path.append('./src/lib')
+_SRC = os.path.join(os.path.dirname(__file__), '..', 'src')
+sys.path.append(_SRC)
+sys.path.append(os.path.join(_SRC, 'lib'))
 
 
 @pytest.fixture(autouse=True)
