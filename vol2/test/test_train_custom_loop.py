@@ -1,5 +1,6 @@
 import os
 
+import numpy as np
 import pytest
 
 from spiral import load_data
@@ -12,6 +13,8 @@ BATCH_SIZE = 30
 
 @pytest.fixture
 def setup():
+    # Seed so TwoLayerNet weight initialisation is deterministic.
+    np.random.seed(0)
     loop = TrainCustomLoop()
     x, t = load_data()
     batch_x = x[1 * BATCH_SIZE: 2 * BATCH_SIZE]
@@ -29,7 +32,7 @@ def test_shuffle_data(setup):
 def test_update_params_with_grads(setup):
     loop, _, _, batch_x, batch_t = setup
     assert loop._update_params_with_grads(
-        batch_x, batch_t, 0, 0) == 1.1074495352433567
+        batch_x, batch_t, 0, 0) == pytest.approx(1.111674016212609, rel=1e-6)
 
 
 def test_learning_process(setup):
@@ -37,7 +40,7 @@ def test_learning_process(setup):
     loss = loop._update_params_with_grads(batch_x, batch_t, 0, 0)
     max_iters = len(x) // BATCH_SIZE
     *_, process = loop._learning_process(loss, 1, 9, 9, max_iters)
-    assert process == '| epoch 10 | iter 10 / 10 | loss 1.07'
+    assert process == '| epoch 10 | iter 10 / 10 | loss 1.11'
 
 
 def test_update(setup):

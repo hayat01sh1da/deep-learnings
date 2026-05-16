@@ -1,5 +1,3 @@
-import os
-
 import numpy as np
 import pytest
 
@@ -9,6 +7,8 @@ from rnnlm import RNNLM
 
 @pytest.fixture
 def rnnlm_setup():
+    # Seed so weight initialisation (np.random.randn) is deterministic.
+    np.random.seed(0)
     cbm = CountBasedMethod()
     word_list = cbm.text_to_word_list('You said good-bye and I said hello.')
     word_to_id, *_ = cbm.preprocess(word_list)
@@ -43,17 +43,20 @@ def test_reset_state(rnnlm_setup):
     assert rnnlm.lstm_layer.h is None
 
 
-def test_save_params(rnnlm_setup):
+def test_save_params(rnnlm_setup, tmp_path):
     rnnlm, xs, ts = rnnlm_setup
     rnnlm.forward(xs, ts)
     rnnlm.backward()
-    rnnlm.save_params()
-    assert os.path.exists('../pkl/rnnlm.pkl')
+    file_path = tmp_path / 'rnnlm.pkl'
+    rnnlm.save_params(str(file_path))
+    assert file_path.exists()
 
 
-def test_load_params(rnnlm_setup):
-    rnnlm, _, _ = rnnlm_setup
-    rnnlm.load_params()
+def test_load_params(rnnlm_setup, tmp_path):
+    rnnlm, xs, ts = rnnlm_setup
+    file_path = tmp_path / 'rnnlm.pkl'
+    rnnlm.save_params(str(file_path))
+    rnnlm.load_params(str(file_path))
     a, b, c, d, e, f = rnnlm.params
     assert a.shape == (7, 100)
     assert b.shape == (100, 400)
