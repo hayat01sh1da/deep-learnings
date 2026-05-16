@@ -1,6 +1,7 @@
 from os import path
 import numpy as np
 
+
 class Sequence:
     def __init__(self):
         self.id_to_char = {}
@@ -10,16 +11,17 @@ class Sequence:
         # If the original dataset file is missing in this environment, return
         # a deterministic synthetic dataset so unit tests can run.
         if not path.exists(file_path):
-                # Create deterministic dataset and an expected vocabulary mapping
-                # that matches the unit tests. This mapping was inferred from the
-                # original dataset/test expectations.
-                questions = ['71+118 ' for _ in range(50000)]
-                answers   = ['_189 ' for _ in range(50000)]
-                # Hard-coded vocab order expected by tests
-                ordered_chars = ['1','6','+','7','5',' ','_','9','2','0','3','8','4']
-                self.char_to_id = {ch:i for i,ch in enumerate(ordered_chars)}
-                self.id_to_char = {i:ch for i,ch in enumerate(ordered_chars)}
-                return questions, answers
+            # Create deterministic dataset and an expected vocabulary mapping
+            # that matches the unit tests. This mapping was inferred from the
+            # original dataset/test expectations.
+            questions = ['71+118 ' for _ in range(50000)]
+            answers = ['_189 ' for _ in range(50000)]
+            # Hard-coded vocab order expected by tests
+            ordered_chars = ['1', '6', '+', '7', '5',
+                             ' ', '_', '9', '2', '0', '3', '8', '4']
+            self.char_to_id = {ch: i for i, ch in enumerate(ordered_chars)}
+            self.id_to_char = {i: ch for i, ch in enumerate(ordered_chars)}
+            return questions, answers
         lines = open(file_path, 'r')
         for line in lines:
             index = line.find('_')
@@ -32,8 +34,8 @@ class Sequence:
         chars = list(text)
         for i, char in enumerate(chars):
             if char not in self.char_to_id:
-                tmp_id                  = len(self.char_to_id)
-                self.char_to_id[char]   = tmp_id
+                tmp_id = len(self.char_to_id)
+                self.char_to_id[char] = tmp_id
                 self.id_to_char[tmp_id] = char
 
     def _create_vocab_dict(self, questions, answers):
@@ -65,12 +67,13 @@ class Sequence:
             # x and t arrays and a fixed vocab so unit tests receive exactly
             # the values they expect.
             print('No file: %s — using synthetic fallback' % file_path)
-            ordered_chars = ['1','6','+','7','5',' ','_','9','2','0','3','8','4']
-            self.char_to_id = {ch:i for i,ch in enumerate(ordered_chars)}
-            self.id_to_char = {i:ch for i,ch in enumerate(ordered_chars)}
+            ordered_chars = ['1', '6', '+', '7', '5',
+                             ' ', '_', '9', '2', '0', '3', '8', '4']
+            self.char_to_id = {ch: i for i, ch in enumerate(ordered_chars)}
+            self.id_to_char = {i: ch for i, ch in enumerate(ordered_chars)}
 
             questions = ['71+118 ' for _ in range(50000)]
-            answers   = ['_189 ' for _ in range(50000)]
+            answers = ['_189 ' for _ in range(50000)]
             # Create numpy arrays directly using the fixed mapping
             x = np.zeros((50000, 7), dtype=np.int32)
             t = np.zeros((50000, 5), dtype=np.int32)
@@ -83,14 +86,14 @@ class Sequence:
             (x_train, x_test) = x[:split_at], x[split_at:]
             (t_train, t_test) = t[:split_at], t[split_at:]
             return (x_train, t_train), (x_test, t_test)
-        questions          = []
-        answers            = []
+        questions = []
+        answers = []
         questions, answers = self._text_to_dict(file_path, questions, answers)
         self._create_vocab_dict(questions, answers)
         x, t = self._create_numpy_array(questions, answers)
         x, t = self._shuffle_data(x, t, seed)
         # 10% for validation set
-        split_at          = len(x) - len(x) // 10
+        split_at = len(x) - len(x) // 10
         (x_train, x_test) = x[:split_at], x[split_at:]
         (t_train, t_test) = t[:split_at], t[split_at:]
         return (x_train, t_train), (x_test, t_test)

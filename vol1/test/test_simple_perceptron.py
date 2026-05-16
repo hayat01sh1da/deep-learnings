@@ -1,38 +1,26 @@
-import unittest
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
+import pytest
+
 from simple_perceptron import SimplePerceptron
 
-class TestPerceptron(unittest.TestCase):
-    def setUp(self):
-        self.sp       = SimplePerceptron()
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def sp():
+    return SimplePerceptron()
 
-    def test_and_gate(self):
-        self.assertEqual(self.sp.and_gate(0, 0), 0)
-        self.assertEqual(self.sp.and_gate(1, 0), 0)
-        self.assertEqual(self.sp.and_gate(0, 1), 0)
-        self.assertEqual(self.sp.and_gate(1, 1), 1)
 
-    def test_nand_gate(self):
-        self.assertEqual(self.sp.nand_gate(0, 0), 1)
-        self.assertEqual(self.sp.nand_gate(1, 0), 1)
-        self.assertEqual(self.sp.nand_gate(0, 1), 1)
-        self.assertEqual(self.sp.nand_gate(1, 1), 0)
+@pytest.mark.parametrize(('a', 'b', 'expected'),
+                         [(0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 1)])
+def test_and_gate(sp, a, b, expected):
+    assert sp.and_gate(a, b) == expected
 
-    def test_or_gate(self):
-        self.assertEqual(self.sp.or_gate(0, 0), 0)
-        self.assertEqual(self.sp.or_gate(1, 0), 1)
-        self.assertEqual(self.sp.or_gate(0, 1), 1)
-        self.assertEqual(self.sp.or_gate(1, 1), 1)
 
-if __name__ == '__main__':
-    unittest.main()
+@pytest.mark.parametrize(('a', 'b', 'expected'),
+                         [(0, 0, 1), (1, 0, 1), (0, 1, 1), (1, 1, 0)])
+def test_nand_gate(sp, a, b, expected):
+    assert sp.nand_gate(a, b) == expected
+
+
+@pytest.mark.parametrize(('a', 'b', 'expected'),
+                         [(0, 0, 0), (1, 0, 1), (0, 1, 1), (1, 1, 1)])
+def test_or_gate(sp, a, b, expected):
+    assert sp.or_gate(a, b) == expected

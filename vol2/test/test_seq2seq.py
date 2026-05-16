@@ -1,45 +1,29 @@
-import unittest
 import numpy as np
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
-sys.path.append('./src/concerns')
-sys.path.append('./src/models')
-sys.path.append('./src/layers')
+import pytest
+
 from seq2seq import Seq2Seq
 
-class TestSeq2Seq(unittest.TestCase):
-    def setUp(self):
-        vocab_size    = 13
-        wordvec_size  = 100
-        hidden_size   = 100
-        self.seq2seq  = Seq2Seq(vocab_size, wordvec_size, hidden_size)
-        self.xs       = np.random.randint(0, 13, (13, 100))
-        self.ts       = np.random.randint(0, 13, (13, 100))
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def setup():
+    seq2seq = Seq2Seq(13, 100, 100)
+    xs = np.random.randint(0, 13, (13, 100))
+    ts = np.random.randint(0, 13, (13, 100))
+    return seq2seq, xs, ts
 
-    def test_forward(self):
-        loss = self.seq2seq.forward(self.xs, self.ts)
-        self.assertTrue(2.55 < round(loss, 2) < 2.58)
 
-    def test_backward(self):
-        self.seq2seq.forward(self.xs, self.ts)
-        dout = self.seq2seq.backward()
-        self.assertEqual(dout, None)
+def test_forward(setup):
+    seq2seq, xs, ts = setup
+    assert 2.55 < round(seq2seq.forward(xs, ts), 2) < 2.58
 
-    def test_generate(self):
-        xs          = np.random.randint(0, 13, (1, 100))
-        start_id    = 0
-        sample_size = 10
-        sampled = self.seq2seq.generate(xs, start_id, sample_size)
-        self.assertEqual(len(sampled), 10)
 
-if __name__ == '__main__':
-    unittest.main()
+def test_backward(setup):
+    seq2seq, xs, ts = setup
+    seq2seq.forward(xs, ts)
+    assert seq2seq.backward() is None
+
+
+def test_generate(setup):
+    seq2seq, _, _ = setup
+    xs = np.random.randint(0, 13, (1, 100))
+    assert len(seq2seq.generate(xs, 0, 10)) == 10

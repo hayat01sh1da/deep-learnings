@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+# Use importlib mode so vol3's per-chapter test_template.py modules don't
+# collide on basename (pytest's default "prepend" mode requires unique
+# test-module names across the whole project).
+addopts = "--import-mode=importlib"
+
+[tool.mypy]
+exclude = [
+    "vol2/dataset/",
+]

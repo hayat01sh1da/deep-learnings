@@ -1,64 +1,45 @@
-import unittest
 import numpy as np
+import pytest
 from numpy.testing import assert_array_equal
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src/concerns')
-sys.path.append('./src/layers')
+
 from negative_sampling_loss import NegativeSamplingLoss
 
-class TestNegativeSamplingLoss(unittest.TestCase):
-    def setUp(self):
-        W             = np.arange(21).reshape(7, 3)
-        corpus        = np.array([0, 1, 2, 3, 4, 1, 5, 2, 6])
-        self.nsl      = NegativeSamplingLoss(W, corpus)
-        self.h        = np.arange(3)
-        self.target   = np.array([1, 3, 0])
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def setup():
+    W = np.arange(21).reshape(7, 3)
+    corpus = np.array([0, 1, 2, 3, 4, 1, 5, 2, 6])
+    nsl = NegativeSamplingLoss(W, corpus)
+    h = np.arange(3)
+    target = np.array([1, 3, 0])
+    return nsl, h, target
 
-    def test_params(self):
-        param, *_ = self.nsl.params
-        assert_array_equal(np.array([
-            [ 0,  1,  2],
-            [ 3,  4,  5],
-            [ 6,  7,  8],
-            [ 9, 10, 11],
-            [12, 13, 14],
-            [15, 16, 17],
-            [18, 19, 20]
-        ]), param)
 
-    def test_initial_grads(self):
-        grad, *_ = self.nsl.grads
-        assert_array_equal(np.array([
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0]
-        ]), grad)
+def test_params(setup):
+    nsl, _, _ = setup
+    param, *_ = nsl.params
+    assert_array_equal(param, np.arange(21).reshape(7, 3))
 
-    def test_forward(self):
-        loss = self.nsl.forward(self.h, self.target)
-        self.assertTrue(65 <= loss < 75)
 
-    def test_backward(self):
-        self.nsl.forward(self.h, self.target)
-        dh = self.nsl.backward()
-        assert_array_equal(np.array([
-            [14. , 15.7, 17.3],
-            [12. , 13.7, 15.3],
-            [17. , 18.7, 20.3]
-        ]), np.round(dh, decimals = 1))
+def test_initial_grads(setup):
+    nsl, _, _ = setup
+    grad, *_ = nsl.grads
+    assert_array_equal(grad, np.zeros((7, 3)))
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_forward(setup):
+    nsl, h, target = setup
+    assert 65 <= nsl.forward(h, target) < 75
+
+
+def test_backward(setup):
+    nsl, h, target = setup
+    nsl.forward(h, target)
+    assert_array_equal(
+        np.round(nsl.backward(), decimals=1),
+        np.array([
+            [14.0, 15.7, 17.3],
+            [12.0, 13.7, 15.3],
+            [17.0, 18.7, 20.3],
+        ]),
+    )

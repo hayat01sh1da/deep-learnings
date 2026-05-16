@@ -1,39 +1,25 @@
-import unittest
 import numpy as np
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
-sys.path.append('./src/concerns')
-sys.path.append('./src/layers')
-sys.path.append('./src/models')
+import pytest
+
 from two_layer_net import TwoLayerNet
 
-class TestTwoLayerNet(unittest.TestCase):
-    def setUp(self):
-        self.two_layer_net = TwoLayerNet(2, 4, 3)
-        self.x             = np.random.randn(4, 2)
-        self.t             = np.random.randn(4, 3)
-        self.pycaches      = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def setup():
+    return TwoLayerNet(2, 4, 3), np.random.randn(4, 2), np.random.randn(4, 3)
 
-    def test_predict(self):
-        x = self.two_layer_net._predict(self.x)
-        self.assertEqual(x.shape, (4, 3))
 
-    def test_forward(self):
-        loss = self.two_layer_net.forward(self.x, self.t)
-        self.assertEqual(int(loss), 1)
+def test_predict(setup):
+    net, x, _ = setup
+    assert net._predict(x).shape == (4, 3)
 
-    def test_backward(self):
-        self.two_layer_net.forward(self.x, self.t)
-        dout = self.two_layer_net.backward()
-        self.assertEqual(dout.shape, (4, 2))
 
-if __name__ == '__main__':
-    unittest.main()
+def test_forward(setup):
+    net, x, t = setup
+    assert int(net.forward(x, t)) == 1
+
+
+def test_backward(setup):
+    net, x, t = setup
+    net.forward(x, t)
+    assert net.backward().shape == (4, 2)

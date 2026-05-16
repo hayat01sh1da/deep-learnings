@@ -1,32 +1,20 @@
-import unittest
 import numpy as np
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src/layers')
+import pytest
+
 from sigmoid import Sigmoid
 
-class TestSigmoid(unittest.TestCase):
-    def setUp(self):
-        self.sigmoid  = Sigmoid()
-        self.x        = np.random.randn(10, 4)
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def setup():
+    return Sigmoid(), np.random.randn(10, 4)
 
-    def test_forward(self):
-        out = self.sigmoid.forward(self.x)
-        self.assertEqual(out.shape, (10, 4))
 
-    def test_backward(self):
-        self.sigmoid.forward(self.x)
-        dout = np.random.randn(10, 4)
-        dx   = self.sigmoid.backward(dout)
-        self.assertEqual(dx.shape, (10, 4))
+def test_forward(setup):
+    sigmoid, x = setup
+    assert sigmoid.forward(x).shape == (10, 4)
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_backward(setup):
+    sigmoid, x = setup
+    sigmoid.forward(x)
+    assert sigmoid.backward(np.random.randn(10, 4)).shape == (10, 4)

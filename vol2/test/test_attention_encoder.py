@@ -1,35 +1,22 @@
-import unittest
 import numpy as np
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
-sys.path.append('./src/layers')
+import pytest
+
 from attention_encoder import AttentionEncoder
 
-class TestAttentionEncoder(unittest.TestCase):
-    def setUp(self):
-        vocab_size             = 13
-        wordvec_size           = 100
-        hidden_size            = 100
-        self.attention_encoder = AttentionEncoder(vocab_size, wordvec_size, hidden_size)
-        self.xs                = np.random.randint(0, 13, (7, 3))
-        self.pycaches          = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def encoder_setup():
+    encoder = AttentionEncoder(13, 100, 100)
+    xs = np.random.randint(0, 13, (7, 3))
+    return encoder, xs
 
-    def test_forward(self):
-        hs = self.attention_encoder.forward(self.xs)
-        self.assertEqual(hs.shape, (7, 3, 100))
 
-    def test_backward(self):
-        dhs  = self.attention_encoder.forward(self.xs)
-        dout = self.attention_encoder.backward(dhs)
-        self.assertEqual(dout, None)
+def test_forward(encoder_setup):
+    encoder, xs = encoder_setup
+    assert encoder.forward(xs).shape == (7, 3, 100)
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_backward(encoder_setup):
+    encoder, xs = encoder_setup
+    dhs = encoder.forward(xs)
+    assert encoder.backward(dhs) is None

@@ -1,5 +1,7 @@
 # Python
 **/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
 
 # Vol.2
 vol2/exec/cbow_params.pkl

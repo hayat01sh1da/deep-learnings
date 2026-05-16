@@ -2,6 +2,7 @@ import os
 import pickle
 import numpy as np
 
+
 class BaseModel:
     def __init__(self):
         pass
@@ -26,8 +27,10 @@ class BaseModel:
             file_path = file_path.replace('/', os.sep)
         if not os.path.exists(file_path):
             # Create placeholder params when the pkl is missing so tests can run without external files.
-            # We create a minimal list of one small array; specific models/tests may overwrite this afterward.
-            print(f'Warning: No file: {file_path} — creating placeholder params')
+            # We create a minimal list of one small array; specific
+            # models/tests may overwrite this afterward.
+            print(
+                f'Warning: No file: {file_path} — creating placeholder params')
             params = [np.zeros((1,), dtype='f')]
             self.params = params
             return

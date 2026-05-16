@@ -1,16 +1,15 @@
-import sys
-sys.path.append('./dataset')
-import sys
-sys.path.append('./dataset')
+import pickle
+import os
 import numpy as np
+import sys
+sys.path.append('./dataset')
+sys.path.append('./dataset')
 
 try:
     import matplotlib.pylab as plt
 except Exception:
     plt = None
 
-import os
-import numpy as np
 
 try:
     import matplotlib.pylab as plt
@@ -21,8 +20,6 @@ try:
     from PIL import Image
 except Exception:
     Image = None
-
-import pickle
 
 
 class NeuralNetwork:
@@ -43,7 +40,12 @@ class NeuralNetwork:
         plt.plot(x, y)
         plt.ylim(-0.1, 1.1)
         plt.tight_layout()
-        plt.savefig(os.path.join(os.path.dirname(__file__), '..', 'img', f'{func_name}.png'))
+        plt.savefig(
+            os.path.join(
+                os.path.dirname(__file__),
+                '..',
+                'img',
+                f'{func_name}.png'))
 
     def _sigmoid(self, x):
         return 1.0 / (1.0 + np.exp(-x))
@@ -68,16 +70,22 @@ class NeuralNetwork:
         pil_img.show()
 
     def _get_test_data(self):
-        # Defer importing dataset code until runtime; raise clear error if absent.
+        # Defer importing dataset code until runtime; raise clear error if
+        # absent.
         try:
             from mnist import load_mnist
         except Exception as exc:
             raise RuntimeError('mnist dataset loader not available') from exc
-        (x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize=False)
+        (x_train, t_train), (x_test, t_test) = load_mnist(
+            flatten=True, normalize=False)
         return x_test, t_test
 
     def _init_network(self):
-        weights_path = os.path.join(os.path.dirname(__file__), '..', 'dataset', 'sample_weight.pkl')
+        weights_path = os.path.join(
+            os.path.dirname(__file__),
+            '..',
+            'dataset',
+            'sample_weight.pkl')
         if not os.path.exists(weights_path):
             raise RuntimeError('sample_weight.pkl not found')
         with open(weights_path, 'rb') as f:
@@ -105,7 +113,8 @@ class NeuralNetwork:
         return np.dot(a, b)
 
     def evaluate(self):
-        # Attempt to run evaluation; if dataset or weights are missing, return a clear fallback.
+        # Attempt to run evaluation; if dataset or weights are missing, return
+        # a clear fallback.
         try:
             x, t = self._get_test_data()
             network = self._init_network()
@@ -115,8 +124,8 @@ class NeuralNetwork:
         batch_size = 100
         accuracy_count = 0
         for i in range(0, len(x), batch_size):
-            x_batch = x[i:i+batch_size]
+            x_batch = x[i:i + batch_size]
             y_batch = self._predict(network, x_batch)
             p = np.argmax(y_batch, axis=1)
-            accuracy_count += np.sum(p == t[i:i+batch_size])
+            accuracy_count += np.sum(p == t[i:i + batch_size])
         return f'{(float(accuracy_count) / len(x) * 100):.2f}%'

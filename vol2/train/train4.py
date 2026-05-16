@@ -1,3 +1,6 @@
+from sgd import SGD
+from ptb import *
+from simple_rnnlm import SimpleRNNLM
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
@@ -5,41 +8,38 @@ sys.path.append('./src')
 sys.path.append('./src/concerns')
 sys.path.append('./src/layers')
 sys.path.append('./src/optimisers')
-from simple_rnnlm import SimpleRNNLM
-from ptb import *
-from sgd import SGD
 
 # Hyper params
-batch_size    = 10
-wordvec_size  = 100
-hidden_dize   = 100 # Element numbers of hidden vectors in RNN
-time_size     = 5   # For Truncated BPTT
+batch_size = 10
+wordvec_size = 100
+hidden_dize = 100  # Element numbers of hidden vectors in RNN
+time_size = 5   # For Truncated BPTT
 learning_rate = 0.1
-max_epoch     = 100
+max_epoch = 100
 
 # Load trainig data(Make data size smalller)
 corpus, word_to_id, id_to_word = load_data('train')
 corpus_size = 1000
-corpus      = corpus[:corpus_size]
-vocab_size  = int(max(corpus) + 1)
-xs          = corpus[:-1] # Inputs
-ts          = corpus[1:]  # Outputs(Teacher labels)
-data_size   = len(xs)
+corpus = corpus[:corpus_size]
+vocab_size = int(max(corpus) + 1)
+xs = corpus[:-1]  # Inputs
+ts = corpus[1:]  # Outputs(Teacher labels)
+data_size = len(xs)
 print('Corpus size: %d, Vocabulary size: %d' % (corpus_size, vocab_size))
 
 # Variables for training
-max_iters  = data_size // (batch_size * time_size)
+max_iters = data_size // (batch_size * time_size)
 time_index = 0
 total_loss = 0
 loss_count = 0
-ppl_list   = []
+ppl_list = []
 
 # Generate a model and optimiser
-model     = SimpleRNNLM(vocab_size, wordvec_size, hidden_dize)
+model = SimpleRNNLM(vocab_size, wordvec_size, hidden_dize)
 optimiser = SGD(learning_rate)
 
 # 1. Calculate the initial position to load each sample of mini batches
-jump    = (corpus_size - 1) // batch_size
+jump = (corpus_size - 1) // batch_size
 offsets = [i * jump for i in range(batch_size)]
 for epoch in range(max_epoch):
     for iter in range(max_iters):

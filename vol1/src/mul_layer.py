@@ -6,7 +6,7 @@ class MulLayer:
     def forward(self, x, y):
         self.x = x
         self.y = y
-        out    = x * y
+        out = x * y
         return out
 
     def backward(self, dout):

@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def _numerical_gradient_1d(f, x):
     h = 1e-4
     grad = np.zeros_like(x)
@@ -11,10 +12,11 @@ def _numerical_gradient_1d(f, x):
         x[idx] = tmp_val - h
         # f(x-h)
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2) / (2*h)
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         # Revert the value
         x[idx] = tmp_val
     return grad
+
 
 def numerical_gradient_2d(f, X):
     if X.ndim == 1:
@@ -24,6 +26,7 @@ def numerical_gradient_2d(f, X):
         for idx, x in enumerate(X):
             grad[idx] = _numerical_gradient_1d(f, x)
         return grad
+
 
 def numerical_gradient(f, x):
     h = 1e-4
@@ -38,7 +41,7 @@ def numerical_gradient(f, x):
         x[idx] = tmp_val - h
         # f(x-h)
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2) / (2*h)
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         # Revert the value
         x[idx] = tmp_val
         it.iternext()

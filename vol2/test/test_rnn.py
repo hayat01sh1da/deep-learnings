@@ -1,36 +1,25 @@
-import unittest
 import numpy as np
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src/layers')
+import pytest
+
 from rnn import RNN
 
-class TestRNN(unittest.TestCase):
-    def setUp(self):
-        Wx            = np.random.randn(3, 3)
-        Wh            = np.random.randn(7, 3)
-        b             = np.random.randn(3,)
-        self.rnn      = RNN(Wx, Wh, b)
-        self.x        = np.random.randn(7, 3)
-        self.h_prev   = np.random.randn(7, 7)
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def setup():
+    Wx = np.random.randn(3, 3)
+    Wh = np.random.randn(7, 3)
+    b = np.random.randn(3)
+    return RNN(Wx, Wh, b), np.random.randn(7, 3), np.random.randn(7, 7)
 
-    def test_forward(self):
-        h_next = self.rnn.forward(self.x, self.h_prev)
-        self.assertEqual(h_next.shape, (7, 3))
 
-    def test_backward(self):
-        h_next      = self.rnn.forward(self.x, self.h_prev)
-        dx, dh_prev = self.rnn.backward(h_next)
-        self.assertEqual(dx.shape, (7, 3))
-        self.assertEqual(dh_prev.shape, (7, 7))
+def test_forward(setup):
+    rnn, x, h_prev = setup
+    assert rnn.forward(x, h_prev).shape == (7, 3)
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_backward(setup):
+    rnn, x, h_prev = setup
+    h_next = rnn.forward(x, h_prev)
+    dx, dh_prev = rnn.backward(h_next)
+    assert dx.shape == (7, 3)
+    assert dh_prev.shape == (7, 7)

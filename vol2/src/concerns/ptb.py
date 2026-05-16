@@ -14,8 +14,9 @@ save_file = {
     'test': 'ptb.test.npy',
     'valid': 'ptb.valid.npy'
 }
-vocab_file  = 'ptb.vocab.pkl'
+vocab_file = 'ptb.vocab.pkl'
 dataset_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 def _download(file_name):
     file_path = f'{dataset_dir}/{file_name}'
@@ -30,6 +31,7 @@ def _download(file_name):
         urllib.request.urlretrieve(url_base + file_name, file_path)
     print('Done')
 
+
 def load_vocab():
     vocab_path = f'{dataset_dir}/{vocab_file}'
     if os.path.exists(vocab_path):
@@ -38,27 +40,29 @@ def load_vocab():
         return word_to_id, id_to_word
     word_to_id = {}
     id_to_word = {}
-    data_type  = 'train'
-    file_name  = key_file[data_type]
-    file_path  = f'{dataset_dir}/{file_name}'
+    data_type = 'train'
+    file_name = key_file[data_type]
+    file_path = f'{dataset_dir}/{file_name}'
     _download(file_name)
     words = open(file_path).read().replace('\n', '<eos>').strip().split()
     for i, word in enumerate(words):
         if word not in word_to_id:
-            tmp_id             = len(word_to_id)
-            word_to_id[word]   = tmp_id
+            tmp_id = len(word_to_id)
+            word_to_id[word] = tmp_id
             id_to_word[tmp_id] = word
     with open(vocab_path, 'wb') as f:
         pickle.dump((word_to_id, id_to_word), f)
     return word_to_id, id_to_word
+
 
 def load_data(data_type='train'):
     '''
         :param data_type: データの種類：'train' or 'test' or 'valid (val)'
         :return:
     '''
-    if data_type == 'val': data_type = 'valid'
-    save_path              = f'{dataset_dir}/{save_file[data_type]}'
+    if data_type == 'val':
+        data_type = 'valid'
+    save_path = f'{dataset_dir}/{save_file[data_type]}'
     word_to_id, id_to_word = load_vocab()
     if os.path.exists(save_path):
         corpus = np.load(save_path)
@@ -66,10 +70,11 @@ def load_data(data_type='train'):
     file_name = key_file[data_type]
     file_path = f'{dataset_dir}/{file_name}'
     _download(file_name)
-    words  = open(file_path).read().replace('\n', '<eos>').strip().split()
+    words = open(file_path).read().replace('\n', '<eos>').strip().split()
     corpus = np.array([word_to_id[w] for w in words])
     np.save(save_path, corpus)
     return corpus, word_to_id, id_to_word
+
 
 if __name__ == '__main__':
     for data_type in ('train', 'val', 'test'):

@@ -1,31 +1,18 @@
-import unittest
-import sys
-sys.path.append('./1_basic_differential/src')
-import os
-import shutil
-import glob
-from diff import *
-from variable import Variable
 import numpy as np
+import pytest
 
-class TestDifferenciation(unittest.TestCase):
-    def setUp(self):
-        data          = np.array(0.5)
-        self.x        = Variable(data)
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+from diff import f, numerical_diff
+from variable import Variable
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
 
-    def test_numerical_diff_1(self):
-        dy = numerical_diff(f, self.x)
-        self.assertEqual(dy, 3.2974426293330694)
+@pytest.fixture
+def x():
+    return Variable(np.array(0.5))
 
-    def test_f(self):
-        dy = f(self.x)
-        self.assertEqual(dy.data, 1.648721270700128)
 
-if __name__ == '__main__':
-    unittest.main()
+def test_numerical_diff_1(x):
+    assert numerical_diff(f, x) == 3.2974426293330694
+
+
+def test_f(x):
+    assert f(x).data == 1.648721270700128

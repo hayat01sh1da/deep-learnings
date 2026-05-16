@@ -1,7 +1,8 @@
+from sigmoid import Sigmoid
 import numpy as np
 import sys
 sys.path.append('./layers')
-from sigmoid import Sigmoid
+
 
 class NeuralNetwork:
     def __init__(self, x, W, b):
@@ -15,6 +16,6 @@ class NeuralNetwork:
 
     def get_output_layer(self, h):
         sigmoid = Sigmoid()
-        a       = sigmoid.forward(h)
-        out     = np.dot(a, self.W) + self.b
+        a = sigmoid.forward(h)
+        out = np.dot(a, self.W) + self.b
         return out

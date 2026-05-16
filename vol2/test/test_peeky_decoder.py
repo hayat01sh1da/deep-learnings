@@ -1,43 +1,28 @@
-import unittest
 import numpy as np
-import sys
-import os
-import shutil
-import glob
-sys.path.append('./src')
-sys.path.append('./src/layers')
+import pytest
+
 from peeky_decoder import PeekyDecoder
 
-class TestPeekyDecoder(unittest.TestCase):
-    def setUp(self):
-        vocab_size         = 13
-        wordvec_size       = 16
-        hidden_size        = 128
-        self.peeky_decoder = PeekyDecoder(vocab_size, wordvec_size, hidden_size)
-        self.xs            = np.random.randint(0, 13, (13, 16))
-        self.h             = np.random.randn(13, 128)
-        self.pycaches      = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
+@pytest.fixture
+def setup():
+    decoder = PeekyDecoder(13, 16, 128)
+    return decoder, np.random.randint(
+        0, 13, (13, 16)), np.random.randn(
+        13, 128)
 
-    def test_forward(self):
-        score = self.peeky_decoder.forward(self.xs, self.h)
-        self.assertEqual(score.shape, (13, 16, 13))
 
-    def test_backward(self):
-        dscore = self.peeky_decoder.forward(self.xs, self.h)
-        dh     = self.peeky_decoder.backward(dscore)
-        self.assertEqual(dh.shape, (13, 128))
+def test_forward(setup):
+    decoder, xs, h = setup
+    assert decoder.forward(xs, h).shape == (13, 16, 13)
 
-    def test_generate(self):
-        h           = np.random.randn(1, 128)
-        start_id    = 0
-        sample_size = 10
-        sampled     = self.peeky_decoder.generate(h, start_id, sample_size)
-        self.assertEqual(len(sampled), 10)
 
-if __name__ == '__main__':
-    unittest.main()
+def test_backward(setup):
+    decoder, xs, h = setup
+    dscore = decoder.forward(xs, h)
+    assert decoder.backward(dscore).shape == (13, 128)
+
+
+def test_generate(setup):
+    decoder, _, _ = setup
+    assert len(decoder.generate(np.random.randn(1, 128), 0, 10)) == 10
