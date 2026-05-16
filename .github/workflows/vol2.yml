@@ -57,8 +57,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-python
-        with:
-          working-directory: ./vol2
       - name: flake8
         working-directory: ./vol2
         run: |

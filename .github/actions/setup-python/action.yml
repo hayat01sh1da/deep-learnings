@@ -1,9 +1,5 @@
 name: Setup Python Environment
 description: Setup Python with caching and dependency installation
-inputs:
-  working-directory:
-    description: The working directory of the application that will use this action
-    required: true
 
 runs:
   using: composite
@@ -14,7 +10,7 @@ runs:
       uses: actions/setup-python@v6
     - name: Pip Install with Caching
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: .
       run: |
         pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
