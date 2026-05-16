@@ -10,10 +10,10 @@ class RNNLMGen(BetterRNNLM):
             x = np.array(x).reshape(1, 1)
             score = self._predict(x)
             p = self.softmax.calc_softmax(score.flatten())
-            sampled = np.random.choice(len(p), size=1, p=p)
+            sampled = int(np.random.choice(len(p), size=1, p=p).item())
             if (skip_ids is None) or (sampled not in skip_ids):
                 x = sampled
-                word_ids.append(int(x))
+                word_ids.append(x)
         return word_ids
 
     def generate_text(self, id_to_word, word_ids):

@@ -2,6 +2,7 @@ from time_softmax_with_loss import TimeSoftmaxWithLoss
 from time_lstm import TimeLSTM
 from time_embedding import TimeEmbedding
 from time_affine import TimeAffine
+import os
 import pickle
 import numpy as np
 import sys
@@ -56,6 +57,9 @@ class RNNLM:
         self.lstm_layer.reset_state()
 
     def save_params(self, file_path='../pkl/rnnlm.pkl'):
+        directory = os.path.dirname(file_path)
+        if directory:
+            os.makedirs(directory, exist_ok=True)
         with open(file_path, 'wb') as f:
             pickle.dump(self.params, f)
 
