@@ -15,12 +15,7 @@ warn_unused_configs = true
 ignore_missing_imports = true
 namespace_packages = true
 explicit_package_bases = true
-# `vol2/dataset/` is vendored dataset code; `vol2/train/` and
-# `vol2/evaluate/` are manual experiment-runner scripts (not import-tested)
-# that carry pre-existing undefined-name issues — all excluded from
-# type-checking rather than rewritten.
+# `vol2/dataset/` is vendored dataset code, excluded from type-checking.
 exclude = [
     "vol2/dataset/",
-    "vol2/train/",
-    "vol2/evaluate/",
 ]
