@@ -1,5 +1,5 @@
 import numpy as np
-from functions import *
+from functions import sigmoid, softmax, cross_entropy_error
 from util import im2col, col2im
 
 

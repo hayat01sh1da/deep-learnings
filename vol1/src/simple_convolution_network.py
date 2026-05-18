@@ -19,8 +19,8 @@ class SimpleConvolutionNetwork:
                 'filter_size': 5,
                 'pad': 0,
                 'stride': 1},
-        hidden_size=100,
-        output_size=10,
+            hidden_size=100,
+            output_size=10,
             weight_init_std=0.01):
         filter_num = conv_param['filter_num']
         filter_size = conv_param['filter_size']

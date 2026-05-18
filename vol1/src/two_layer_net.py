@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from gradient import numerical_gradient
-from layers import *
+from layers import Affine, Relu, SoftmaxWithLoss
 import numpy as np
 import sys
 sys.path.append('./lib')

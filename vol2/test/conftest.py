@@ -13,7 +13,7 @@ sys.path.append(os.path.join(_SRC, 'optimisers'))
 
 
 @pytest.fixture(autouse=True)
-def _cleanup_pycaches():
+def __cleanup_caches__():
     before = set(
         glob.glob(
             os.path.join(
