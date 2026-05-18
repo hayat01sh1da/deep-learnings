@@ -1,5 +1,5 @@
 from two_layer_net import TwoLayerNet
-from spiral import *
+from spiral import load_data
 from trainer import Trainer
 from sgd import SGD
 import sys

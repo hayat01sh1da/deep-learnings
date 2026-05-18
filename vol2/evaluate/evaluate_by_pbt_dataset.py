@@ -1,4 +1,4 @@
-from ptb import *
+from ptb import load_data
 from count_based_methods import CountBasedMethod
 from sklearn.utils.extmath import randomized_svd
 import sys

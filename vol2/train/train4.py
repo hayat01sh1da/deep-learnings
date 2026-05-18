@@ -1,5 +1,5 @@
 from sgd import SGD
-from ptb import *
+from ptb import load_data
 from simple_rnnlm import SimpleRNNLM
 import numpy as np
 import matplotlib.pyplot as plt
