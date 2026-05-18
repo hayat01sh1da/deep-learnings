@@ -1,6 +1,6 @@
 from rnnlm import RNNLM
-from ptb import *
-from eval_perplexity import *
+from ptb import load_data
+from eval_perplexity import eval_perplexity
 from rnnlm_trainer import RNNLMTrainer
 from sgd import SGD
 import sys
@@ -42,7 +42,7 @@ training_process = trainer.fit(
 for iter in training_process:
     print(iter)
 file_path = '../img/train_rnnlm.png'
-tainer.save_plot_image(file_path, ylim=(0, 500))
+trainer.save_plot_image(file_path, ylim=(0, 500))
 
 # 2. Evaluate by test data
 model.reset_state()

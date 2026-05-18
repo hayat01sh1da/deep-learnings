@@ -1,4 +1,4 @@
-from ptb import *
+from ptb import load_data
 from adam import Adam
 from cbow import CBOW
 from trainer import Trainer

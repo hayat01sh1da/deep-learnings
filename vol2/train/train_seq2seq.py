@@ -1,6 +1,6 @@
 from peekly_seq2seq import PeekySeq2Seq
 from trainer import Trainer
-from eval_seq2seq import *
+from eval_seq2seq import eval_seq2seq
 from adam import Adam
 from sequence import Sequence
 import numpy as np

@@ -1,6 +1,6 @@
 from better_rnnlm import BetterRNNLM
-from ptb import *
-from eval_perplexity import *
+from ptb import load_data
+from eval_perplexity import eval_perplexity
 from rnnlm_trainer import RNNLMTrainer
 from sgd import SGD
 import sys

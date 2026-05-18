@@ -79,6 +79,10 @@ class TrainCustomLoop:
         plt.savefig(file_path)
 
     def save_dicision_boundary_image(self, x, t, file_path, h=0.001):
+        # Start a fresh figure so the boundary is not drawn on top of a
+        # previously-created figure (e.g. the loss plot from
+        # save_plot_image), which would corrupt the saved image.
+        plt.figure()
         # Plot boundary
         x_min, x_max = x[:, 0].min() - .1, x[:, 0].max() + .1
         y_min, y_max = x[:, 1].min() - .1, x[:, 1].max() + .1

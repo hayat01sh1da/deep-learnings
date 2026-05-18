@@ -90,7 +90,10 @@ except Exception:
     # Minimal colormap namespace used like plt.cm.gray_r
     cm = SimpleNamespace(gray_r=None)
 
-    plt = SimpleNamespace(
+    def close(*args, **kwargs):
+        return None
+
+    plt = SimpleNamespace(  # type: ignore[assignment]
         figure=figure,
         annotate=annotate,
         contourf=contourf,
@@ -101,6 +104,18 @@ except Exception:
         ylabel=ylabel,
         ylim=ylim,
         savefig=savefig,
+        axis=axis,
+        legend=legend,
+        subplot=subplot,
+        subplots=subplots,
+        show=show,
+        xlim=xlim,
+        xticks=xticks,
+        yticks=yticks,
+        contour=contour,
+        colorbar=colorbar,
+        close=close,
+        cm=cm,
     )
 
 __all__ = ['plt']

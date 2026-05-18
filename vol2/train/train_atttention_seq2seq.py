@@ -1,5 +1,5 @@
 from attention_seq2seq import AttentionSeq2Seq
-from eval_seq2seq import *
+from eval_seq2seq import eval_seq2seq
 from trainer import Trainer
 from adam import Adam
 from sequence import Sequence

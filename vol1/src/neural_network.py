@@ -3,23 +3,16 @@ import os
 import numpy as np
 import sys
 sys.path.append('./dataset')
-sys.path.append('./dataset')
 
 try:
     import matplotlib.pylab as plt
 except Exception:
-    plt = None
-
-
-try:
-    import matplotlib.pylab as plt
-except Exception:
-    plt = None
+    plt = None  # type: ignore[assignment]
 
 try:
     from PIL import Image
 except Exception:
-    Image = None
+    Image = None  # type: ignore[assignment]
 
 
 class NeuralNetwork:
