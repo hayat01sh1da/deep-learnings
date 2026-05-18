@@ -90,6 +90,9 @@ except Exception:
     # Minimal colormap namespace used like plt.cm.gray_r
     cm = SimpleNamespace(gray_r=None)
 
+    def close(*args, **kwargs):
+        return None
+
     plt = SimpleNamespace(  # type: ignore[assignment]
         figure=figure,
         annotate=annotate,
