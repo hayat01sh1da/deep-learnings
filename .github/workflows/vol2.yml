@@ -14,7 +14,7 @@ on:
       - requirements.txt
       - requirements.lock
       - pyproject.toml
-      - vol1/**/*.py
+      - vol2/**/*.py
   pull_request:
     paths:
       - .github/actions/setup-python/action.yml
@@ -23,7 +23,7 @@ on:
       - requirements.txt
       - requirements.lock
       - pyproject.toml
-      - vol1/**/*.py
+      - vol2/**/*.py
 
 permissions:
   contents: read
@@ -48,7 +48,7 @@ jobs:
             - requirements.txt
             - requirements.lock
             - pyproject.toml
-            - vol1/**/*.py
+            - vol2/**/*.py
   flake8:
     timeout-minutes: 10
     runs-on: ubuntu-latest
