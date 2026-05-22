@@ -11,23 +11,43 @@ $ pip install -r requirements.txt
 ## 3. Unit Test
 
 ```command
-$ pytest
-====================================================================== test session starts =======================================================================
+$ invoke
+============================= test session starts ==============================
 platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
-rootdir: /mnt/c/Users/binlh/Documents/development/deep-learnings/vol1
-collected 32 items                                                                                                                                               
+rootdir: deep-learnings
+configfile: pyproject.toml
+collected 48 items
 
-test/test_add_layer.py ..                                                                                                                                  [  6%]
-test/test_affine.py ..                                                                                                                                     [ 12%]
-test/test_mul_layer.py ..                                                                                                                                  [ 18%]
-test/test_multi_layerred_perceptron.py .                                                                                                                   [ 21%]
-test/test_neural_network.py ...                                                                                                                            [ 31%]
-test/test_neural_network_clean.py ...                                                                                                                      [ 40%]
-test/test_neural_network_learning.py ..........                                                                                                            [ 71%]
-test/test_relu.py ..                                                                                                                                       [ 78%]
-test/test_sigmoid.py ..                                                                                                                                    [ 84%]
-test/test_simple_perceptron.py ...                                                                                                                         [ 93%]
-test/test_softmax_with_loss.py ..                                                                                                                          [100%]
+test/test_add_layer.py ..                                                [  4%]
+test/test_affine.py ..                                                   [  8%]
+test/test_mul_layer.py ..                                                [ 12%]
+test/test_multi_layerred_perceptron.py ....                              [ 20%]
+test/test_neural_network.py ...                                          [ 27%]
+test/test_neural_network_clean.py ...                                    [ 33%]
+test/test_neural_network_learning.py ..............                      [ 62%]
+test/test_relu.py ..                                                     [ 66%]
+test/test_sigmoid.py ..                                                  [ 70%]
+test/test_simple_perceptron.py ............                              [ 95%]
+test/test_softmax_with_loss.py ..                                        [100%]
 
-======================================================================= 32 passed in 1.62s =======================================================================
+============================== 48 passed in 4.02s ==============================
+```
+
+## 4. Static Code Analysis
+
+```command
+$ flake8 .
+./dataset/mnist.py:40:80: E501 line too long (101 > 79 characters)
+./src/adam.py:21:80: E501 line too long (84 > 79 characters)
+./src/neural_network.py:21:80: E501 line too long (84 > 79 characters)
+./src/neural_network.py:22:80: E501 line too long (81 > 79 characters)
+$ autoflake8 --in-place --remove-duplicate-keys --remove-unused-variables --recursive .
+$ autopep8 --in-place --aggressive --aggressive --recursive .
+```
+
+## 5. Type Checks
+
+```command
+$ mypy .
+Success: no issues found in 42 source files
 ```

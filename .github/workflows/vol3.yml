@@ -14,7 +14,7 @@ on:
       - requirements.txt
       - requirements.lock
       - pyproject.toml
-      - vol1/**/*.py
+      - vol3/**/*.py
   pull_request:
     paths:
       - .github/actions/setup-python/action.yml
@@ -23,7 +23,7 @@ on:
       - requirements.txt
       - requirements.lock
       - pyproject.toml
-      - vol1/**/*.py
+      - vol3/**/*.py
 
 permissions:
   contents: read
@@ -48,7 +48,7 @@ jobs:
             - requirements.txt
             - requirements.lock
             - pyproject.toml
-            - vol1/**/*.py
+            - vol3/**/*.py
   flake8:
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -87,7 +87,8 @@ jobs:
         working-directory: ./vol3
         run: |
           status=0
-          for chapter in ./*/; do
+          for chapter in ./*/
+          do
             echo "===== mypy ${chapter} ====="
             mypy "${chapter}" || status=1
           done
