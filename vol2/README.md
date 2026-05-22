@@ -11,175 +11,232 @@ $ pip install -r requirements.txt
 ## 3. Unit Test
 
 ```command
-$ pytest
-====================================================================== test session starts =======================================================================
+$ pytest .
+============================= test session starts ==============================
 platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
-rootdir: /mnt/c/Users/binlh/Documents/development/deep-learnings/vol2
-collected 153 items                                                                                                                                              
+rootdir: deep-learnings
+configfile: pyproject.toml
+collected 48 items
 
-test/test_affine.py ..                                                                                                                                     [  1%]
-test/test_attention.py ..                                                                                                                                  [  2%]
-test/test_attention_decoder.py ...                                                                                                                         [  4%]
-test/test_attention_encoder.py ..                                                                                                                          [  5%]
-test/test_attention_weight.py ..                                                                                                                           [  7%]
-test/test_better_rnnlm.py ....                                                                                                                             [  9%]
-test/test_cbow.py ..                                                                                                                                       [ 11%]
-test/test_count_based_methods.py ...........                                                                                                               [ 18%]
-test/test_cross_entropy_error.py .                                                                                                                         [ 18%]
-test/test_decoder.py ...                                                                                                                                   [ 20%]
-test/test_embedding.py ....                                                                                                                                [ 23%]
-test/test_embedding_dot.py ........                                                                                                                        [ 28%]
-test/test_encoder.py ..                                                                                                                                    [ 30%]
-test/test_lstm.py ...                                                                                                                                      [ 32%]
-test/test_matmul.py ..                                                                                                                                     [ 33%]
-test/test_matrix.py ........                                                                                                                               [ 38%]
-test/test_negative_sampling_loss.py ....                                                                                                                   [ 41%]
-test/test_neural_network.py ..                                                                                                                             [ 42%]
-test/test_peeky_decoder.py ...                                                                                                                             [ 44%]
-test/test_repeat.py ..                                                                                                                                     [ 45%]
-test/test_rnn.py ..                                                                                                                                        [ 47%]
-test/test_rnn_gen.py FF                                                                                                                                    [ 48%]
-test/test_rnnlm.py .FF..F                                                                                                                                  [ 52%]
-test/test_rnnlm_trainer.py ...                                                                                                                             [ 54%]
-test/test_seq2seq.py ...                                                                                                                                   [ 56%]
-test/test_sequence.py .....                                                                                                                                [ 59%]
-test/test_sigmoid.py ..                                                                                                                                    [ 60%]
-test/test_sigmoid_with_loss.py ..                                                                                                                          [ 62%]
-test/test_simple_cbow.py ..                                                                                                                                [ 63%]
-test/test_simple_rnnlm.py ....                                                                                                                             [ 66%]
-test/test_simple_word2vec.py ...                                                                                                                           [ 67%]
-test/test_softmax.py ...                                                                                                                                   [ 69%]
-test/test_softmax_with_loss.py ..                                                                                                                          [ 71%]
-test/test_spiral_dataset.py ...                                                                                                                            [ 73%]
-test/test_sum.py ..                                                                                                                                        [ 74%]
-test/test_time_affine.py ..                                                                                                                                [ 75%]
-test/test_time_attention.py ..                                                                                                                             [ 77%]
-test/test_time_dropout.py ..                                                                                                                               [ 78%]
-test/test_time_embedding.py ..                                                                                                                             [ 79%]
-test/test_time_lstm.py ...                                                                                                                                 [ 81%]
-test/test_time_rnn.py ...                                                                                                                                  [ 83%]
-test/test_time_softmax_with_loss.py ..                                                                                                                     [ 84%]
-test/test_train_custom_loop.py ......                                                                                                                      [ 88%]
-test/test_trainer.py ......                                                                                                                                [ 92%]
-test/test_two_layer_net.py ...                                                                                                                             [ 94%]
-test/test_unigram_sampler.py ..                                                                                                                            [ 96%]
-test/test_vector.py ....                                                                                                                                   [ 98%]
-test/test_weight_sum.py ..                                                                                                                                 [100%]
+test/test_add_layer.py ..                                                [  4%]
+test/test_affine.py ..                                                   [  8%]
+test/test_mul_layer.py ..                                                [ 12%]
+test/test_multi_layerred_perceptron.py ....                              [ 20%]
+test/test_neural_network.py ...                                          [ 27%]
+test/test_neural_network_clean.py ...                                    [ 33%]
+test/test_neural_network_learning.py ..............                      [ 62%]
+test/test_relu.py ..                                                     [ 66%]
+test/test_sigmoid.py ..                                                  [ 70%]
+test/test_simple_perceptron.py ............                              [ 95%]
+test/test_softmax_with_loss.py ..                                        [100%]
 
-============================================================================ FAILURES ============================================================================
-________________________________________________________________ TestRNNLMGen.test_generate_text _________________________________________________________________
+$ pytest .
+============================= test session starts ==============================
+platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+rootdir: deep-learnings
+configfile: pyproject.toml
+collected 153 items
 
-self = <test_rnn_gen.TestRNNLMGen testMethod=test_generate_text>
+test/test_affine.py ..                                                   [  1%]
+test/test_attention.py ..                                                [  2%]
+test/test_attention_decoder.py ...                                       [  4%]
+test/test_attention_encoder.py ..                                        [  5%]
+test/test_attention_weight.py ..                                         [  7%]
+test/test_better_rnnlm.py ....                                           [  9%]
+test/test_cbow.py ..                                                     [ 11%]
+test/test_count_based_methods.py ...........                             [ 18%]
+test/test_cross_entropy_error.py .                                       [ 18%]
+test/test_decoder.py ...                                                 [ 20%]
+test/test_embedding.py ....                                              [ 23%]
+test/test_embedding_dot.py ........                                      [ 28%]
+test/test_encoder.py ..                                                  [ 30%]
+test/test_lstm.py ...                                                    [ 32%]
+test/test_matmul.py ..                                                   [ 33%]
+test/test_matrix.py ........                                             [ 38%]
+test/test_negative_sampling_loss.py ....                                 [ 41%]
+test/test_neural_network.py ..                                           [ 42%]
+test/test_peeky_decoder.py ...                                           [ 44%]
+test/test_repeat.py ..                                                   [ 45%]
+test/test_rnn.py ..                                                      [ 47%]
+test/test_rnn_gen.py ..                                                  [ 48%]
+test/test_rnnlm.py ......                                                [ 52%]
+test/test_rnnlm_trainer.py ...                                           [ 54%]
+test/test_seq2seq.py ...                                                 [ 56%]
+test/test_sequence.py .....                                              [ 59%]
+test/test_sigmoid.py ..                                                  [ 60%]
+test/test_sigmoid_with_loss.py ..                                        [ 62%]
+test/test_simple_cbow.py ..                                              [ 63%]
+test/test_simple_rnnlm.py ....                                           [ 66%]
+test/test_simple_word2vec.py ...                                         [ 67%]
+test/test_softmax.py ...                                                 [ 69%]
+test/test_softmax_with_loss.py ..                                        [ 71%]
+test/test_spiral_dataset.py ...                                          [ 73%]
+test/test_sum.py ..                                                      [ 74%]
+test/test_time_affine.py ..                                              [ 75%]
+test/test_time_attention.py ..                                           [ 77%]
+test/test_time_dropout.py ..                                             [ 78%]
+test/test_time_embedding.py ..                                           [ 79%]
+test/test_time_lstm.py ...                                               [ 81%]
+test/test_time_rnn.py ...                                                [ 83%]
+test/test_time_softmax_with_loss.py ..                                   [ 84%]
+test/test_train_custom_loop.py ......                                    [ 88%]
+test/test_trainer.py ......                                              [ 92%]
+test/test_two_layer_net.py ...                                           [ 94%]
+test/test_unigram_sampler.py ..                                          [ 96%]
+test/test_vector.py ....                                                 [ 98%]
+test/test_weight_sum.py ..                                               [100%]
 
-    def test_generate_text(self):
->       word_ids = self.rnnlm_gen.word_ids_list(self.start_id, self.skip_ids)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+============================= 153 passed in 29.77s =============================
+```
 
-test/test_rnn_gen.py:32: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+## 4. Static Code Analysis
 
-self = <rnnlm_gen.RNNLMGen object at 0x71e156625d30>, start_id = 316, skip_ids = [27, 26, 416], sample_size = 100
+```command
+$ flake8 .
+./src/concerns/eval_perplexity.py:9:17: F841 local variable 'loss_cnt' is assigned to but never used
+./src/layers/attention_weight.py:26:9: F841 local variable 'dh' is assigned to but never used
+./src/layers/sigmoid_with_loss.py:1:1: F403 'from cross_entropy_error import *' used; unable to detect undefined names
+./src/layers/sigmoid_with_loss.py:17:16: F405 'cross_entropy_error' may be undefined, or defined from star imports: cross_entropy_error
+./src/layers/softmax_with_loss.py:1:1: F403 'from cross_entropy_error import *' used; unable to detect undefined names
+./src/layers/softmax_with_loss.py:21:16: F405 'cross_entropy_error' may be undefined, or defined from star imports: cross_entropy_error
+./src/models/base_model.py:29:80: E501 line too long (104 > 79 characters)
+./src/models/two_layer_net.py:11:9: E741 ambiguous variable name 'I'
+./src/models/two_layer_net.py:13:9: E741 ambiguous variable name 'O'
+./src/plot_shim.py:4:80: E501 line too long (81 > 79 characters)
+./src/plot_shim.py:5:80: E501 line too long (86 > 79 characters)
+./src/rnnlm_trainer.py:4:1: F403 'from clip_grads import *' used; unable to detect undefined names
+./src/rnnlm_trainer.py:18:80: E501 line too long (92 > 79 characters)
+./src/rnnlm_trainer.py:38:80: E501 line too long (102 > 79 characters)
+./src/rnnlm_trainer.py:58:13: F402 import 'time' from line 2 shadowed by loop variable
+./src/rnnlm_trainer.py:91:21: F405 'clip_grads' may be undefined, or defined from star imports: clip_grads
+./src/rnnlm_trainer.py:101:80: E501 line too long (85 > 79 characters)
+./src/rnnlm_trainer.py:102:80: E501 line too long (90 > 79 characters)
+./src/spiral_dataset.py:2:1: F403 'from spiral import *' used; unable to detect undefined names
+./src/spiral_dataset.py:9:26: F405 'load_data' may be undefined, or defined from star imports: spiral
+./src/spiral_dataset.py:18:80: E501 line too long (85 > 79 characters)
+./src/spiral_dataset.py:19:80: E501 line too long (85 > 79 characters)
+./src/train_custom_loop.py:68:80: E501 line too long (99 > 79 characters)
+./src/train_custom_loop.py:105:80: E501 line too long (80 > 79 characters)
+./src/train_custom_loop.py:106:80: E501 line too long (80 > 79 characters)
+./src/trainer.py:1:1: F403 'from clip_grads import *' used; unable to detect undefined names
+./src/trainer.py:28:80: E501 line too long (92 > 79 characters)
+./src/trainer.py:48:80: E501 line too long (102 > 79 characters)
+./src/trainer.py:71:80: E501 line too long (83 > 79 characters)
+./src/trainer.py:72:80: E501 line too long (80 > 79 characters)
+./src/trainer.py:98:21: F405 'clip_grads' may be undefined, or defined from star imports: clip_grads
+./src/trainer.py:105:80: E501 line too long (92 > 79 characters)
+./test/test_count_based_methods.py:30:80: E501 line too long (83 > 79 characters)
+./test/test_count_based_methods.py:150:80: E501 line too long (119 > 79 characters)
+./test/test_count_based_methods.py:151:80: E501 line too long (83 > 79 characters)
+./test/test_count_based_methods.py:152:80: E501 line too long (130 > 79 characters)
+./test/test_count_based_methods.py:153:80: E501 line too long (127 > 79 characters)
+./test/test_count_based_methods.py:154:80: E501 line too long (129 > 79 characters)
+./test/test_count_based_methods.py:155:80: E501 line too long (128 > 79 characters)
+./test/test_count_based_methods.py:156:80: E501 line too long (130 > 79 characters)
+./test/test_lstm.py:13:80: E501 line too long (85 > 79 characters)
+./test/test_lstm.py:17:80: E501 line too long (103 > 79 characters)
+./test/test_lstm.py:19:80: E501 line too long (119 > 79 characters)
+./test/test_lstm.py:23:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:24:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:25:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:26:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:27:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:28:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:29:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:30:80: E501 line too long (121 > 79 characters)
+./test/test_lstm.py:31:80: E501 line too long (89 > 79 characters)
+./test/test_lstm.py:32:80: E501 line too long (91 > 79 characters)
+./test/test_lstm.py:34:80: E501 line too long (157 > 79 characters)
+./test/test_lstm.py:35:80: E501 line too long (160 > 79 characters)
+./test/test_lstm.py:36:80: E501 line too long (158 > 79 characters)
+./test/test_lstm.py:39:80: E501 line too long (80 > 79 characters)
+./test/test_lstm.py:40:80: E501 line too long (80 > 79 characters)
+./test/test_time_attention.py:9:80: E501 line too long (80 > 79 characters)
+./test/test_time_lstm.py:11:80: E501 line too long (85 > 79 characters)
+./test/test_time_lstm.py:15:80: E501 line too long (103 > 79 characters)
+./test/test_time_lstm.py:17:80: E501 line too long (119 > 79 characters)
+./test/test_time_lstm.py:21:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:22:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:23:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:24:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:25:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:26:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:27:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:28:80: E501 line too long (121 > 79 characters)
+./test/test_time_lstm.py:29:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:30:80: E501 line too long (91 > 79 characters)
+./test/test_time_lstm.py:32:80: E501 line too long (157 > 79 characters)
+./test/test_time_lstm.py:33:80: E501 line too long (160 > 79 characters)
+./test/test_time_lstm.py:34:80: E501 line too long (158 > 79 characters)
+./test/test_time_lstm.py:37:80: E501 line too long (80 > 79 characters)
+./test/test_time_lstm.py:38:80: E501 line too long (80 > 79 characters)
+./test/test_time_lstm.py:43:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:44:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:45:80: E501 line too long (90 > 79 characters)
+./test/test_time_lstm.py:46:80: E501 line too long (90 > 79 characters)
+./test/test_time_lstm.py:47:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:48:80: E501 line too long (87 > 79 characters)
+./test/test_time_lstm.py:51:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:52:80: E501 line too long (86 > 79 characters)
+./test/test_time_lstm.py:53:80: E501 line too long (92 > 79 characters)
+./test/test_time_lstm.py:54:80: E501 line too long (91 > 79 characters)
+./test/test_time_lstm.py:55:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:56:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:59:80: E501 line too long (87 > 79 characters)
+./test/test_time_lstm.py:60:80: E501 line too long (87 > 79 characters)
+./test/test_time_lstm.py:61:80: E501 line too long (92 > 79 characters)
+./test/test_time_lstm.py:62:80: E501 line too long (89 > 79 characters)
+./test/test_time_lstm.py:63:80: E501 line too long (91 > 79 characters)
+./test/test_time_lstm.py:64:80: E501 line too long (92 > 79 characters)
+./test/test_time_lstm.py:72:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:73:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:74:80: E501 line too long (82 > 79 characters)
+./test/test_time_lstm.py:75:80: E501 line too long (80 > 79 characters)
+./test/test_time_lstm.py:76:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:77:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:80:80: E501 line too long (88 > 79 characters)
+./test/test_time_lstm.py:81:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:82:80: E501 line too long (82 > 79 characters)
+./test/test_time_lstm.py:83:80: E501 line too long (82 > 79 characters)
+./test/test_time_lstm.py:84:80: E501 line too long (86 > 79 characters)
+./test/test_time_lstm.py:85:80: E501 line too long (84 > 79 characters)
+./test/test_time_lstm.py:88:80: E501 line too long (84 > 79 characters)
+./test/test_time_lstm.py:89:80: E501 line too long (84 > 79 characters)
+./test/test_time_lstm.py:90:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:91:80: E501 line too long (87 > 79 characters)
+./test/test_time_lstm.py:92:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:93:80: E501 line too long (83 > 79 characters)
+./test/test_time_lstm.py:99:80: E501 line too long (86 > 79 characters)
+./test/test_time_lstm.py:100:80: E501 line too long (85 > 79 characters)
+./test/test_time_lstm.py:101:80: E501 line too long (87 > 79 characters)
+./test/test_time_lstm.py:102:80: E501 line too long (85 > 79 characters)
+./test/test_time_lstm.py:103:80: E501 line too long (86 > 79 characters)
+./test/test_time_lstm.py:104:80: E501 line too long (86 > 79 characters)
+./test/test_time_lstm.py:107:80: E501 line too long (85 > 79 characters)
+./test/test_time_lstm.py:108:80: E501 line too long (87 > 79 characters)
+./test/test_time_lstm.py:109:80: E501 line too long (84 > 79 characters)
+./test/test_time_lstm.py:110:80: E501 line too long (86 > 79 characters)
+./test/test_time_lstm.py:111:80: E501 line too long (84 > 79 characters)
+./test/test_time_lstm.py:112:80: E501 line too long (85 > 79 characters)
+./test/test_time_lstm.py:115:80: E501 line too long (84 > 79 characters)
+./test/test_time_lstm.py:116:80: E501 line too long (82 > 79 characters)
+./test/test_time_lstm.py:117:80: E501 line too long (85 > 79 characters)
+./test/test_time_lstm.py:118:80: E501 line too long (84 > 79 characters)
+./test/test_time_lstm.py:119:80: E501 line too long (85 > 79 characters)
+./test/test_time_lstm.py:120:80: E501 line too long (86 > 79 characters)
+./test/test_time_softmax_with_loss.py:35:80: E501 line too long (128 > 79 characters)
+./test/test_time_softmax_with_loss.py:36:80: E501 line too long (130 > 79 characters)
+./test/test_time_softmax_with_loss.py:37:80: E501 line too long (128 > 79 characters)
+./test/test_trainer.py:80:80: E501 line too long (89 > 79 characters)
+./test/test_trainer.py:81:80: E501 line too long (91 > 79 characters)
+./train/train_seq2seq.py:16:80: E501 line too long (82 > 79 characters)
+$ autoflake8 --in-place --remove-duplicate-keys --remove-unused-variables --recursive .
+$ autopep8 --in-place --aggressive --aggressive --recursive .
+```
 
-    def word_ids_list(self, start_id, skip_ids = None, sample_size = 100):
-        word_ids = [start_id]
-        x        = start_id
-        while len(word_ids) < sample_size:
-            x       = np.array(x).reshape(1, 1)
-            score   = self._predict(x)
-            p       = self.softmax.calc_softmax(score.flatten())
-            sampled = np.random.choice(len(p), size = 1, p = p)
-            if (skip_ids is None) or (sampled not in skip_ids):
-                x = sampled
->               word_ids.append(int(x))
-                                ^^^^^^
-E               TypeError: only 0-dimensional arrays can be converted to Python scalars
+## 5. Type Checks
 
-src/rnnlm_gen.py:16: TypeError
----------------------------------------------------------------------- Captured stdout call ----------------------------------------------------------------------
-Warning: No file: ../pkl/better_rnnlm.pkl — creating placeholder params
-________________________________________________________________ TestRNNLMGen.test_word_ids_list _________________________________________________________________
-
-self = <test_rnn_gen.TestRNNLMGen testMethod=test_word_ids_list>
-
-    def test_word_ids_list(self):
->       word_ids = self.rnnlm_gen.word_ids_list(self.start_id, self.skip_ids)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-test/test_rnn_gen.py:28: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <rnnlm_gen.RNNLMGen object at 0x71e15678b4d0>, start_id = 316, skip_ids = [27, 26, 416], sample_size = 100
-
-    def word_ids_list(self, start_id, skip_ids = None, sample_size = 100):
-        word_ids = [start_id]
-        x        = start_id
-        while len(word_ids) < sample_size:
-            x       = np.array(x).reshape(1, 1)
-            score   = self._predict(x)
-            p       = self.softmax.calc_softmax(score.flatten())
-            sampled = np.random.choice(len(p), size = 1, p = p)
-            if (skip_ids is None) or (sampled not in skip_ids):
-                x = sampled
->               word_ids.append(int(x))
-                                ^^^^^^
-E               TypeError: only 0-dimensional arrays can be converted to Python scalars
-
-src/rnnlm_gen.py:16: TypeError
----------------------------------------------------------------------- Captured stdout call ----------------------------------------------------------------------
-Warning: No file: ../pkl/better_rnnlm.pkl — creating placeholder params
-_____________________________________________________________________ TestRNNLM.test_forward _____________________________________________________________________
-
-self = <test_rnnlm.TestRNNLM testMethod=test_forward>
-
-    def test_forward(self):
-        loss = self.rnnlm.forward(self.xs, self.ts)
->       self.assertEqual(round(loss, 2), 1.94)
-E       AssertionError: np.float64(1.95) != 1.94
-
-test/test_rnnlm.py:44: AssertionError
-___________________________________________________________________ TestRNNLM.test_load_params ___________________________________________________________________
-
-self = <test_rnnlm.TestRNNLM testMethod=test_load_params>
-
-    def test_load_params(self):
->       self.rnnlm.load_params()
-
-test/test_rnnlm.py:65: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <rnnlm.RNNLM object at 0x71e15678a850>, file_path = '../pkl/rnnlm.pkl'
-
-    def load_params(self, file_path='../pkl/rnnlm.pkl'):
->       with open(file_path, 'rb') as f:
-             ^^^^^^^^^^^^^^^^^^^^^
-E       FileNotFoundError: [Errno 2] No such file or directory: '../pkl/rnnlm.pkl'
-
-src/rnnlm.py:62: FileNotFoundError
-___________________________________________________________________ TestRNNLM.test_save_params ___________________________________________________________________
-
-self = <test_rnnlm.TestRNNLM testMethod=test_save_params>
-
-    def test_save_params(self):
-        self.rnnlm.forward(self.xs, self.ts)
-        self.rnnlm.backward()
->       self.rnnlm.save_params()
-
-test/test_rnnlm.py:61: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-self = <rnnlm.RNNLM object at 0x71e1567b8710>, file_path = '../pkl/rnnlm.pkl'
-
-    def save_params(self, file_path='../pkl/rnnlm.pkl'):
->       with open(file_path, 'wb') as f:
-             ^^^^^^^^^^^^^^^^^^^^^
-E       FileNotFoundError: [Errno 2] No such file or directory: '../pkl/rnnlm.pkl'
-
-src/rnnlm.py:58: FileNotFoundError
-==================================================================== short test summary info =====================================================================
-FAILED test/test_rnn_gen.py::TestRNNLMGen::test_generate_text - TypeError: only 0-dimensional arrays can be converted to Python scalars
-FAILED test/test_rnn_gen.py::TestRNNLMGen::test_word_ids_list - TypeError: only 0-dimensional arrays can be converted to Python scalars
-FAILED test/test_rnnlm.py::TestRNNLM::test_forward - AssertionError: np.float64(1.95) != 1.94
-FAILED test/test_rnnlm.py::TestRNNLM::test_load_params - FileNotFoundError: [Errno 2] No such file or directory: '../pkl/rnnlm.pkl'
-FAILED test/test_rnnlm.py::TestRNNLM::test_save_params - FileNotFoundError: [Errno 2] No such file or directory: '../pkl/rnnlm.pkl'
-================================================================= 5 failed, 148 passed in 23.03s =================================================================
+```command
+$ mypy .
+Success: no issues found in 120 source files
 ```
