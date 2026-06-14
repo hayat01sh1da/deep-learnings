@@ -13,7 +13,7 @@ $ pip install -r requirements.txt
 ```command
 $ invoke
 ============================= test session starts ==============================
-platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+platform linux -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0
 rootdir: deep-learnings
 configfile: pyproject.toml
 collected 48 items
