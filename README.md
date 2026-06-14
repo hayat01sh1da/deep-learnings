@@ -6,7 +6,7 @@
 ## 1. Common Environment
 
 - WSL (Ubuntu 25.10)
-- Python 3.14.5
+- Python 3.14.6
 
 ## 2. READMEs
 
@@ -25,7 +25,7 @@ $   pytest .
 $ done
 ===== mypy ./vol1/ =====
 ============================= test session starts ==============================
-platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+platform linux -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0
 rootdir: /mnt/c/Users/binlh/Development/personal/deep-learnings
 configfile: pyproject.toml
 collected 48 items
@@ -45,7 +45,7 @@ test/test_softmax_with_loss.py ..                                        [100%]
 ============================== 48 passed in 1.97s ==============================
 ===== mypy ./vol2/ =====
 ============================= test session starts ==============================
-platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+platform linux -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0
 rootdir: /mnt/c/Users/binlh/Development/personal/deep-learnings
 configfile: pyproject.toml
 collected 153 items
@@ -102,7 +102,7 @@ test/test_weight_sum.py ..                                               [100%]
 ============================= 153 passed in 31.00s =============================
 ===== mypy ./vol3/ =====
 ============================= test session starts ==============================
-platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+platform linux -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0
 rootdir: /mnt/c/Users/binlh/Development/personal/deep-learnings
 configfile: pyproject.toml
 collected 15 items
