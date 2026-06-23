@@ -144,18 +144,23 @@ def test_ppmi(cbm_setup):
 def test_svd(cbm_setup):
     M = cbm_setup['cbm'].ppmi(cbm_setup['co_matrix'])
     U = cbm_setup['cbm'].singular_value_deconposition(M)
+    # The left singular vectors are not unique: their signs are arbitrary and,
+    # because every non-zero singular value here is degenerate (each appears
+    # twice), any rotation within the shared subspace is an equally valid U.
+    # Pinning exact values is therefore brittle -- it broke on the LAPACK update
+    # shipped with numpy 2.5.0. Instead assert the properties that *are*
+    # invariant: the (unique) singular values, that U is orthonormal, and that U
+    # diagonalises M @ M.T with the squared singular values.
+    S = np.linalg.svd(M, compute_uv=False)
+    assert U.shape == M.shape
     assert_almost_equal(
-        U,
-        np.array([
-            [3.40948761e-01, 0.0, -1.20516241e-01, -3.88578059e-16, -9.32324946e-01, -1.11022302e-16, -2.42574685e-17],
-            [0.0, -5.97636402e-01, 0.0, 1.80237904e-01, 0.0, -7.81245828e-01, 0.0],
-            [4.36312199e-01, -5.55111512e-17, -5.08782864e-01, -2.22044605e-16, 2.25325629e-01, -1.38777878e-17, -7.07106769e-01],
-            [1.11022302e-16, -4.97828126e-01, 2.77555756e-17, 6.80396318e-01, -1.11022302e-16, 5.37799239e-01, 7.46693292e-17],
-            [4.36312199e-01, -3.12375064e-17, -5.08782864e-01, -1.59998290e-16, 2.25325629e-01, -1.30164976e-17, 7.07106769e-01],
-            [7.09237099e-01, -3.12375064e-17, 6.83926761e-01, -1.59998290e-16, 1.70958877e-01, -1.30164976e-17, 2.31390806e-17],
-            [-1.66533454e-16, -6.28488600e-01, -4.16333634e-17, -7.10334539e-01, 2.22044605e-16, 3.16902101e-01, -9.61431563e-17],
-        ]),
+        S,
+        np.array([3.1680453, 3.1680453, 2.7029872,
+                  2.7029872, 1.5144811, 1.5144811, 0.0]),
     )
+    eye = np.eye(M.shape[0])
+    assert_almost_equal(U @ U.T, eye, decimal=5)
+    assert_almost_equal(U @ np.diag(S ** 2) @ U.T, M @ M.T, decimal=5)
 
 
 def test_save_svd_plot_image(cbm_setup):
