@@ -1,6 +1,7 @@
 [![Actions Status: Vol.1](https://github.com/hayat01sh1da/deep-learnings/workflows/Vol.1/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Vol.1%22)
 [![Actions Status: Vol.2](https://github.com/hayat01sh1da/deep-learnings/workflows/Vol.2/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Vol.2%22)
 [![Actions Status: Vol.3](https://github.com/hayat01sh1da/deep-learnings/workflows/Vol.3/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Vol.3%22)
+[![Actions Status: Python - Daily Dependencies Update](https://github.com/hayat01sh1da/deep-learnings/workflows/Python%20-%20Daily%20Dependencies%20Update/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Python%20-%20Daily%20Dependencies%20Update%22)
 [![Actions Status: CodeQL](https://github.com/hayat01sh1da/deep-learnings/workflows/CodeQL/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22CodeQL%22)
 
 ## 1. Common Environment
