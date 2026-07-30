@@ -8,7 +8,7 @@
 
 - WSL (Ubuntu 25.10)
 - Python 3.14.6
-- pip 26.1.2
+- pip 26.2
 
 ## 2. READMEs
 
