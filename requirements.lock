@@ -1,4 +1,4 @@
-ast_serialize==0.11.1
+ast_serialize==0.11.2
 autoflake8==0.4.1
 autopep8==2.3.2
 contourpy==1.4.0
