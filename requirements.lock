@@ -19,7 +19,7 @@ pathspec==1.1.1
 pillow==12.3.0
 pluggy==1.6.0
 pycodestyle==2.15.0
-pyflakes==4.0.0
+pyflakes==4.0.1
 Pygments==2.21.0
 pyparsing==3.3.3
 pytest==9.1.1
