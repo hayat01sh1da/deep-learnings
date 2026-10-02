@@ -11,7 +11,7 @@ kiwisolver==1.5.1
 librt==0.16.0
 matplotlib==3.11.2
 mccabe==0.7.0
-mypy==2.3.1
+mypy==2.4.0
 mypy_extensions==1.1.0
 numpy==2.5.3
 packaging==26.3
