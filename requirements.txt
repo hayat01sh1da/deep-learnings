@@ -4,6 +4,6 @@ flake8==7.4.1
 invoke==3.0.3
 mypy==2.4.0
 matplotlib==3.11.2
-numpy==2.5.3
+numpy==2.5.4
 pillow==12.3.0
 pytest==9.1.1
