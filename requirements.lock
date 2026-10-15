@@ -17,7 +17,7 @@ numpy==2.5.4
 packaging==26.3
 pathspec==1.1.1
 pillow==12.3.0
-pluggy==1.6.0
+pluggy==1.7.0
 pycodestyle==2.15.0
 pyflakes==4.0.3
 Pygments==2.21.0
