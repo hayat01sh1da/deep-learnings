@@ -1,9 +1,9 @@
+[![Actions Status: CodeQL](https://github.com/hayat01sh1da/deep-learnings/workflows/CodeQL/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22CodeQL%22)
+[![Actions Status: Daily Dependencies Update - Python](https://github.com/hayat01sh1da/deep-learnings/workflows/Daily%20Dependencies%20Update%20-%20Python/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Daily%20Dependencies%20Update%20-%20Python%22)
+[![Actions Status: Daily Runtime Update - Python](https://github.com/hayat01sh1da/deep-learnings/workflows/Daily%20Runtime%20Update%20-%20Python/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Daily%20Runtime%20Update%20-%20Python%22)
 [![Actions Status: Vol.1](https://github.com/hayat01sh1da/deep-learnings/workflows/Vol.1/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Vol.1%22)
 [![Actions Status: Vol.2](https://github.com/hayat01sh1da/deep-learnings/workflows/Vol.2/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Vol.2%22)
 [![Actions Status: Vol.3](https://github.com/hayat01sh1da/deep-learnings/workflows/Vol.3/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Vol.3%22)
-[![Actions Status: Daily Dependencies Update - Python](https://github.com/hayat01sh1da/deep-learnings/workflows/Daily%20Dependencies%20Update%20-%20Python/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Daily%20Dependencies%20Update%20-%20Python%22)
-[![Actions Status: Daily Runtime Update - Python](https://github.com/hayat01sh1da/deep-learnings/workflows/Daily%20Runtime%20Update%20-%20Python/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22Daily%20Runtime%20Update%20-%20Python%22)
-[![Actions Status: CodeQL](https://github.com/hayat01sh1da/deep-learnings/workflows/CodeQL/badge.svg)](https://github.com/hayat01sh1da/deep-learnings/actions?query=workflow%3A%22CodeQL%22)
 
 ## 1. Common Environment
 
