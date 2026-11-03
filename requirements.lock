@@ -26,4 +26,4 @@ pytest==9.2.0
 python-dateutil==4.0.0
 typing_extensions==4.16.0
 tzdata==2026.6
-pip==26.2.2
+pip==26.3
